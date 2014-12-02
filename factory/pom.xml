@@ -16,5 +16,21 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
+   	<dependency>
+		<groupId>org.mozartspaces</groupId>
+		<artifactId>mozartspaces-notifications</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.mozartspaces</groupId>
+		<artifactId>mozartspaces-capi3-berkeleydb</artifactId>
+	</dependency>		
+	<dependency>
+		<groupId>org.mozartspaces</groupId>
+		<artifactId>mozartspaces-xvsmp-jaxb</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+	</dependency>
   </dependencies>
 </project>

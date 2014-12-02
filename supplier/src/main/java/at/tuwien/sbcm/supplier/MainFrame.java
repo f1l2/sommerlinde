@@ -46,6 +46,7 @@ public class MainFrame {
 		JPanel centerPanel = new JPanel(new GridLayout(3,1));
 		content_panel.add(centerPanel);
 		
+		//row supplier
 		JPanel rowPanel1 = new JPanel(new FlowLayout());
 		centerPanel.add(rowPanel1);
 		
@@ -57,6 +58,7 @@ public class MainFrame {
 		rowPanel1.add(supplierTF);
 		supplierTF.setColumns(10);
 		
+		//row wooden
 		JPanel rowPanel2 = new JPanel(new FlowLayout());
 		centerPanel.add(rowPanel2);
 		
@@ -68,7 +70,30 @@ public class MainFrame {
 		rowPanel2.add(woodenTF);
 		woodenTF.setColumns(10);
 	
+		//row igniter
+		JPanel rowPanel3 = new JPanel(new FlowLayout());
+		centerPanel.add(rowPanel3);
+				
+		JLabel igniterLBL = new JLabel("Gehäuse mit Zünder:");
+		rowPanel3.add(igniterLBL);
+				
+		JTextField igniterTF = new JTextField();
+		igniterTF.setToolTipText("# Gehäuse mit Zünder");
+		rowPanel3.add(igniterTF);
+		igniterTF.setColumns(10);
 		
+		//row igniter
+		JPanel rowPanel4 = new JPanel(new FlowLayout());
+		centerPanel.add(rowPanel4);
+				
+		JLabel loadLBL = new JLabel("Effektladung: ");
+		rowPanel4.add(loadLBL);
+				
+		JTextField loadTF = new JTextField();
+		loadTF.setToolTipText("# Effektladung");
+		rowPanel4.add(loadTF);
+		loadTF.setColumns(10);
+			
 		
 	}
 	
