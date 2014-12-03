@@ -19,7 +19,7 @@ public class Factory {
 
 		// RUN
 		Date time = new Date();
-		while ((time.getTime() + 60 * 1000) > new Date().getTime()) {
+		while ((time.getTime() + 260 * 1000) > new Date().getTime()) {
 
 		}
 

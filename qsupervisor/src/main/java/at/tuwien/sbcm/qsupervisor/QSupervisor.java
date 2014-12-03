@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.tuwien.sbcm.factory.FactoryCore;
+import at.tuwien.sbcm.factory.model.EffectiveLoad;
+import at.tuwien.sbcm.factory.model.Propellant;
 import at.tuwien.sbcm.factory.model.Rocket;
 
 public class QSupervisor {
@@ -51,12 +53,26 @@ public class QSupervisor {
 
 				ArrayList<Rocket> result = FactoryCore.CAPI.take(cReference, rocketSelector, RequestTimeout.INFINITE, tReference);
 
-				logger.info("Took 1  rocket (Id = " + result.get(0).getId() + ").");
+				logger.info("Check rocket (Id = " + result.get(0).getId() + ").");
+				Thread.sleep(FactoryCore.workRandomTime());
 
 				Rocket rocket = result.get(0);
-				rocket.setIsDefect(Boolean.FALSE);
 
-				// TODO check
+				int amount = 0;
+				for (Propellant propellant : rocket.getPropellant()) {
+					amount += propellant.getAmount();
+				}
+
+				int cntDefectEffectiveLoad = 0;
+				for (EffectiveLoad effectiveLoad : rocket.getEffectiveLoad()) {
+					if (effectiveLoad.getIsDefect())
+						cntDefectEffectiveLoad++;
+				}
+
+				if ((amount <= 110) || (cntDefectEffectiveLoad >= 2))
+					rocket.setIsDefect(Boolean.TRUE);
+				else
+					rocket.setIsDefect(Boolean.FALSE);
 
 				if (rocket.getIsDefect()) {
 					FactoryCore.write(FactoryCore.DEFECT_ROCKETS, new Entry(rocket));
@@ -76,7 +92,10 @@ public class QSupervisor {
 				} catch (MzsCoreException e1) {
 					logger.error("", e1);
 				}
+			} catch (InterruptedException e) {
+				logger.error("", e);
 			}
+
 		} while (true);
 	}
 }

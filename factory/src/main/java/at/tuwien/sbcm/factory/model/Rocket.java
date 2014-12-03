@@ -1,6 +1,7 @@
 package at.tuwien.sbcm.factory.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.mozartspaces.capi3.Queryable;
 
@@ -16,6 +17,14 @@ public class Rocket implements Serializable {
 	private Boolean isDefect;
 
 	private Boolean readyForPickUP;
+
+	private Igniter igniter;
+
+	private WoodenStaff woodenStaff;
+
+	private List<Propellant> propellant;
+
+	private List<EffectiveLoad> effectiveLoad;
 
 	public Rocket() {
 
@@ -59,6 +68,38 @@ public class Rocket implements Serializable {
 
 	public void setIsDefect(Boolean isDefect) {
 		this.isDefect = isDefect;
+	}
+
+	public Igniter getIgniter() {
+		return igniter;
+	}
+
+	public void setIgniter(Igniter igniter) {
+		this.igniter = igniter;
+	}
+
+	public WoodenStaff getWoodenStaff() {
+		return woodenStaff;
+	}
+
+	public void setWoodenStaff(WoodenStaff woodenStaff) {
+		this.woodenStaff = woodenStaff;
+	}
+
+	public List<Propellant> getPropellant() {
+		return propellant;
+	}
+
+	public void setPropellant(List<Propellant> propellant) {
+		this.propellant = propellant;
+	}
+
+	public List<EffectiveLoad> getEffectiveLoad() {
+		return effectiveLoad;
+	}
+
+	public void setEffectiveLoad(List<EffectiveLoad> effectiveLoad) {
+		this.effectiveLoad = effectiveLoad;
 	}
 
 }

@@ -48,8 +48,6 @@ public class Logistician {
 
 			try {
 
-				logger.info("Waiting for rockets.");
-
 				tReference = FactoryCore.CAPI.createTransaction(RequestTimeout.INFINITE, FactoryCore.SPACE_URI);
 
 				ContainerReference cReference = FactoryCore.getOrCreateNamedContainer(FactoryCore.GOOD_ROCKETS);
@@ -57,7 +55,8 @@ public class Logistician {
 				ArrayList<Rocket> result = FactoryCore.CAPI.take(cReference, FifoCoordinator.newSelector(5), TransactionTimeout.INFINITE,
 						tReference);
 
-				logger.info("Took 5 rockets.");
+				logger.info("Package rockets ...");
+				Thread.sleep(FactoryCore.workRandomTime());
 
 				List<Entry> rocketPackage = new ArrayList<Entry>();
 				for (Rocket rocket : result) {
@@ -67,9 +66,9 @@ public class Logistician {
 
 				FactoryCore.write(FactoryCore.ROCKET_PACKAGES, rocketPackage);
 
-				logger.info(" Packaged 5 rockets.");
-
 				FactoryCore.CAPI.commitTransaction(tReference);
+
+				logger.info("Rocket package created.");
 
 			} catch (MzsCoreException e) {
 
@@ -81,7 +80,10 @@ public class Logistician {
 					logger.error("", e1);
 				}
 
+			} catch (InterruptedException e) {
+				logger.error("", e);
 			}
+
 		} while (true);
 	}
 }

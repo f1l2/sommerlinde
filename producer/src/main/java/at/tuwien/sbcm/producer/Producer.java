@@ -58,28 +58,57 @@ public class Producer {
 				LindaSelector woodenStaffSelector = LindaCoordinator.newSelector(new WoodenStaff(), 1);
 				LindaSelector effectiveLoadSelector = LindaCoordinator.newSelector(new EffectiveLoad(), 3);
 
-				logger.info("Retrieving necessary parts ...");
-
 				tReference = FactoryCore.CAPI.createTransaction(RequestTimeout.INFINITE, FactoryCore.SPACE_URI);
 				ContainerReference cReference = FactoryCore.getOrCreateNamedContainer(FactoryCore.PARTS);
 
-				ArrayList<Rocket> resultIgniter = FactoryCore.CAPI.take(cReference, igniterSelector, TransactionTimeout.INFINITE,
+				ArrayList<Igniter> resultIgniter = FactoryCore.CAPI.take(cReference, igniterSelector, TransactionTimeout.INFINITE,
 						tReference);
 
-				ArrayList<Rocket> resultPropellant = FactoryCore.CAPI.take(cReference, propellantSelector, TransactionTimeout.INFINITE,
-						tReference);
-
-				ArrayList<Rocket> resultWoodenStaff = FactoryCore.CAPI.take(cReference, woodenStaffSelector, TransactionTimeout.INFINITE,
-						tReference);
-
-				ArrayList<Rocket> resultEffectiveLoad = FactoryCore.CAPI.take(cReference, effectiveLoadSelector,
+				ArrayList<WoodenStaff> resultWoodenStaff = FactoryCore.CAPI.take(cReference, woodenStaffSelector,
 						TransactionTimeout.INFINITE, tReference);
 
+				ArrayList<EffectiveLoad> resultEffectiveLoad = FactoryCore.CAPI.take(cReference, effectiveLoadSelector,
+						TransactionTimeout.INFINITE, tReference);
+
+				int propellantAmount = 110 + FactoryCore.workRandomValue();
+				Boolean isPropellantReached = false;
+
+				ArrayList<Propellant> resultPropellant = new ArrayList<Propellant>();
+
+				while (!isPropellantReached) {
+
+					ArrayList<Propellant> tempResultPropellant = FactoryCore.CAPI.take(cReference, propellantSelector,
+							TransactionTimeout.INFINITE, tReference);
+
+					Propellant propellant = tempResultPropellant.get(0);
+
+					resultPropellant.add(propellant);
+
+					if (propellant.getAmount() >= propellantAmount) {
+
+						propellant.setAmount(propellant.getAmount() - propellantAmount);
+
+						if (propellant.getAmount() > 0) {
+							FactoryCore.write(FactoryCore.PARTS, new Entry(propellant));
+						}
+
+						isPropellantReached = true;
+
+					} else {
+						propellantAmount = propellantAmount - propellant.getAmount();
+					}
+				}
+
 				logger.info("Produce rocket.");
+				Thread.sleep(FactoryCore.workRandomTime());
 
 				Rocket rocket = new Rocket(null, null, false);
 				rocket.setId(FactoryCore.getIDAndIncr(FactoryCore.ROCKET_COUNTER));
 				rocket.setProducerId(this.producerId);
+				rocket.setIgniter(resultIgniter.get(0));
+				rocket.setWoodenStaff(resultWoodenStaff.get(0));
+				rocket.setPropellant(resultPropellant);
+				rocket.setEffectiveLoad(resultEffectiveLoad);
 
 				FactoryCore.write(FactoryCore.PRODUCED_ROCKETS, new Entry(rocket));
 
@@ -97,8 +126,11 @@ public class Producer {
 					logger.error("", e1);
 				}
 
+			} catch (InterruptedException e) {
+
+				logger.error("", e);
+
 			}
 		} while (true);
 	}
-
 }

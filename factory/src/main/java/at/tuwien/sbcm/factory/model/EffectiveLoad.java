@@ -11,12 +11,22 @@ public class EffectiveLoad implements Serializable {
 
 	private Integer id;
 
+	private Boolean isDefect;
+
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Boolean getIsDefect() {
+		return isDefect;
+	}
+
+	public void setIsDefect(Boolean isDefect) {
+		this.isDefect = isDefect;
 	}
 
 }

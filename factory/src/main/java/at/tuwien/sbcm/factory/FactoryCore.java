@@ -28,18 +28,6 @@ public abstract class FactoryCore {
 	public static final URI SPACE_URI = URI.create("xvsm://localhost:9876");
 	private static MzsCore CORE;
 
-	public static final String WOODENSTAFF = "woodenstaff";
-	private static ContainerReference woodenstaffCRef;
-
-	public static final String IGNITER = "igniter";
-	private static ContainerReference igniterCRef;
-
-	public static final String PROPELLANT = "propellant";
-	private static ContainerReference propellantCRef;
-
-	public static final String EFFECTIVE_LOAD = "effectiveLoad";
-	private static ContainerReference effectiveLoadCRef;
-
 	public static final String PARTS = "parts";
 	private static ContainerReference partsCRef;
 
@@ -80,11 +68,6 @@ public abstract class FactoryCore {
 			}
 
 			// Create container
-			woodenstaffCRef = FactoryCore.getOrCreateNamedContainer(WOODENSTAFF, CAPI);
-			igniterCRef = FactoryCore.getOrCreateNamedContainer(IGNITER, CAPI);
-			propellantCRef = FactoryCore.getOrCreateNamedContainer(PROPELLANT, CAPI);
-			effectiveLoadCRef = FactoryCore.getOrCreateNamedContainer(EFFECTIVE_LOAD, CAPI);
-
 			producedRocketsCRef = FactoryCore.getOrCreateNamedContainer(PRODUCED_ROCKETS);
 			goodRocketsCRef = FactoryCore.getOrCreateNamedContainer(GOOD_ROCKETS);
 			defetRocketsCRef = FactoryCore.getOrCreateNamedContainer(DEFECT_ROCKETS);
@@ -188,4 +171,22 @@ public abstract class FactoryCore {
 
 		return (random.nextInt(max - min) + min);
 	}
+
+	public static boolean isDefectRandom(int probability) {
+
+		Random random = new Random();
+		int number = random.nextInt(100);
+
+		if (number < probability)
+			return true;
+		else
+			return false;
+	}
+
+	public static int workRandomValue() {
+
+		Random random = new Random();
+		return random.nextInt(40);
+	}
+
 }
