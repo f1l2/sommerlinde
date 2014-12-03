@@ -8,6 +8,7 @@ import java.util.Random;
 import org.mozartspaces.capi3.Coordinator;
 import org.mozartspaces.capi3.FifoCoordinator;
 import org.mozartspaces.capi3.LifoCoordinator;
+import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.core.Capi;
 import org.mozartspaces.core.ContainerReference;
 import org.mozartspaces.core.DefaultMzsCore;
@@ -39,8 +40,20 @@ public abstract class FactoryCore {
 	public static final String EFFECTIVE_LOAD = "effectiveLoad";
 	private static ContainerReference effectiveLoadCRef;
 
-	public static final String ROCKET = "rocket";
-	private static ContainerReference rocketCRef;
+	public static final String PARTS = "parts";
+	private static ContainerReference partsCRef;
+
+	public static final String PRODUCED_ROCKETS = "producedRockets";
+	private static ContainerReference producedRocketsCRef;
+
+	public static final String GOOD_ROCKETS = "goodRockets";
+	private static ContainerReference goodRocketsCRef;
+
+	public static final String DEFECT_ROCKETS = "defectRockets";
+	private static ContainerReference defetRocketsCRef;
+
+	public static final String ROCKET_PACKAGES = "rocketPackages";
+	private static ContainerReference rocketPackagesCRef;
 
 	public static final String PRODUCER_COUNTER = "producerCounter";
 	private static ContainerReference producerCounterCRef;
@@ -71,7 +84,11 @@ public abstract class FactoryCore {
 			igniterCRef = FactoryCore.getOrCreateNamedContainer(IGNITER, CAPI);
 			propellantCRef = FactoryCore.getOrCreateNamedContainer(PROPELLANT, CAPI);
 			effectiveLoadCRef = FactoryCore.getOrCreateNamedContainer(EFFECTIVE_LOAD, CAPI);
-			rocketCRef = FactoryCore.getOrCreateNamedContainer(ROCKET);
+
+			producedRocketsCRef = FactoryCore.getOrCreateNamedContainer(PRODUCED_ROCKETS);
+			goodRocketsCRef = FactoryCore.getOrCreateNamedContainer(GOOD_ROCKETS);
+			defetRocketsCRef = FactoryCore.getOrCreateNamedContainer(DEFECT_ROCKETS);
+			rocketPackagesCRef = FactoryCore.getOrCreateNamedContainer(ROCKET_PACKAGES);
 
 			producerCounterCRef = FactoryCore.getOrCreateNamedContainer(PRODUCER_COUNTER);
 			partCounterCRef = FactoryCore.getOrCreateNamedContainer(PART_COUNTER);
@@ -114,6 +131,7 @@ public abstract class FactoryCore {
 
 				ArrayList<Coordinator> obligatoryCoords = new ArrayList<Coordinator>();
 				obligatoryCoords.add(new FifoCoordinator());
+				obligatoryCoords.add(new LindaCoordinator());
 				containerReference = capi.createContainer(containerName, SPACE_URI, Container.UNBOUNDED, obligatoryCoords, null, null);
 
 				logger.info("Container created: " + containerName);

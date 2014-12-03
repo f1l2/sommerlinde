@@ -2,6 +2,9 @@ package at.tuwien.sbcm.factory.model;
 
 import java.io.Serializable;
 
+import org.mozartspaces.capi3.Queryable;
+
+@Queryable(autoindex = true)
 public class Rocket implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,6 +16,18 @@ public class Rocket implements Serializable {
 	private Boolean isDefect;
 
 	private Boolean readyForPickUP;
+
+	public Rocket() {
+
+	}
+
+	public Rocket(Integer id, Integer producerId, Boolean isDefect) {
+
+		this.id = id;
+		this.producerId = producerId;
+		this.isDefect = isDefect;
+
+	}
 
 	public Integer getId() {
 		return id;

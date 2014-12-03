@@ -7,6 +7,7 @@ import org.mozartspaces.capi3.FifoCoordinator;
 import org.mozartspaces.core.ContainerReference;
 import org.mozartspaces.core.Entry;
 import org.mozartspaces.core.MzsConstants.RequestTimeout;
+import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 import org.mozartspaces.core.MzsCoreException;
 import org.mozartspaces.core.TransactionReference;
 import org.slf4j.Logger;
@@ -23,6 +24,8 @@ public class Logistician {
 
 	public static void main(String[] args) {
 		new Logistician();
+
+		System.exit(0);
 	}
 
 	public Logistician() {
@@ -32,38 +35,53 @@ public class Logistician {
 		// first receive producer id
 		this.employeeId = FactoryCore.getIDAndIncr(FactoryCore.PRODUCER_COUNTER);
 
+		logger.info(this.employeeId + " started.");
+
 		this.pack();
 	}
 
 	public void pack() {
 
-		TransactionReference tReference;
-		try {
+		TransactionReference tReference = null;
 
-			logger.info("[" + this.getClass().getSimpleName() + "]" + " Waiting for rockets.");
+		do {
 
-			tReference = FactoryCore.CAPI.createTransaction(RequestTimeout.INFINITE, FactoryCore.SPACE_URI);
+			try {
 
-			ContainerReference cReference = FactoryCore.getOrCreateNamedContainer(FactoryCore.ROCKET);
+				logger.info("Waiting for rockets.");
 
-			ArrayList<Rocket> result = FactoryCore.CAPI.take(cReference, FifoCoordinator.newSelector(2), RequestTimeout.INFINITE,
-					tReference);
+				tReference = FactoryCore.CAPI.createTransaction(RequestTimeout.INFINITE, FactoryCore.SPACE_URI);
 
-			logger.info("[" + this.getClass().getSimpleName() + "]" + " Took 5 rockets.");
+				ContainerReference cReference = FactoryCore.getOrCreateNamedContainer(FactoryCore.GOOD_ROCKETS);
 
-			List<Entry> rocketPackage = new ArrayList<Entry>();
-			for (Rocket rocket : result) {
-				rocket.setReadyForPickUP(Boolean.TRUE);
-				rocketPackage.add(new Entry(rocket));
+				ArrayList<Rocket> result = FactoryCore.CAPI.take(cReference, FifoCoordinator.newSelector(5), TransactionTimeout.INFINITE,
+						tReference);
+
+				logger.info("Took 5 rockets.");
+
+				List<Entry> rocketPackage = new ArrayList<Entry>();
+				for (Rocket rocket : result) {
+					rocket.setReadyForPickUP(Boolean.TRUE);
+					rocketPackage.add(new Entry(rocket));
+				}
+
+				FactoryCore.write(FactoryCore.ROCKET_PACKAGES, rocketPackage);
+
+				logger.info(" Packaged 5 rockets.");
+
+				FactoryCore.CAPI.commitTransaction(tReference);
+
+			} catch (MzsCoreException e) {
+
+				logger.error("", e);
+
+				try {
+					FactoryCore.CAPI.rollbackTransaction(tReference);
+				} catch (MzsCoreException e1) {
+					logger.error("", e1);
+				}
+
 			}
-
-			FactoryCore.write(FactoryCore.ROCKET, rocketPackage);
-
-			logger.info("[" + this.getClass().getSimpleName() + "]" + " Packaged 5 rockets.");
-
-		} catch (MzsCoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} while (true);
 	}
 }
