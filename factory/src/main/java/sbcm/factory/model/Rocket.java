@@ -1,6 +1,7 @@
 package sbcm.factory.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mozartspaces.capi3.Queryable;
@@ -12,7 +13,7 @@ public class Rocket implements Serializable {
 
 	private Integer id;
 
-	private Integer producerId;
+	private List<Integer> employee;
 
 	private Boolean isDefect;
 
@@ -34,14 +35,17 @@ public class Rocket implements Serializable {
 
 	public Rocket() {
 
+		this.employee = new ArrayList<Integer>();
 	}
 
-	public Rocket(Integer id, Integer producerId, Boolean isDefect) {
+	public Rocket(Integer id, Integer employeeId, Boolean isDefect) {
 
 		this.id = id;
-		this.producerId = producerId;
 		this.isDefect = isDefect;
 
+		this.employee = new ArrayList<Integer>();
+		if (employeeId != null)
+			this.employee.add(employeeId);
 	}
 
 	public Integer getId() {
@@ -50,14 +54,6 @@ public class Rocket implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getProducerId() {
-		return producerId;
-	}
-
-	public void setProducerId(Integer producerId) {
-		this.producerId = producerId;
 	}
 
 	public Boolean getReadyForPickUP() {
@@ -114,6 +110,18 @@ public class Rocket implements Serializable {
 
 	public void setFillingQuantity(Integer fillingQuantity) {
 		this.fillingQuantity = fillingQuantity;
+	}
+
+	public List<Integer> getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(List<Integer> employee) {
+		this.employee = employee;
+	}
+
+	public void addEmployee(Integer employeeId) {
+		this.employee.add(employeeId);
 	}
 
 }

@@ -25,7 +25,8 @@ public class Report {
 
 	private static final Logger logger = LoggerFactory.getLogger(Report.class);
 
-	private List<Rocket> prList;
+	private List<Rocket> goodRockets;
+	private List<Rocket> defectRockets;
 	private List<Igniter> lIgniter;
 	private List<Propellant> lPropellant;
 	private List<WoodenStaff> lWoodenStaff;
@@ -78,8 +79,14 @@ public class Report {
 			logger.info("# EffectiveLoad: " + lEffectLoad.size());
 
 			container = FactoryCore.getOrCreateNamedContainer(FactoryCore.PRODUCED_ROCKETS);
-			this.prList = FactoryCore.CAPI.read(container, producedRocket, new Long(0), null);
-			logger.info("# Produced rockets: " + this.prList.size());
+			this.goodRockets = FactoryCore.CAPI.read(container, producedRocket, new Long(0), null);
+			logger.info("# Produced rockets: " + this.goodRockets.size());
+
+			// container =
+			// FactoryCore.getOrCreateNamedContainer(FactoryCore.DEFECT_ROCKETS);
+			// this.defectRockets = FactoryCore.CAPI.read(container,
+			// producedRocket, new Long(0), null);
+			// logger.info("# Defect rockets: " + this.defectRockets.size());
 
 		} catch (MzsCoreException e) {
 			// TODO Auto-generated catch block
@@ -119,12 +126,20 @@ public class Report {
 
 	private List<EffectiveLoad> lEffectLoad;
 
-	public List<Rocket> getPrList() {
-		return prList;
+	public List<Rocket> getDefectRockets() {
+		return defectRockets;
 	}
 
-	public void setPrList(List<Rocket> prList) {
-		this.prList = prList;
+	public void setDefectRockets(List<Rocket> defectRockets) {
+		this.defectRockets = defectRockets;
+	}
+
+	public List<Rocket> getGoodRockets() {
+		return goodRockets;
+	}
+
+	public void setGoodRockets(List<Rocket> goodRockets) {
+		this.goodRockets = goodRockets;
 	}
 
 }

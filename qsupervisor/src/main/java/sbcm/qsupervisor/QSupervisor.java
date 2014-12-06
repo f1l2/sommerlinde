@@ -48,6 +48,8 @@ public class QSupervisor {
 			LindaSelector rocketSelector = LindaCoordinator.newSelector(rocketTemplate, 1);
 			try {
 
+				logger.info("Waiting for work ... ");
+
 				tReference = FactoryCore.CAPI.createTransaction(RequestTimeout.INFINITE, FactoryCore.SPACE_URI);
 				ContainerReference cReference = FactoryCore.getOrCreateNamedContainer(FactoryCore.PRODUCED_ROCKETS);
 
