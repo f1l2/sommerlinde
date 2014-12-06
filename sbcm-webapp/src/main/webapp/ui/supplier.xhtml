@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:p="http://primefaces.org/ui">
+   <h:body>
+   
+
+      <ui:composition template="templates/common.xhtml">	
+         <ui:define name="content">				
+            <br/><br/>
+            	<h:form>
+    				<h:panelGrid id="grid" cellpadding="5" columns="2" style="margin-bottom:10px">
+ 
+        				<p:outputLabel for="supplier" value="Lieferant:" />
+        				<p:inputText id="supplier" value="#{supplier.name}" />
+ 
+        				<p:outputLabel for="woodenstaff" value="# Holzstab:" />
+        				<p:inputText id="woodenstaff" value="#{supplier.woodenstaff}" />
+        				
+        				<p:outputLabel for="igniter" value="# Gehäuse mit Zünder:" />
+        				<p:inputText id="igniter" value="#{supplier.igniter}"  />
+        				
+        				<p:outputLabel for="propellant" value="# Treibladung:" />
+        				<p:inputText id="propellant" value="#{supplier.propellant}" />
+        				
+        				<p:outputLabel for="effectLoad" value="# Effektladung:" />
+        				<p:inputText id="effectLoad" value="#{supplier.effectLoad}"  />
+        				
+        				
+        				<p:commandButton value="Liefern" id="btnDeliver" actionListener="#{supplier.deliver}" />
+        				
+    				</h:panelGrid>
+    			</h:form>		
+            <br/><br/>
+         </ui:define>
+      </ui:composition>
+
+   </h:body>
+</html>

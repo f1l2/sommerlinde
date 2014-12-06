@@ -104,6 +104,7 @@ public class Producer {
 
 				Rocket rocket = new Rocket(null, null, false);
 				rocket.setId(FactoryCore.getIDAndIncr(FactoryCore.ROCKET_COUNTER));
+				rocket.setFillingQuantity(propellantAmount);
 				rocket.setProducerId(this.producerId);
 				rocket.setIgniter(resultIgniter.get(0));
 				rocket.setWoodenStaff(resultWoodenStaff.get(0));

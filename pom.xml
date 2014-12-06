@@ -13,6 +13,7 @@
 		<module>logistician</module>
 		<module>producer</module>
 		<module>qsupervisor</module>
+    <module>sbcm-webapp</module>
   </modules>
 	
 	<repositories>

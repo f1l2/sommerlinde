@@ -26,6 +26,12 @@ public class Rocket implements Serializable {
 
 	private List<EffectiveLoad> effectiveLoad;
 
+	private Integer fillingQuantity;
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public Rocket() {
 
 	}
@@ -100,6 +106,14 @@ public class Rocket implements Serializable {
 
 	public void setEffectiveLoad(List<EffectiveLoad> effectiveLoad) {
 		this.effectiveLoad = effectiveLoad;
+	}
+
+	public Integer getFillingQuantity() {
+		return fillingQuantity;
+	}
+
+	public void setFillingQuantity(Integer fillingQuantity) {
+		this.fillingQuantity = fillingQuantity;
 	}
 
 }
