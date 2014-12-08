@@ -76,6 +76,7 @@ public class QSupervisor {
 						cntDefectEffectiveLoad++;
 				}
 
+				// rocket.getEmployee().add(new Employee(this.employeeId));
 				if ((amount <= 110) || (cntDefectEffectiveLoad >= 2))
 					rocket.setIsDefect(Boolean.TRUE);
 				else

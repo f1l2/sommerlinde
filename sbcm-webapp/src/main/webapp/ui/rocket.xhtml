@@ -9,9 +9,55 @@
    
    <h:body>
    
-
       <ui:composition template="templates/common.xhtml">	
          <ui:define name="content">	
+         
+         	<h:outputLabel value="Produced rockets:"/>			
+         
+            <p:dataTable var="rocket" value="#{report.producedRockets}">
+			    <p:column headerText="Id">
+			        <h:outputText value="#{rocket.id}" />
+			    </p:column>
+			 
+			    <p:column headerText="ID Mitarbeiter">
+			        <ui:repeat value="#{rocket.employee}" var="item">
+    					 <h:outputText value="#{item.id}" />
+    					 <h:outputText value="; " />
+					</ui:repeat>
+			    </p:column>
+			    
+			    <p:column headerText="ID Holzstab">
+			        <h:outputText value="#{rocket.woodenStaff.id}" />
+			    </p:column>
+
+				 <p:column headerText="ID Zünder">
+			        <h:outputText value="#{rocket.igniter.id}" />
+			    </p:column>
+			 	
+			 	 <p:column headerText="ID Treibladung">
+			 	 
+					<ui:repeat value="#{rocket.propellant}" var="item">
+            			<h:outputText value="#{item.id}" />
+            			<h:outputText value="; " />
+        			</ui:repeat> 
+				</p:column>
+				
+			 	<p:column headerText="ID Effektladung">
+			        <ui:repeat value="#{rocket.effectiveLoad}" var="item">
+    					 <h:outputText value="#{item.id} - #{item.isDefect}" />
+    					 <h:outputText value="; " />
+					</ui:repeat>
+			    </p:column>
+			    
+			    <p:column headerText="Füllmenge">
+			        <h:outputText value="#{rocket.fillingQuantity}" />
+			    </p:column>
+			 
+			    <p:column headerText="Defect">
+			        <h:outputText value="#{rocket.isDefect}" />
+			    </p:column>
+
+			</p:dataTable>
          
          	<h:outputLabel value="Good rockets:"/>			
          
@@ -21,9 +67,8 @@
 			    </p:column>
 			 
 			    <p:column headerText="ID Mitarbeiter">
-			        <h:outputText value="#{rocket.producerId}" />
 			        <ui:repeat value="#{rocket.employee}" var="item">
-    					 <h:outputText value="#{item}" />
+    					 <h:outputText value="#{item.id}" />
     					 <h:outputText value="; " />
 					</ui:repeat>
 			    </p:column>
@@ -69,9 +114,8 @@
 			    </p:column>
 			 
 			    <p:column headerText="ID Mitarbeiter">
-			        <h:outputText value="#{rocket.producerId}" />
 			        <ui:repeat value="#{rocket.employee}" var="item">
-    					 <h:outputText value="#{item}" />
+    					 <h:outputText value="#{item.id}" />
     					 <h:outputText value="; " />
 					</ui:repeat>
 			    </p:column>

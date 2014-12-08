@@ -19,10 +19,10 @@ public class Factory {
 
 		// RUN
 		Date time = new Date();
-		while ((time.getTime() + 460 * 1000) > new Date().getTime()) {
+		while ((time.getTime() + 660 * 1000) > new Date().getTime()) {
 
 			try {
-				Thread.sleep(20000);
+				Thread.sleep(200000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

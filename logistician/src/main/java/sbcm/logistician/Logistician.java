@@ -13,7 +13,9 @@ import org.mozartspaces.core.TransactionReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sbc.space.MozartSpaces;
 import sbcm.factory.FactoryCore;
+import sbcm.factory.model.Employee;
 import sbcm.factory.model.Rocket;
 
 public class Logistician {
@@ -21,6 +23,8 @@ public class Logistician {
 	private static final Logger logger = LoggerFactory.getLogger(Logistician.class);
 
 	private int employeeId;
+
+	private MozartSpaces mozartSpaces;
 
 	public static void main(String[] args) {
 		new Logistician();
@@ -61,6 +65,7 @@ public class Logistician {
 				List<Entry> rocketPackage = new ArrayList<Entry>();
 				for (Rocket rocket : result) {
 					rocket.setReadyForPickUP(Boolean.TRUE);
+					rocket.getEmployee().add(new Employee(this.employeeId));
 					rocketPackage.add(new Entry(rocket));
 				}
 

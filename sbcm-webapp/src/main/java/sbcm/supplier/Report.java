@@ -25,6 +25,7 @@ public class Report {
 
 	private static final Logger logger = LoggerFactory.getLogger(Report.class);
 
+	private List<Rocket> producedRockets;
 	private List<Rocket> goodRockets;
 	private List<Rocket> defectRockets;
 	private List<Igniter> lIgniter;
@@ -79,18 +80,19 @@ public class Report {
 			logger.info("# EffectiveLoad: " + lEffectLoad.size());
 
 			container = FactoryCore.getOrCreateNamedContainer(FactoryCore.PRODUCED_ROCKETS);
-			this.goodRockets = FactoryCore.CAPI.read(container, producedRocket, new Long(0), null);
-			logger.info("# Produced rockets: " + this.goodRockets.size());
+			this.producedRockets = FactoryCore.CAPI.read(container, producedRocket, new Long(0), null);
+			logger.info("# Produced rockets: " + this.producedRockets.size());
 
-			// container =
-			// FactoryCore.getOrCreateNamedContainer(FactoryCore.DEFECT_ROCKETS);
-			// this.defectRockets = FactoryCore.CAPI.read(container,
-			// producedRocket, new Long(0), null);
-			// logger.info("# Defect rockets: " + this.defectRockets.size());
+			container = FactoryCore.getOrCreateNamedContainer(FactoryCore.GOOD_ROCKETS);
+			this.goodRockets = FactoryCore.CAPI.read(container, producedRocket, new Long(0), null);
+			logger.info("# Good rockets: " + this.goodRockets.size());
+
+			container = FactoryCore.getOrCreateNamedContainer(FactoryCore.DEFECT_ROCKETS);
+			this.defectRockets = FactoryCore.CAPI.read(container, producedRocket, new Long(0), null);
+			logger.info("# Defect rockets: " + this.defectRockets.size());
 
 		} catch (MzsCoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("", e);
 		}
 
 		logger.info("-------- END REPORT ---------- ");
@@ -140,6 +142,14 @@ public class Report {
 
 	public void setGoodRockets(List<Rocket> goodRockets) {
 		this.goodRockets = goodRockets;
+	}
+
+	public List<Rocket> getProducedRockets() {
+		return producedRockets;
+	}
+
+	public void setProducedRockets(List<Rocket> producedRockets) {
+		this.producedRockets = producedRockets;
 	}
 
 }

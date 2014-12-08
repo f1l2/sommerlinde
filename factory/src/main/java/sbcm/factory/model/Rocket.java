@@ -13,7 +13,7 @@ public class Rocket implements Serializable {
 
 	private Integer id;
 
-	private List<Integer> employee;
+	private List<Employee> employee;
 
 	private Boolean isDefect;
 
@@ -35,7 +35,7 @@ public class Rocket implements Serializable {
 
 	public Rocket() {
 
-		this.employee = new ArrayList<Integer>();
+		this.employee = new ArrayList<Employee>();
 	}
 
 	public Rocket(Integer id, Integer employeeId, Boolean isDefect) {
@@ -43,9 +43,9 @@ public class Rocket implements Serializable {
 		this.id = id;
 		this.isDefect = isDefect;
 
-		this.employee = new ArrayList<Integer>();
+		this.employee = new ArrayList<Employee>();
 		if (employeeId != null)
-			this.employee.add(employeeId);
+			this.employee.add(new Employee(employeeId));
 	}
 
 	public Integer getId() {
@@ -112,16 +112,11 @@ public class Rocket implements Serializable {
 		this.fillingQuantity = fillingQuantity;
 	}
 
-	public List<Integer> getEmployee() {
+	public List<Employee> getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(List<Integer> employee) {
+	public void setEmployee(List<Employee> employee) {
 		this.employee = employee;
 	}
-
-	public void addEmployee(Integer employeeId) {
-		this.employee.add(employeeId);
-	}
-
 }

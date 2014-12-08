@@ -1,7 +1,11 @@
 package sbcm.supplier;
 
+import java.io.IOException;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import org.mozartspaces.core.Entry;
 import org.mozartspaces.core.MzsCoreException;
@@ -160,6 +164,14 @@ public class Supplier {
 			} catch (MzsCoreException e) {
 				e.printStackTrace();
 			}
+		}
+
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+		try {
+			ec.redirect(ec.getRequestContextPath() + "/ui/parts.xhtml");
+		} catch (IOException e) {
+			logger.error("", e);
 		}
 
 	}
