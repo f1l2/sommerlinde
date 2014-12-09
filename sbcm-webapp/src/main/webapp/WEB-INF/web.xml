@@ -22,6 +22,11 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 	
+	<servlet-mapping>
+		<servlet-name>Firework Servlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>blitzer</param-value>

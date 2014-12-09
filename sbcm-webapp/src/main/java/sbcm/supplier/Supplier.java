@@ -32,7 +32,7 @@ public class Supplier extends Role {
 	}
 
 	public void setProducerId(int producerId) {
-		this.employeeId = producerId;
+		employeeId = producerId;
 	}
 
 	public String getName() {
@@ -104,56 +104,10 @@ public class Supplier extends Role {
 	}
 
 	public void deliver() {
-		logger.info(this.employeeId + " started.");
 
-		for (int i = 1; i <= this.igniter; i++) {
+		DeliverProcess deliverProcess = new DeliverProcess();
 
-			Igniter ig = new Igniter(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-			try {
-				mozartSpaces.write(MozartSpaces.PARTS, ig);
-			} catch (Exception e) {
-				logger.error("Write igniter exception", e);
-			}
-		}
-
-		for (int i = 1; i <= this.propellant; i++) {
-
-			Propellant p = new Propellant(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-			p.setAmount(500);
-
-			try {
-				mozartSpaces.write(MozartSpaces.PARTS, p);
-			} catch (Exception e) {
-				logger.error("Write propellant exception", e);
-			}
-		}
-
-		for (int i = 1; i <= this.woodenstaff; i++) {
-
-			WoodenStaff w = new WoodenStaff(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-
-			try {
-				mozartSpaces.write(MozartSpaces.PARTS, w);
-			} catch (Exception e) {
-				logger.error("Write woodenstaff exception", e);
-			}
-		}
-
-		for (int i = 1; i <= this.effectLoad; i++) {
-
-			EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-
-			if (this.errorRate != null)
-				el.setIsDefect(this.isDefectRandom(this.errorRate));
-			else
-				el.setIsDefect(this.isDefectRandom(10));
-
-			try {
-				mozartSpaces.write(MozartSpaces.PARTS, el);
-			} catch (Exception e) {
-				logger.error("Write effectload exception", e);
-			}
-		}
+		deliverProcess.run();
 
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 
@@ -161,6 +115,74 @@ public class Supplier extends Role {
 			ec.redirect(ec.getRequestContextPath() + "/ui/parts.xhtml");
 		} catch (IOException e) {
 			logger.error("", e);
+		}
+
+	}
+
+	class DeliverProcess implements Runnable {
+
+		public void run() {
+
+			try {
+				Thread.sleep(workRandomTime());
+			} catch (InterruptedException e) {
+				logger.error("", e);
+			}
+
+			logger.info(employeeId + " started.");
+
+			for (int i = 1; i <= igniter; i++) {
+
+				Igniter ig = new Igniter(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				// ig.setSupplierId(employeeId);
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, ig);
+				} catch (Exception e) {
+					logger.error("Write igniter exception", e);
+				}
+			}
+
+			for (int i = 1; i <= propellant; i++) {
+
+				Propellant p = new Propellant(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				p.setAmount(500);
+				// p.setSupplierId(employeeId);
+
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, p);
+				} catch (Exception e) {
+					logger.error("Write propellant exception", e);
+				}
+			}
+
+			for (int i = 1; i <= woodenstaff; i++) {
+
+				WoodenStaff w = new WoodenStaff(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				// w.setSupplierId(employeeId);
+
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, w);
+				} catch (Exception e) {
+					logger.error("Write woodenstaff exception", e);
+				}
+			}
+
+			for (int i = 1; i <= effectLoad; i++) {
+
+				EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				// el.setSupplierId(employeeId);
+
+				if (errorRate != null)
+					el.setIsDefect(isDefectRandom(errorRate));
+				else
+					el.setIsDefect(isDefectRandom(10));
+
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, el);
+				} catch (Exception e) {
+					logger.error("Write effectload exception", e);
+				}
+			}
 		}
 
 	}

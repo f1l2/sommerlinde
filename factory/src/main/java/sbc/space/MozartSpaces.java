@@ -8,6 +8,7 @@ import org.mozartspaces.capi3.AnyCoordinator;
 import org.mozartspaces.capi3.FifoCoordinator;
 import org.mozartspaces.capi3.LifoCoordinator;
 import org.mozartspaces.capi3.LindaCoordinator;
+import org.mozartspaces.capi3.QueryCoordinator;
 import org.mozartspaces.core.Capi;
 import org.mozartspaces.core.ContainerReference;
 import org.mozartspaces.core.DefaultMzsCore;
@@ -89,8 +90,8 @@ public class MozartSpaces extends SpaceTech {
 	}
 
 	public Container createContainer(String id, int size) throws Exception {
-		return (Container) new MozartContainer(capi.createContainer(id, spaceURI, size,
-				Arrays.asList(new FifoCoordinator(), new LifoCoordinator(), new AnyCoordinator(), new LindaCoordinator()), null, null));
+		return (Container) new MozartContainer(capi.createContainer(id, spaceURI, size, Arrays.asList(new FifoCoordinator(),
+				new LifoCoordinator(), new AnyCoordinator(), new LindaCoordinator(), new QueryCoordinator()), null, null));
 	}
 
 	public Container findContainer(String id) throws Exception {

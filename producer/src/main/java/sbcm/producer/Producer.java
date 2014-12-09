@@ -3,7 +3,10 @@ package sbcm.producer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mozartspaces.capi3.ComparableProperty;
 import org.mozartspaces.capi3.LindaCoordinator;
+import org.mozartspaces.capi3.Query;
+import org.mozartspaces.capi3.QueryCoordinator;
 import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 
 import sbc.space.MozartContainer;
@@ -66,10 +69,15 @@ public class Producer extends Role {
 				rocket.setFillingQuantity(propellantAmount);
 				rocket.setPropellant(new ArrayList<Propellant>());
 
+				ComparableProperty amount = ComparableProperty.forName("amount");
+				Query query = new Query().sortup(amount).cnt(1);
+
 				Boolean isPropellantReached = false;
 				while (!isPropellantReached) {
 
-					Propellant propellant = (Propellant) this.mozartSpaces.take(mc, mt, propellantSelector).get(0);
+					Propellant propellant = (Propellant) this.mozartSpaces.take(mc, mt,
+							new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
+
 					rocket.getPropellant().add(propellant);
 
 					if (propellant.getAmount() >= propellantAmount) {

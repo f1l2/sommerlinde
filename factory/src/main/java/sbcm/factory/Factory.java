@@ -17,5 +17,6 @@ public class Factory {
 		mozartSpaces.init();
 
 		logger.info("Space started.");
+
 	}
 }
