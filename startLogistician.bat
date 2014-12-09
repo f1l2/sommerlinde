@@ -1,0 +1,1 @@
+mvn exec:java -pl logistician -Dexec.mainClass="sbcm.logistician.Logistician"

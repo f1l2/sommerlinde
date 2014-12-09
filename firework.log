@@ -28092,3 +28092,1014 @@ java.lang.NullPointerException: null
 	at sbc.space.MozartSpaces.init(MozartSpaces.java:67) ~[classes/:na]
 	at sbcm.factory.Factory.main(Factory.java:17) [classes/:na]
 18:30:19.287 [main] INFO  - [Factory] Space started.
+18:40:36.396 [Request-TP] INFO  - [RequestTimeoutHandler] Request xvsm://localhost:1596/requests/288 timed out
+18:40:39.470 [TcpSocket-1-338] WARN  - [TcpSocketSender] Maximum number of connection attempts (3) to localhost:1596 reached
+18:40:39.470 [TcpSocket-1-338] ERROR - [TcpSocketSender] Sending response message for request xvsm://localhost:1596/requests/288 failed
+18:45:01.414 [sbcm.factory.Factory.main()] INFO  - [Factory] Start space ...
+18:45:01.508 [sbcm.factory.Factory.main()] INFO  - [PersistenceContext] Initializing persistence profile 'in-memory'
+18:45:01.524 [sbcm.factory.Factory.main()] INFO  - [PersistenceContext] Persistence context successfully initialized with the backend "org.mozartspaces.capi3.javanative.persistence.InMemoryDB@326fa443" and the serializer "org.mozartspaces.core.util.JavaBuiltinSerializer@3f894493".
+18:45:01.524 [sbcm.factory.Factory.main()] INFO  - [PersistenceContext] Persistence context successfully initialized with the backend "org.mozartspaces.capi3.javanative.persistence.InMemoryDB@4cc85072" and the serializer "org.mozartspaces.core.util.JavaBuiltinSerializer@731993bf".
+18:45:01.539 [sbcm.factory.Factory.main()] INFO  - [DefaultCapi3Native] Started capi3-javanative
+18:45:01.555 [sbcm.factory.Factory.main()] INFO  - [Factory] *** Initialising MozartSpaces
+18:45:01.586 [CoreProcessor-1] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+18:45:01.617 [CoreProcessor-2] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+18:45:01.617 [CoreProcessor-3] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+18:45:01.617 [CoreProcessor-4] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+18:45:01.633 [CoreProcessor-5] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+18:45:01.633 [CoreProcessor-6] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+18:45:01.633 [CoreProcessor-7] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+18:45:01.633 [CoreProcessor-8] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+18:45:01.664 [sbcm.factory.Factory.main()] INFO  - [Factory] Space started.
+18:46:22.921 [http-bio-8080-exec-8] INFO  - [Role] 1 started.
+18:46:26.289 [http-bio-8080-exec-9] INFO  - [Report] -------- REPORT ---------- 
+18:46:26.310 [http-bio-8080-exec-9] INFO  - [Report] # Igniter: 0
+18:46:26.314 [http-bio-8080-exec-9] INFO  - [Report] # Propellant: 0
+18:46:26.317 [http-bio-8080-exec-9] INFO  - [Report] # WoodenStaff: 0
+18:46:26.321 [http-bio-8080-exec-9] INFO  - [Report] # EffectiveLoad: 0
+18:46:26.328 [http-bio-8080-exec-9] INFO  - [Report] # Produced rockets: 0
+18:46:26.332 [http-bio-8080-exec-9] INFO  - [Report] # Good rockets: 0
+18:46:26.337 [http-bio-8080-exec-9] INFO  - [Report] # Defect rockets: 0
+18:46:26.342 [http-bio-8080-exec-9] INFO  - [Report] # Packages: 0
+18:46:26.343 [http-bio-8080-exec-9] INFO  - [Report] -------- END REPORT ---------- 
+18:46:27.454 [http-bio-8080-exec-10] INFO  - [Report] -------- REPORT ---------- 
+18:46:27.462 [http-bio-8080-exec-10] INFO  - [Report] # Igniter: 0
+18:46:27.466 [http-bio-8080-exec-10] INFO  - [Report] # Propellant: 0
+18:46:27.469 [http-bio-8080-exec-10] INFO  - [Report] # WoodenStaff: 0
+18:46:27.473 [http-bio-8080-exec-10] INFO  - [Report] # EffectiveLoad: 0
+18:46:27.479 [http-bio-8080-exec-10] INFO  - [Report] # Produced rockets: 0
+18:46:27.485 [http-bio-8080-exec-10] INFO  - [Report] # Good rockets: 0
+18:46:27.491 [http-bio-8080-exec-10] INFO  - [Report] # Defect rockets: 0
+18:46:27.496 [http-bio-8080-exec-10] INFO  - [Report] # Packages: 0
+18:46:27.496 [http-bio-8080-exec-10] INFO  - [Report] -------- END REPORT ---------- 
+18:46:27.834 [http-bio-8080-exec-10] INFO  - [Report] -------- REPORT ---------- 
+18:46:27.839 [http-bio-8080-exec-10] INFO  - [Report] # Igniter: 0
+18:46:27.842 [http-bio-8080-exec-10] INFO  - [Report] # Propellant: 0
+18:46:27.844 [http-bio-8080-exec-10] INFO  - [Report] # WoodenStaff: 0
+18:46:27.846 [http-bio-8080-exec-10] INFO  - [Report] # EffectiveLoad: 0
+18:46:27.850 [http-bio-8080-exec-10] INFO  - [Report] # Produced rockets: 0
+18:46:27.854 [http-bio-8080-exec-10] INFO  - [Report] # Good rockets: 0
+18:46:27.858 [http-bio-8080-exec-10] INFO  - [Report] # Defect rockets: 0
+18:46:27.861 [http-bio-8080-exec-10] INFO  - [Report] # Packages: 0
+18:46:27.861 [http-bio-8080-exec-10] INFO  - [Report] -------- END REPORT ---------- 
+18:46:28.788 [http-bio-8080-exec-2] INFO  - [Report] -------- REPORT ---------- 
+18:46:28.794 [http-bio-8080-exec-2] INFO  - [Report] # Igniter: 0
+18:46:28.797 [http-bio-8080-exec-2] INFO  - [Report] # Propellant: 0
+18:46:28.799 [http-bio-8080-exec-2] INFO  - [Report] # WoodenStaff: 0
+18:46:28.801 [http-bio-8080-exec-2] INFO  - [Report] # EffectiveLoad: 0
+18:46:28.805 [http-bio-8080-exec-2] INFO  - [Report] # Produced rockets: 0
+18:46:28.809 [http-bio-8080-exec-2] INFO  - [Report] # Good rockets: 0
+18:46:28.813 [http-bio-8080-exec-2] INFO  - [Report] # Defect rockets: 0
+18:46:28.817 [http-bio-8080-exec-2] INFO  - [Report] # Packages: 0
+18:46:28.817 [http-bio-8080-exec-2] INFO  - [Report] -------- END REPORT ---------- 
+18:46:29.393 [http-bio-8080-exec-2] INFO  - [Role] 2 started.
+18:46:41.302 [http-bio-8080-exec-2] INFO  - [Role] 2 started.
+18:46:41.618 [http-bio-8080-exec-2] INFO  - [Report] -------- REPORT ---------- 
+18:46:41.618 [http-bio-8080-exec-2] INFO  - [Report] # Igniter: 12
+18:46:41.633 [http-bio-8080-exec-2] INFO  - [Report] # Propellant: 1
+18:46:41.633 [http-bio-8080-exec-2] INFO  - [Report] - ID:13; Amount: 500
+18:46:41.633 [http-bio-8080-exec-2] INFO  - [Report] # WoodenStaff: 12
+18:46:41.633 [http-bio-8080-exec-2] INFO  - [Report] # EffectiveLoad: 1
+18:46:41.633 [http-bio-8080-exec-2] INFO  - [Report] # Produced rockets: 0
+18:46:41.633 [http-bio-8080-exec-2] INFO  - [Report] # Good rockets: 0
+18:46:41.633 [http-bio-8080-exec-2] INFO  - [Report] # Defect rockets: 0
+18:46:41.651 [http-bio-8080-exec-2] INFO  - [Report] # Packages: 0
+18:46:41.651 [http-bio-8080-exec-2] INFO  - [Report] -------- END REPORT ---------- 
+18:48:27.658 [sbcm.producer.Producer.main()] INFO  - [Role] 3 started.
+18:51:14.124 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] 4 started.
+18:51:14.124 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+18:51:48.965 [sbcm.logistician.Logistician.main()] INFO  - [Role] 5 started.
+18:51:59.124 [http-bio-8080-exec-7] INFO  - [Report] -------- REPORT ---------- 
+18:51:59.132 [http-bio-8080-exec-7] INFO  - [Report] # Igniter: 11
+18:51:59.134 [http-bio-8080-exec-7] INFO  - [Report] # Propellant: 1
+18:51:59.134 [http-bio-8080-exec-7] INFO  - [Report] - ID:13; Amount: 500
+18:51:59.137 [http-bio-8080-exec-7] INFO  - [Report] # WoodenStaff: 11
+18:51:59.139 [http-bio-8080-exec-7] INFO  - [Report] # EffectiveLoad: 1
+18:51:59.142 [http-bio-8080-exec-7] INFO  - [Report] # Produced rockets: 0
+18:51:59.146 [http-bio-8080-exec-7] INFO  - [Report] # Good rockets: 0
+18:51:59.149 [http-bio-8080-exec-7] INFO  - [Report] # Defect rockets: 0
+18:51:59.152 [http-bio-8080-exec-7] INFO  - [Report] # Packages: 0
+18:51:59.152 [http-bio-8080-exec-7] INFO  - [Report] -------- END REPORT ---------- 
+18:51:59.924 [http-bio-8080-exec-7] INFO  - [Report] -------- REPORT ---------- 
+18:51:59.936 [http-bio-8080-exec-7] INFO  - [Report] # Igniter: 11
+18:51:59.939 [http-bio-8080-exec-7] INFO  - [Report] # Propellant: 1
+18:51:59.939 [http-bio-8080-exec-7] INFO  - [Report] - ID:13; Amount: 500
+18:51:59.943 [http-bio-8080-exec-7] INFO  - [Report] # WoodenStaff: 11
+18:51:59.945 [http-bio-8080-exec-7] INFO  - [Report] # EffectiveLoad: 1
+18:51:59.949 [http-bio-8080-exec-7] INFO  - [Report] # Produced rockets: 0
+18:51:59.954 [http-bio-8080-exec-7] INFO  - [Report] # Good rockets: 0
+18:51:59.958 [http-bio-8080-exec-7] INFO  - [Report] # Defect rockets: 0
+18:51:59.962 [http-bio-8080-exec-7] INFO  - [Report] # Packages: 0
+18:51:59.962 [http-bio-8080-exec-7] INFO  - [Report] -------- END REPORT ---------- 
+18:52:01.541 [http-bio-8080-exec-7] INFO  - [Role] 6 started.
+18:52:08.448 [http-bio-8080-exec-7] INFO  - [Role] 6 started.
+18:52:08.513 [http-bio-8080-exec-7] INFO  - [Report] -------- REPORT ---------- 
+18:52:08.513 [http-bio-8080-exec-7] INFO  - [Report] # Igniter: 11
+18:52:08.513 [http-bio-8080-exec-7] INFO  - [Report] # Propellant: 1
+18:52:08.513 [http-bio-8080-exec-7] INFO  - [Report] - ID:13; Amount: 500
+18:52:08.513 [http-bio-8080-exec-7] INFO  - [Report] # WoodenStaff: 11
+18:52:08.513 [http-bio-8080-exec-7] INFO  - [Report] # EffectiveLoad: 0
+18:52:08.513 [http-bio-8080-exec-7] INFO  - [Report] # Produced rockets: 0
+18:52:08.532 [http-bio-8080-exec-7] INFO  - [Report] # Good rockets: 0
+18:52:08.535 [http-bio-8080-exec-7] INFO  - [Report] # Defect rockets: 0
+18:52:08.538 [http-bio-8080-exec-7] INFO  - [Report] # Packages: 0
+18:52:08.538 [http-bio-8080-exec-7] INFO  - [Report] -------- END REPORT ---------- 
+18:52:08.544 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+18:52:10.184 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 1).
+18:52:10.200 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 1).
+18:52:11.241 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 1; Defect = false).
+18:52:11.241 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+18:56:39.775 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] 7 started.
+18:56:39.791 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:08:24.720 [qtp533440100-23] INFO  - [Role] 8 started.
+19:08:29.011 [Request-TP] INFO  - [RequestTimeoutHandler] Request xvsm://localhost:2967/requests/8 timed out
+19:08:29.011 [sbcm.logistician.Logistician.main()] ERROR - [Role] 
+org.mozartspaces.core.MzsTimeoutException: Request timed out
+	at org.mozartspaces.runtime.tasks.AbstractTask.checkRequestTimeout(AbstractTask.java:309) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.runtime.tasks.AbstractTask.run(AbstractTask.java:115) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) ~[na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) ~[na:1.7.0_45]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+	at [Request result retrieved with the following stack trace].(Unknown Source) ~[na:na]
+	at org.mozartspaces.core.GenericRequestFuture.enhanceStackTrace(GenericRequestFuture.java:186) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.GenericRequestFuture.getResultOrError(GenericRequestFuture.java:129) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.GenericRequestFuture.getResult(GenericRequestFuture.java:81) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.Capi.sendRequestAndWaitForResult(Capi.java:1307) ~[mozartspaces-core-api-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.Capi.take(Capi.java:839) ~[mozartspaces-core-api-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.Capi.take(Capi.java:805) ~[mozartspaces-core-api-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at sbc.space.MozartSpaces.take(MozartSpaces.java:132) ~[factory-1.0.0-SNAPSHOT.jar:na]
+	at sbcm.logistician.Logistician.doAction(Logistician.java:43) [classes/:na]
+	at sbcm.space.role.Role.<init>(Role.java:26) [factory-1.0.0-SNAPSHOT.jar:na]
+	at sbcm.logistician.Logistician.<init>(Logistician.java:27) [classes/:na]
+	at sbcm.logistician.Logistician.main(Logistician.java:21) [classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_45]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_45]
+	at org.codehaus.mojo.exec.ExecJavaMojo$1.run(ExecJavaMojo.java:293) [exec-maven-plugin-1.3.jar:na]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+19:08:29.248 [qtp533440100-24] INFO  - [Report] -------- REPORT ---------- 
+19:08:29.262 [qtp533440100-24] INFO  - [Report] # Igniter: 10
+19:08:29.267 [qtp533440100-24] INFO  - [Report] # Propellant: 1
+19:08:29.269 [qtp533440100-24] INFO  - [Report] - ID:13; Amount: 352
+19:08:29.272 [qtp533440100-24] INFO  - [Report] # WoodenStaff: 10
+19:08:29.279 [qtp533440100-24] INFO  - [Report] # EffectiveLoad: 0
+19:08:29.286 [qtp533440100-24] INFO  - [Report] # Produced rockets: 0
+19:08:29.292 [qtp533440100-24] INFO  - [Report] # Good rockets: 1
+19:08:29.297 [qtp533440100-24] INFO  - [Report] # Defect rockets: 0
+19:08:29.301 [qtp533440100-24] INFO  - [Report] # Packages: 0
+19:08:29.302 [qtp533440100-24] INFO  - [Report] -------- END REPORT ---------- 
+19:08:30.436 [qtp533440100-19] INFO  - [Report] -------- REPORT ---------- 
+19:08:30.448 [qtp533440100-19] INFO  - [Report] # Igniter: 10
+19:08:30.451 [qtp533440100-19] INFO  - [Report] # Propellant: 1
+19:08:30.451 [qtp533440100-19] INFO  - [Report] - ID:13; Amount: 352
+19:08:30.454 [qtp533440100-19] INFO  - [Report] # WoodenStaff: 10
+19:08:30.459 [qtp533440100-19] INFO  - [Report] # EffectiveLoad: 0
+19:08:30.463 [qtp533440100-19] INFO  - [Report] # Produced rockets: 0
+19:08:30.481 [qtp533440100-19] INFO  - [Report] # Good rockets: 1
+19:08:30.484 [qtp533440100-19] INFO  - [Report] # Defect rockets: 0
+19:08:30.487 [qtp533440100-19] INFO  - [Report] # Packages: 0
+19:08:30.488 [qtp533440100-19] INFO  - [Report] -------- END REPORT ---------- 
+19:08:31.733 [qtp533440100-14] INFO  - [Role] 9 started.
+19:08:32.196 [qtp533440100-12] INFO  - [Report] -------- REPORT ---------- 
+19:08:32.209 [qtp533440100-12] INFO  - [Report] # Igniter: 10
+19:08:32.215 [qtp533440100-12] INFO  - [Report] # Propellant: 1
+19:08:32.215 [qtp533440100-12] INFO  - [Report] - ID:13; Amount: 352
+19:08:32.218 [qtp533440100-12] INFO  - [Report] # WoodenStaff: 10
+19:08:32.221 [qtp533440100-12] INFO  - [Report] # EffectiveLoad: 0
+19:08:32.225 [qtp533440100-12] INFO  - [Report] # Produced rockets: 0
+19:08:32.232 [qtp533440100-12] INFO  - [Report] # Good rockets: 1
+19:08:32.237 [qtp533440100-12] INFO  - [Report] # Defect rockets: 0
+19:08:32.241 [qtp533440100-12] INFO  - [Report] # Packages: 0
+19:08:32.241 [qtp533440100-12] INFO  - [Report] -------- END REPORT ---------- 
+19:08:50.252 [Request-TP] INFO  - [RequestTimeoutHandler] Request xvsm://localhost:2960/requests/26 timed out
+19:08:50.267 [sbcm.producer.Producer.main()] ERROR - [Role] 
+org.mozartspaces.core.MzsTimeoutException: Request timed out
+	at org.mozartspaces.runtime.tasks.AbstractTask.checkRequestTimeout(AbstractTask.java:309) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.runtime.tasks.AbstractTask.run(AbstractTask.java:115) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) ~[na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) ~[na:1.7.0_45]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+	at [Request result retrieved with the following stack trace].(Unknown Source) ~[na:na]
+	at org.mozartspaces.core.GenericRequestFuture.enhanceStackTrace(GenericRequestFuture.java:186) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.GenericRequestFuture.getResultOrError(GenericRequestFuture.java:129) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.GenericRequestFuture.getResult(GenericRequestFuture.java:81) ~[mozartspaces-runtime-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.Capi.sendRequestAndWaitForResult(Capi.java:1307) ~[mozartspaces-core-api-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.Capi.take(Capi.java:839) ~[mozartspaces-core-api-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at org.mozartspaces.core.Capi.take(Capi.java:805) ~[mozartspaces-core-api-2.3-SNAPSHOT.jar:2.3-SNAPSHOT]
+	at sbc.space.MozartSpaces.take(MozartSpaces.java:132) ~[factory-1.0.0-SNAPSHOT.jar:na]
+	at sbcm.producer.Producer.doAction(Producer.java:64) [classes/:na]
+	at sbcm.space.role.Role.<init>(Role.java:26) [factory-1.0.0-SNAPSHOT.jar:na]
+	at sbcm.producer.Producer.<init>(Producer.java:39) [classes/:na]
+	at sbcm.producer.Producer.main(Producer.java:33) [classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_45]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_45]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_45]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_45]
+	at org.codehaus.mojo.exec.ExecJavaMojo$1.run(ExecJavaMojo.java:293) [exec-maven-plugin-1.3.jar:na]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+19:08:51.283 [Request-TP] INFO  - [RequestTimeoutHandler] Request xvsm://localhost:2964/requests/14 timed out
+19:08:54.356 [TcpSocket-1-60] WARN  - [TcpSocketSender] Maximum number of connection attempts (3) to localhost:2964 reached
+19:08:54.356 [TcpSocket-1-60] ERROR - [TcpSocketSender] Sending response message for request xvsm://localhost:2964/requests/14 failed
+19:10:09.072 [qtp220607672-18] INFO  - [Report] -------- REPORT ---------- 
+19:10:09.106 [qtp220607672-18] INFO  - [Report] # Igniter: 9
+19:10:09.109 [qtp220607672-18] INFO  - [Report] # Propellant: 1
+19:10:09.110 [qtp220607672-18] INFO  - [Report] - ID:13; Amount: 352
+19:10:09.113 [qtp220607672-18] INFO  - [Report] # WoodenStaff: 9
+19:10:09.115 [qtp220607672-18] INFO  - [Report] # EffectiveLoad: 0
+19:10:09.119 [qtp220607672-18] INFO  - [Report] # Produced rockets: 0
+19:10:09.125 [qtp220607672-18] INFO  - [Report] # Good rockets: 1
+19:10:09.128 [qtp220607672-18] INFO  - [Report] # Defect rockets: 0
+19:10:09.132 [qtp220607672-18] INFO  - [Report] # Packages: 0
+19:10:09.133 [qtp220607672-18] INFO  - [Report] -------- END REPORT ---------- 
+19:10:10.311 [qtp220607672-13] INFO  - [Role] 10 started.
+19:10:11.245 [qtp220607672-15] INFO  - [Report] -------- REPORT ---------- 
+19:10:11.275 [qtp220607672-15] INFO  - [Report] # Igniter: 9
+19:10:11.279 [qtp220607672-15] INFO  - [Report] # Propellant: 1
+19:10:11.279 [qtp220607672-15] INFO  - [Report] - ID:13; Amount: 352
+19:10:11.282 [qtp220607672-15] INFO  - [Report] # WoodenStaff: 9
+19:10:11.284 [qtp220607672-15] INFO  - [Report] # EffectiveLoad: 0
+19:10:11.288 [qtp220607672-15] INFO  - [Report] # Produced rockets: 0
+19:10:11.293 [qtp220607672-15] INFO  - [Report] # Good rockets: 1
+19:10:11.297 [qtp220607672-15] INFO  - [Report] # Defect rockets: 0
+19:10:11.301 [qtp220607672-15] INFO  - [Report] # Packages: 0
+19:10:11.301 [qtp220607672-15] INFO  - [Report] -------- END REPORT ---------- 
+19:10:11.760 [qtp220607672-14] INFO  - [Report] -------- REPORT ---------- 
+19:10:11.766 [qtp220607672-14] INFO  - [Report] # Igniter: 9
+19:10:11.768 [qtp220607672-14] INFO  - [Report] # Propellant: 1
+19:10:11.768 [qtp220607672-14] INFO  - [Report] - ID:13; Amount: 352
+19:10:11.771 [qtp220607672-14] INFO  - [Report] # WoodenStaff: 9
+19:10:11.772 [qtp220607672-14] INFO  - [Report] # EffectiveLoad: 0
+19:10:11.775 [qtp220607672-14] INFO  - [Report] # Produced rockets: 0
+19:10:11.780 [qtp220607672-14] INFO  - [Report] # Good rockets: 1
+19:10:11.783 [qtp220607672-14] INFO  - [Report] # Defect rockets: 0
+19:10:11.786 [qtp220607672-14] INFO  - [Report] # Packages: 0
+19:10:11.786 [qtp220607672-14] INFO  - [Report] -------- END REPORT ---------- 
+19:10:45.276 [qtp982617413-15] INFO  - [Role] 11 started.
+19:11:00.087 [qtp982617413-18] INFO  - [Report] -------- REPORT ---------- 
+19:11:00.099 [qtp982617413-18] INFO  - [Report] # Igniter: 9
+19:11:00.105 [qtp982617413-18] INFO  - [Report] # Propellant: 1
+19:11:00.107 [qtp982617413-18] INFO  - [Report] - ID:13; Amount: 352
+19:11:00.112 [qtp982617413-18] INFO  - [Report] # WoodenStaff: 9
+19:11:00.116 [qtp982617413-18] INFO  - [Report] # EffectiveLoad: 0
+19:11:00.122 [qtp982617413-18] INFO  - [Report] # Produced rockets: 0
+19:11:00.129 [qtp982617413-18] INFO  - [Report] # Good rockets: 1
+19:11:00.134 [qtp982617413-18] INFO  - [Report] # Defect rockets: 0
+19:11:00.140 [qtp982617413-18] INFO  - [Report] # Packages: 0
+19:11:00.142 [qtp982617413-18] INFO  - [Report] -------- END REPORT ---------- 
+19:11:02.396 [qtp982617413-16] INFO  - [Report] -------- REPORT ---------- 
+19:11:02.419 [qtp982617413-16] INFO  - [Report] # Igniter: 9
+19:11:02.423 [qtp982617413-16] INFO  - [Report] # Propellant: 1
+19:11:02.425 [qtp982617413-16] INFO  - [Report] - ID:13; Amount: 352
+19:11:02.429 [qtp982617413-16] INFO  - [Report] # WoodenStaff: 9
+19:11:02.433 [qtp982617413-16] INFO  - [Report] # EffectiveLoad: 0
+19:11:02.438 [qtp982617413-16] INFO  - [Report] # Produced rockets: 0
+19:11:02.444 [qtp982617413-16] INFO  - [Report] # Good rockets: 1
+19:11:02.449 [qtp982617413-16] INFO  - [Report] # Defect rockets: 0
+19:11:02.454 [qtp982617413-16] INFO  - [Report] # Packages: 0
+19:11:02.456 [qtp982617413-16] INFO  - [Report] -------- END REPORT ---------- 
+19:11:03.901 [qtp982617413-15] INFO  - [Report] -------- REPORT ---------- 
+19:11:03.909 [qtp982617413-15] INFO  - [Report] # Igniter: 9
+19:11:03.913 [qtp982617413-15] INFO  - [Report] # Propellant: 1
+19:11:03.915 [qtp982617413-15] INFO  - [Report] - ID:13; Amount: 352
+19:11:03.919 [qtp982617413-15] INFO  - [Report] # WoodenStaff: 9
+19:11:03.923 [qtp982617413-15] INFO  - [Report] # EffectiveLoad: 0
+19:11:03.929 [qtp982617413-15] INFO  - [Report] # Produced rockets: 0
+19:11:03.935 [qtp982617413-15] INFO  - [Report] # Good rockets: 1
+19:11:03.940 [qtp982617413-15] INFO  - [Report] # Defect rockets: 0
+19:11:03.945 [qtp982617413-15] INFO  - [Report] # Packages: 0
+19:11:03.947 [qtp982617413-15] INFO  - [Report] -------- END REPORT ---------- 
+19:11:05.100 [qtp982617413-14] INFO  - [Report] -------- REPORT ---------- 
+19:11:05.107 [qtp982617413-14] INFO  - [Report] # Igniter: 9
+19:11:05.111 [qtp982617413-14] INFO  - [Report] # Propellant: 1
+19:11:05.113 [qtp982617413-14] INFO  - [Report] - ID:13; Amount: 352
+19:11:05.117 [qtp982617413-14] INFO  - [Report] # WoodenStaff: 9
+19:11:05.120 [qtp982617413-14] INFO  - [Report] # EffectiveLoad: 0
+19:11:05.125 [qtp982617413-14] INFO  - [Report] # Produced rockets: 0
+19:11:05.131 [qtp982617413-14] INFO  - [Report] # Good rockets: 1
+19:11:05.136 [qtp982617413-14] INFO  - [Report] # Defect rockets: 0
+19:11:05.141 [qtp982617413-14] INFO  - [Report] # Packages: 0
+19:11:05.142 [qtp982617413-14] INFO  - [Report] -------- END REPORT ---------- 
+19:11:06.274 [qtp982617413-18] INFO  - [Role] 12 started.
+19:11:10.653 [qtp982617413-16] INFO  - [Report] -------- REPORT ---------- 
+19:11:10.661 [qtp982617413-16] INFO  - [Report] # Igniter: 9
+19:11:10.665 [qtp982617413-16] INFO  - [Report] # Propellant: 1
+19:11:10.666 [qtp982617413-16] INFO  - [Report] - ID:13; Amount: 352
+19:11:10.670 [qtp982617413-16] INFO  - [Report] # WoodenStaff: 9
+19:11:10.674 [qtp982617413-16] INFO  - [Report] # EffectiveLoad: 0
+19:11:10.679 [qtp982617413-16] INFO  - [Report] # Produced rockets: 0
+19:11:10.685 [qtp982617413-16] INFO  - [Report] # Good rockets: 1
+19:11:10.690 [qtp982617413-16] INFO  - [Report] # Defect rockets: 0
+19:11:10.695 [qtp982617413-16] INFO  - [Report] # Packages: 0
+19:11:10.697 [qtp982617413-16] INFO  - [Report] -------- END REPORT ---------- 
+19:11:11.373 [qtp982617413-15] INFO  - [Report] -------- REPORT ---------- 
+19:11:11.380 [qtp982617413-15] INFO  - [Report] # Igniter: 9
+19:11:11.384 [qtp982617413-15] INFO  - [Report] # Propellant: 1
+19:11:11.386 [qtp982617413-15] INFO  - [Report] - ID:13; Amount: 352
+19:11:11.390 [qtp982617413-15] INFO  - [Report] # WoodenStaff: 9
+19:11:11.393 [qtp982617413-15] INFO  - [Report] # EffectiveLoad: 0
+19:11:11.398 [qtp982617413-15] INFO  - [Report] # Produced rockets: 0
+19:11:11.404 [qtp982617413-15] INFO  - [Report] # Good rockets: 1
+19:11:11.409 [qtp982617413-15] INFO  - [Report] # Defect rockets: 0
+19:11:11.414 [qtp982617413-15] INFO  - [Report] # Packages: 0
+19:11:11.416 [qtp982617413-15] INFO  - [Report] -------- END REPORT ---------- 
+19:11:11.959 [qtp982617413-14] INFO  - [Report] -------- REPORT ---------- 
+19:11:11.959 [qtp982617413-14] INFO  - [Report] # Igniter: 9
+19:11:11.959 [qtp982617413-14] INFO  - [Report] # Propellant: 1
+19:11:11.959 [qtp982617413-14] INFO  - [Report] - ID:13; Amount: 352
+19:11:11.978 [qtp982617413-14] INFO  - [Report] # WoodenStaff: 9
+19:11:11.981 [qtp982617413-14] INFO  - [Report] # EffectiveLoad: 0
+19:11:11.986 [qtp982617413-14] INFO  - [Report] # Produced rockets: 0
+19:11:11.992 [qtp982617413-14] INFO  - [Report] # Good rockets: 1
+19:11:11.997 [qtp982617413-14] INFO  - [Report] # Defect rockets: 0
+19:11:12.002 [qtp982617413-14] INFO  - [Report] # Packages: 0
+19:11:12.004 [qtp982617413-14] INFO  - [Report] -------- END REPORT ---------- 
+19:11:13.913 [qtp982617413-18] INFO  - [Role] 13 started.
+19:11:14.511 [qtp982617413-16] INFO  - [Report] -------- REPORT ---------- 
+19:11:14.521 [qtp982617413-16] INFO  - [Report] # Igniter: 9
+19:11:14.524 [qtp982617413-16] INFO  - [Report] # Propellant: 1
+19:11:14.526 [qtp982617413-16] INFO  - [Report] - ID:13; Amount: 352
+19:11:14.529 [qtp982617413-16] INFO  - [Report] # WoodenStaff: 9
+19:11:14.532 [qtp982617413-16] INFO  - [Report] # EffectiveLoad: 0
+19:11:14.537 [qtp982617413-16] INFO  - [Report] # Produced rockets: 0
+19:11:14.542 [qtp982617413-16] INFO  - [Report] # Good rockets: 1
+19:11:14.547 [qtp982617413-16] INFO  - [Report] # Defect rockets: 0
+19:11:14.551 [qtp982617413-16] INFO  - [Report] # Packages: 0
+19:11:14.553 [qtp982617413-16] INFO  - [Report] -------- END REPORT ---------- 
+19:11:15.113 [qtp982617413-15] INFO  - [Report] -------- REPORT ---------- 
+19:11:15.131 [qtp982617413-15] INFO  - [Report] # Igniter: 9
+19:11:15.135 [qtp982617413-15] INFO  - [Report] # Propellant: 1
+19:11:15.136 [qtp982617413-15] INFO  - [Report] - ID:13; Amount: 352
+19:11:15.140 [qtp982617413-15] INFO  - [Report] # WoodenStaff: 9
+19:11:15.143 [qtp982617413-15] INFO  - [Report] # EffectiveLoad: 0
+19:11:15.148 [qtp982617413-15] INFO  - [Report] # Produced rockets: 0
+19:11:15.153 [qtp982617413-15] INFO  - [Report] # Good rockets: 1
+19:11:15.157 [qtp982617413-15] INFO  - [Report] # Defect rockets: 0
+19:11:15.161 [qtp982617413-15] INFO  - [Report] # Packages: 0
+19:11:15.163 [qtp982617413-15] INFO  - [Report] -------- END REPORT ---------- 
+19:11:15.853 [qtp982617413-14] INFO  - [Report] -------- REPORT ---------- 
+19:11:15.853 [qtp982617413-14] INFO  - [Report] # Igniter: 9
+19:11:15.853 [qtp982617413-14] INFO  - [Report] # Propellant: 1
+19:11:15.869 [qtp982617413-14] INFO  - [Report] - ID:13; Amount: 352
+19:11:15.872 [qtp982617413-14] INFO  - [Report] # WoodenStaff: 9
+19:11:15.875 [qtp982617413-14] INFO  - [Report] # EffectiveLoad: 0
+19:11:15.879 [qtp982617413-14] INFO  - [Report] # Produced rockets: 0
+19:11:15.884 [qtp982617413-14] INFO  - [Report] # Good rockets: 1
+19:11:15.888 [qtp982617413-14] INFO  - [Report] # Defect rockets: 0
+19:11:15.893 [qtp982617413-14] INFO  - [Report] # Packages: 0
+19:11:15.894 [qtp982617413-14] INFO  - [Report] -------- END REPORT ---------- 
+19:11:16.400 [qtp982617413-18] INFO  - [Report] -------- REPORT ---------- 
+19:11:16.410 [qtp982617413-18] INFO  - [Report] # Igniter: 9
+19:11:16.414 [qtp982617413-18] INFO  - [Report] # Propellant: 1
+19:11:16.415 [qtp982617413-18] INFO  - [Report] - ID:13; Amount: 352
+19:11:16.419 [qtp982617413-18] INFO  - [Report] # WoodenStaff: 9
+19:11:16.422 [qtp982617413-18] INFO  - [Report] # EffectiveLoad: 0
+19:11:16.426 [qtp982617413-18] INFO  - [Report] # Produced rockets: 0
+19:11:16.430 [qtp982617413-18] INFO  - [Report] # Good rockets: 1
+19:11:16.435 [qtp982617413-18] INFO  - [Report] # Defect rockets: 0
+19:11:16.439 [qtp982617413-18] INFO  - [Report] # Packages: 0
+19:11:16.440 [qtp982617413-18] INFO  - [Report] -------- END REPORT ---------- 
+19:11:17.464 [qtp982617413-16] INFO  - [Report] -------- REPORT ---------- 
+19:11:17.471 [qtp982617413-16] INFO  - [Report] # Igniter: 9
+19:11:17.475 [qtp982617413-16] INFO  - [Report] # Propellant: 1
+19:11:17.476 [qtp982617413-16] INFO  - [Report] - ID:13; Amount: 352
+19:11:17.479 [qtp982617413-16] INFO  - [Report] # WoodenStaff: 9
+19:11:17.482 [qtp982617413-16] INFO  - [Report] # EffectiveLoad: 0
+19:11:17.487 [qtp982617413-16] INFO  - [Report] # Produced rockets: 0
+19:11:17.492 [qtp982617413-16] INFO  - [Report] # Good rockets: 1
+19:11:17.496 [qtp982617413-16] INFO  - [Report] # Defect rockets: 0
+19:11:17.500 [qtp982617413-16] INFO  - [Report] # Packages: 0
+19:11:17.502 [qtp982617413-16] INFO  - [Report] -------- END REPORT ---------- 
+19:11:17.980 [qtp982617413-15] INFO  - [Role] 14 started.
+19:11:18.572 [qtp982617413-14] INFO  - [Report] -------- REPORT ---------- 
+19:11:18.578 [qtp982617413-14] INFO  - [Report] # Igniter: 9
+19:11:18.582 [qtp982617413-14] INFO  - [Report] # Propellant: 1
+19:11:18.583 [qtp982617413-14] INFO  - [Report] - ID:13; Amount: 352
+19:11:18.587 [qtp982617413-14] INFO  - [Report] # WoodenStaff: 9
+19:11:18.589 [qtp982617413-14] INFO  - [Report] # EffectiveLoad: 0
+19:11:18.593 [qtp982617413-14] INFO  - [Report] # Produced rockets: 0
+19:11:18.598 [qtp982617413-14] INFO  - [Report] # Good rockets: 1
+19:11:18.602 [qtp982617413-14] INFO  - [Report] # Defect rockets: 0
+19:11:18.606 [qtp982617413-14] INFO  - [Report] # Packages: 0
+19:11:18.608 [qtp982617413-14] INFO  - [Report] -------- END REPORT ---------- 
+19:11:19.224 [qtp982617413-18] INFO  - [Report] -------- REPORT ---------- 
+19:11:19.255 [qtp982617413-18] INFO  - [Report] # Igniter: 9
+19:11:19.259 [qtp982617413-18] INFO  - [Report] # Propellant: 1
+19:11:19.260 [qtp982617413-18] INFO  - [Report] - ID:13; Amount: 352
+19:11:19.263 [qtp982617413-18] INFO  - [Report] # WoodenStaff: 9
+19:11:19.266 [qtp982617413-18] INFO  - [Report] # EffectiveLoad: 0
+19:11:19.271 [qtp982617413-18] INFO  - [Report] # Produced rockets: 0
+19:11:19.275 [qtp982617413-18] INFO  - [Report] # Good rockets: 1
+19:11:19.280 [qtp982617413-18] INFO  - [Report] # Defect rockets: 0
+19:11:19.284 [qtp982617413-18] INFO  - [Report] # Packages: 0
+19:11:19.285 [qtp982617413-18] INFO  - [Report] -------- END REPORT ---------- 
+19:11:19.941 [qtp982617413-16] INFO  - [Report] -------- REPORT ---------- 
+19:11:19.950 [qtp982617413-16] INFO  - [Report] # Igniter: 9
+19:11:19.953 [qtp982617413-16] INFO  - [Report] # Propellant: 1
+19:11:19.955 [qtp982617413-16] INFO  - [Report] - ID:13; Amount: 352
+19:11:19.958 [qtp982617413-16] INFO  - [Report] # WoodenStaff: 9
+19:11:19.961 [qtp982617413-16] INFO  - [Report] # EffectiveLoad: 0
+19:11:19.964 [qtp982617413-16] INFO  - [Report] # Produced rockets: 0
+19:11:19.969 [qtp982617413-16] INFO  - [Report] # Good rockets: 1
+19:11:19.973 [qtp982617413-16] INFO  - [Report] # Defect rockets: 0
+19:11:19.977 [qtp982617413-16] INFO  - [Report] # Packages: 0
+19:11:19.978 [qtp982617413-16] INFO  - [Report] -------- END REPORT ---------- 
+19:11:21.364 [qtp982617413-15] INFO  - [Role] 15 started.
+19:13:26.326 [sbcm.factory.Factory.main()] INFO  - [Factory] Start space ...
+19:13:26.419 [sbcm.factory.Factory.main()] INFO  - [PersistenceContext] Initializing persistence profile 'in-memory'
+19:13:26.419 [sbcm.factory.Factory.main()] INFO  - [PersistenceContext] Persistence context successfully initialized with the backend "org.mozartspaces.capi3.javanative.persistence.InMemoryDB@31b681b7" and the serializer "org.mozartspaces.core.util.JavaBuiltinSerializer@44fe2ee0".
+19:13:26.435 [sbcm.factory.Factory.main()] INFO  - [PersistenceContext] Persistence context successfully initialized with the backend "org.mozartspaces.capi3.javanative.persistence.InMemoryDB@7c7bdb49" and the serializer "org.mozartspaces.core.util.JavaBuiltinSerializer@2779d578".
+19:13:26.450 [sbcm.factory.Factory.main()] INFO  - [DefaultCapi3Native] Started capi3-javanative
+19:13:26.450 [sbcm.factory.Factory.main()] INFO  - [Factory] *** Initialising MozartSpaces
+19:13:26.497 [CoreProcessor-1] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+19:13:26.513 [CoreProcessor-2] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+19:13:26.528 [CoreProcessor-3] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+19:13:26.528 [CoreProcessor-4] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+19:13:26.528 [CoreProcessor-5] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+19:13:26.544 [CoreProcessor-6] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+19:13:26.544 [CoreProcessor-7] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+19:13:26.560 [CoreProcessor-8] INFO  - [PropertyValueCacheManager] Could not find and instantiate Guava based property value cache. Falling back to HashMap based implementation.
+19:13:26.575 [sbcm.factory.Factory.main()] INFO  - [Factory] Space started.
+19:14:02.907 [qtp701614861-12] INFO  - [Role] 1 started.
+19:14:03.757 [qtp701614861-15] INFO  - [Report] -------- REPORT ---------- 
+19:14:03.773 [qtp701614861-15] INFO  - [Report] # Igniter: 0
+19:14:03.779 [qtp701614861-15] INFO  - [Report] # Propellant: 0
+19:14:03.785 [qtp701614861-15] INFO  - [Report] # WoodenStaff: 0
+19:14:03.791 [qtp701614861-15] INFO  - [Report] # EffectiveLoad: 0
+19:14:03.800 [qtp701614861-15] INFO  - [Report] # Produced rockets: 0
+19:14:03.806 [qtp701614861-15] INFO  - [Report] # Good rockets: 0
+19:14:03.813 [qtp701614861-15] INFO  - [Report] # Defect rockets: 0
+19:14:03.820 [qtp701614861-15] INFO  - [Report] # Packages: 0
+19:14:03.822 [qtp701614861-15] INFO  - [Report] -------- END REPORT ---------- 
+19:14:05.064 [qtp701614861-17] INFO  - [Report] -------- REPORT ---------- 
+19:14:05.072 [qtp701614861-17] INFO  - [Report] # Igniter: 0
+19:14:05.077 [qtp701614861-17] INFO  - [Report] # Propellant: 0
+19:14:05.081 [qtp701614861-17] INFO  - [Report] # WoodenStaff: 0
+19:14:05.085 [qtp701614861-17] INFO  - [Report] # EffectiveLoad: 0
+19:14:05.092 [qtp701614861-17] INFO  - [Report] # Produced rockets: 0
+19:14:05.098 [qtp701614861-17] INFO  - [Report] # Good rockets: 0
+19:14:05.104 [qtp701614861-17] INFO  - [Report] # Defect rockets: 0
+19:14:05.110 [qtp701614861-17] INFO  - [Report] # Packages: 0
+19:14:05.111 [qtp701614861-17] INFO  - [Report] -------- END REPORT ---------- 
+19:14:05.752 [qtp701614861-19] INFO  - [Report] -------- REPORT ---------- 
+19:14:05.761 [qtp701614861-19] INFO  - [Report] # Igniter: 0
+19:14:05.765 [qtp701614861-19] INFO  - [Report] # Propellant: 0
+19:14:05.770 [qtp701614861-19] INFO  - [Report] # WoodenStaff: 0
+19:14:05.774 [qtp701614861-19] INFO  - [Report] # EffectiveLoad: 0
+19:14:05.780 [qtp701614861-19] INFO  - [Report] # Produced rockets: 0
+19:14:05.786 [qtp701614861-19] INFO  - [Report] # Good rockets: 0
+19:14:05.792 [qtp701614861-19] INFO  - [Report] # Defect rockets: 0
+19:14:05.798 [qtp701614861-19] INFO  - [Report] # Packages: 0
+19:14:05.800 [qtp701614861-19] INFO  - [Report] -------- END REPORT ---------- 
+19:14:06.570 [qtp701614861-12] INFO  - [Role] 2 started.
+19:14:20.366 [qtp701614861-17] INFO  - [Role] 2 started.
+19:14:20.493 [qtp701614861-19] INFO  - [Report] -------- REPORT ---------- 
+19:14:20.509 [qtp701614861-19] INFO  - [Report] # Igniter: 1
+19:14:20.509 [qtp701614861-19] INFO  - [Report] # Propellant: 1
+19:14:20.509 [qtp701614861-19] INFO  - [Report] - ID:2; Amount: 500
+19:14:20.509 [qtp701614861-19] INFO  - [Report] # WoodenStaff: 1
+19:14:20.528 [qtp701614861-19] INFO  - [Report] # EffectiveLoad: 3
+19:14:20.533 [qtp701614861-19] INFO  - [Report] # Produced rockets: 0
+19:14:20.539 [qtp701614861-19] INFO  - [Report] # Good rockets: 0
+19:14:20.545 [qtp701614861-19] INFO  - [Report] # Defect rockets: 0
+19:14:20.553 [qtp701614861-19] INFO  - [Report] # Packages: 0
+19:14:20.555 [qtp701614861-19] INFO  - [Report] -------- END REPORT ---------- 
+19:14:33.377 [sbcm.producer.Producer.main()] INFO  - [Role] 3 started.
+19:14:33.423 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:14:35.288 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 1).
+19:14:38.026 [qtp701614861-12] INFO  - [Report] -------- REPORT ---------- 
+19:14:38.046 [qtp701614861-12] INFO  - [Report] # Igniter: 0
+19:14:38.050 [qtp701614861-12] INFO  - [Report] # Propellant: 1
+19:14:38.050 [qtp701614861-12] INFO  - [Report] - ID:2; Amount: 362
+19:14:38.053 [qtp701614861-12] INFO  - [Report] # WoodenStaff: 0
+19:14:38.057 [qtp701614861-12] INFO  - [Report] # EffectiveLoad: 0
+19:14:38.062 [qtp701614861-12] INFO  - [Report] # Produced rockets: 1
+19:14:38.066 [qtp701614861-12] INFO  - [Report] # Good rockets: 0
+19:14:38.071 [qtp701614861-12] INFO  - [Report] # Defect rockets: 0
+19:14:38.075 [qtp701614861-12] INFO  - [Report] # Packages: 0
+19:14:38.075 [qtp701614861-12] INFO  - [Report] -------- END REPORT ---------- 
+19:14:41.514 [qtp701614861-47] INFO  - [Report] -------- REPORT ---------- 
+19:14:41.534 [qtp701614861-47] INFO  - [Report] # Igniter: 0
+19:14:41.537 [qtp701614861-47] INFO  - [Report] # Propellant: 1
+19:14:41.537 [qtp701614861-47] INFO  - [Report] - ID:2; Amount: 362
+19:14:41.539 [qtp701614861-47] INFO  - [Report] # WoodenStaff: 0
+19:14:41.541 [qtp701614861-47] INFO  - [Report] # EffectiveLoad: 0
+19:14:41.545 [qtp701614861-47] INFO  - [Report] # Produced rockets: 1
+19:14:41.549 [qtp701614861-47] INFO  - [Report] # Good rockets: 0
+19:14:41.552 [qtp701614861-47] INFO  - [Report] # Defect rockets: 0
+19:14:41.556 [qtp701614861-47] INFO  - [Report] # Packages: 0
+19:14:41.556 [qtp701614861-47] INFO  - [Report] -------- END REPORT ---------- 
+19:15:02.100 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] 4 started.
+19:15:02.100 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:15:02.116 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 1).
+19:15:04.458 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 1; Defect = false).
+19:15:04.458 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:15:07.470 [qtp701614861-15] INFO  - [Report] -------- REPORT ---------- 
+19:15:07.475 [qtp701614861-15] INFO  - [Report] # Igniter: 0
+19:15:07.478 [qtp701614861-15] INFO  - [Report] # Propellant: 1
+19:15:07.478 [qtp701614861-15] INFO  - [Report] - ID:2; Amount: 362
+19:15:07.480 [qtp701614861-15] INFO  - [Report] # WoodenStaff: 0
+19:15:07.482 [qtp701614861-15] INFO  - [Report] # EffectiveLoad: 0
+19:15:07.485 [qtp701614861-15] INFO  - [Report] # Produced rockets: 0
+19:15:07.490 [qtp701614861-15] INFO  - [Report] # Good rockets: 1
+19:15:07.493 [qtp701614861-15] INFO  - [Report] # Defect rockets: 0
+19:15:07.497 [qtp701614861-15] INFO  - [Report] # Packages: 0
+19:15:07.497 [qtp701614861-15] INFO  - [Report] -------- END REPORT ---------- 
+19:15:18.243 [qtp701614861-12] INFO  - [Role] 5 started.
+19:15:35.065 [qtp701614861-46] INFO  - [Role] 5 started.
+19:15:35.364 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:15:35.434 [qtp701614861-17] INFO  - [Report] -------- REPORT ---------- 
+19:15:35.440 [qtp701614861-17] INFO  - [Report] # Igniter: 2
+19:15:35.444 [qtp701614861-17] INFO  - [Report] # Propellant: 3
+19:15:35.444 [qtp701614861-17] INFO  - [Report] - ID:2; Amount: 231
+19:15:35.444 [qtp701614861-17] INFO  - [Report] - ID:10; Amount: 500
+19:15:35.445 [qtp701614861-17] INFO  - [Report] - ID:11; Amount: 500
+19:15:35.447 [qtp701614861-17] INFO  - [Report] # WoodenStaff: 2
+19:15:35.451 [qtp701614861-17] INFO  - [Report] # EffectiveLoad: 6
+19:15:35.458 [qtp701614861-17] INFO  - [Report] # Produced rockets: 0
+19:15:35.462 [qtp701614861-17] INFO  - [Report] # Good rockets: 1
+19:15:35.472 [qtp701614861-17] INFO  - [Report] # Defect rockets: 0
+19:15:35.475 [qtp701614861-17] INFO  - [Report] # Packages: 0
+19:15:35.476 [qtp701614861-17] INFO  - [Report] -------- END REPORT ---------- 
+19:15:37.595 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 2).
+19:15:37.610 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 2).
+19:15:37.653 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:15:39.150 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 2; Defect = false).
+19:15:39.154 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:15:40.230 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 3).
+19:15:40.245 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 3).
+19:15:40.301 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:15:41.818 [qtp701614861-19] INFO  - [Report] -------- REPORT ---------- 
+19:15:41.824 [qtp701614861-19] INFO  - [Report] # Igniter: 0
+19:15:41.826 [qtp701614861-19] INFO  - [Report] # Propellant: 2
+19:15:41.826 [qtp701614861-19] INFO  - [Report] - ID:10; Amount: 471
+19:15:41.827 [qtp701614861-19] INFO  - [Report] - ID:11; Amount: 500
+19:15:41.829 [qtp701614861-19] INFO  - [Report] # WoodenStaff: 0
+19:15:41.831 [qtp701614861-19] INFO  - [Report] # EffectiveLoad: 0
+19:15:41.836 [qtp701614861-19] INFO  - [Report] # Produced rockets: 0
+19:15:41.844 [qtp701614861-19] INFO  - [Report] # Good rockets: 2
+19:15:41.848 [qtp701614861-19] INFO  - [Report] # Defect rockets: 0
+19:15:41.851 [qtp701614861-19] INFO  - [Report] # Packages: 0
+19:15:41.851 [qtp701614861-19] INFO  - [Report] -------- END REPORT ---------- 
+19:15:42.516 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 3; Defect = true).
+19:15:42.531 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:15:42.815 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 4).
+19:15:42.815 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 4).
+19:15:45.695 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 4; Defect = false).
+19:15:45.695 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:15:49.659 [qtp701614861-54] INFO  - [Report] -------- REPORT ---------- 
+19:15:49.665 [qtp701614861-54] INFO  - [Report] # Igniter: 0
+19:15:49.674 [qtp701614861-54] INFO  - [Report] # Propellant: 2
+19:15:49.675 [qtp701614861-54] INFO  - [Report] - ID:10; Amount: 471
+19:15:49.675 [qtp701614861-54] INFO  - [Report] - ID:11; Amount: 500
+19:15:49.677 [qtp701614861-54] INFO  - [Report] # WoodenStaff: 0
+19:15:49.686 [qtp701614861-54] INFO  - [Report] # EffectiveLoad: 0
+19:15:49.696 [qtp701614861-54] INFO  - [Report] # Produced rockets: 0
+19:15:49.701 [qtp701614861-54] INFO  - [Report] # Good rockets: 3
+19:15:49.705 [qtp701614861-54] INFO  - [Report] # Defect rockets: 1
+19:15:49.707 [qtp701614861-54] INFO  - [Report] # Packages: 0
+19:15:49.708 [qtp701614861-54] INFO  - [Report] -------- END REPORT ---------- 
+19:16:05.121 [qtp701614861-12] INFO  - [Report] -------- REPORT ---------- 
+19:16:05.121 [qtp701614861-12] INFO  - [Report] # Igniter: 0
+19:16:05.138 [qtp701614861-12] INFO  - [Report] # Propellant: 2
+19:16:05.138 [qtp701614861-12] INFO  - [Report] - ID:10; Amount: 471
+19:16:05.138 [qtp701614861-12] INFO  - [Report] - ID:11; Amount: 500
+19:16:05.140 [qtp701614861-12] INFO  - [Report] # WoodenStaff: 0
+19:16:05.142 [qtp701614861-12] INFO  - [Report] # EffectiveLoad: 0
+19:16:05.147 [qtp701614861-12] INFO  - [Report] # Produced rockets: 0
+19:16:05.155 [qtp701614861-12] INFO  - [Report] # Good rockets: 3
+19:16:05.169 [qtp701614861-12] INFO  - [Report] # Defect rockets: 1
+19:16:05.173 [qtp701614861-12] INFO  - [Report] # Packages: 0
+19:16:05.173 [qtp701614861-12] INFO  - [Report] -------- END REPORT ---------- 
+19:16:31.304 [qtp701614861-17] INFO  - [Role] 6 started.
+19:16:43.524 [qtp701614861-46] INFO  - [Role] 6 started.
+19:16:43.635 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:16:43.692 [qtp701614861-19] INFO  - [Report] -------- REPORT ---------- 
+19:16:43.699 [qtp701614861-19] INFO  - [Report] # Igniter: 2
+19:16:43.703 [qtp701614861-19] INFO  - [Report] # Propellant: 4
+19:16:43.703 [qtp701614861-19] INFO  - [Report] - ID:27; Amount: 500
+19:16:43.704 [qtp701614861-19] INFO  - [Report] - ID:10; Amount: 339
+19:16:43.704 [qtp701614861-19] INFO  - [Report] - ID:11; Amount: 500
+19:16:43.704 [qtp701614861-19] INFO  - [Report] - ID:28; Amount: 500
+19:16:43.707 [qtp701614861-19] INFO  - [Report] # WoodenStaff: 2
+19:16:43.709 [qtp701614861-19] INFO  - [Report] # EffectiveLoad: 6
+19:16:43.713 [qtp701614861-19] INFO  - [Report] # Produced rockets: 0
+19:16:43.719 [qtp701614861-19] INFO  - [Report] # Good rockets: 3
+19:16:43.725 [qtp701614861-19] INFO  - [Report] # Defect rockets: 1
+19:16:43.730 [qtp701614861-19] INFO  - [Report] # Packages: 0
+19:16:43.730 [qtp701614861-19] INFO  - [Report] -------- END REPORT ---------- 
+19:16:46.123 [qtp701614861-54] INFO  - [Report] -------- REPORT ---------- 
+19:16:46.134 [qtp701614861-54] INFO  - [Report] # Igniter: 2
+19:16:46.138 [qtp701614861-54] INFO  - [Report] # Propellant: 4
+19:16:46.138 [qtp701614861-54] INFO  - [Report] - ID:27; Amount: 500
+19:16:46.138 [qtp701614861-54] INFO  - [Report] - ID:10; Amount: 339
+19:16:46.138 [qtp701614861-54] INFO  - [Report] - ID:11; Amount: 500
+19:16:46.138 [qtp701614861-54] INFO  - [Report] - ID:28; Amount: 500
+19:16:46.140 [qtp701614861-54] INFO  - [Report] # WoodenStaff: 2
+19:16:46.145 [qtp701614861-54] INFO  - [Report] # EffectiveLoad: 6
+19:16:46.149 [qtp701614861-54] INFO  - [Report] # Produced rockets: 0
+19:16:46.156 [qtp701614861-54] INFO  - [Report] # Good rockets: 3
+19:16:46.160 [qtp701614861-54] INFO  - [Report] # Defect rockets: 1
+19:16:46.164 [qtp701614861-54] INFO  - [Report] # Packages: 0
+19:16:46.164 [qtp701614861-54] INFO  - [Report] -------- END REPORT ---------- 
+19:16:46.288 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 5).
+19:16:46.290 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 5).
+19:16:46.315 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:16:49.109 [qtp701614861-47] INFO  - [Report] -------- REPORT ---------- 
+19:16:49.114 [qtp701614861-47] INFO  - [Report] # Igniter: 1
+19:16:49.117 [qtp701614861-47] INFO  - [Report] # Propellant: 4
+19:16:49.118 [qtp701614861-47] INFO  - [Report] - ID:27; Amount: 500
+19:16:49.118 [qtp701614861-47] INFO  - [Report] - ID:11; Amount: 500
+19:16:49.118 [qtp701614861-47] INFO  - [Report] - ID:28; Amount: 500
+19:16:49.118 [qtp701614861-47] INFO  - [Report] - ID:10; Amount: 217
+19:16:49.120 [qtp701614861-47] INFO  - [Report] # WoodenStaff: 1
+19:16:49.122 [qtp701614861-47] INFO  - [Report] # EffectiveLoad: 3
+19:16:49.126 [qtp701614861-47] INFO  - [Report] # Produced rockets: 0
+19:16:49.132 [qtp701614861-47] INFO  - [Report] # Good rockets: 3
+19:16:49.140 [qtp701614861-47] INFO  - [Report] # Defect rockets: 1
+19:16:49.146 [qtp701614861-47] INFO  - [Report] # Packages: 0
+19:16:49.147 [qtp701614861-47] INFO  - [Report] -------- END REPORT ---------- 
+19:16:49.181 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 6).
+19:16:49.202 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:16:49.255 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 5; Defect = false).
+19:16:49.256 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:16:49.262 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 6).
+19:16:50.089 [qtp701614861-46] INFO  - [Report] -------- REPORT ---------- 
+19:16:50.097 [qtp701614861-46] INFO  - [Report] # Igniter: 0
+19:16:50.099 [qtp701614861-46] INFO  - [Report] # Propellant: 4
+19:16:50.100 [qtp701614861-46] INFO  - [Report] - ID:27; Amount: 500
+19:16:50.100 [qtp701614861-46] INFO  - [Report] - ID:10; Amount: 71
+19:16:50.100 [qtp701614861-46] INFO  - [Report] - ID:11; Amount: 500
+19:16:50.100 [qtp701614861-46] INFO  - [Report] - ID:28; Amount: 500
+19:16:50.102 [qtp701614861-46] INFO  - [Report] # WoodenStaff: 0
+19:16:50.104 [qtp701614861-46] INFO  - [Report] # EffectiveLoad: 0
+19:16:50.107 [qtp701614861-46] INFO  - [Report] # Produced rockets: 0
+19:16:50.111 [qtp701614861-46] INFO  - [Report] # Good rockets: 4
+19:16:50.116 [qtp701614861-46] INFO  - [Report] # Defect rockets: 1
+19:16:50.130 [qtp701614861-46] INFO  - [Report] # Packages: 0
+19:16:50.130 [qtp701614861-46] INFO  - [Report] -------- END REPORT ---------- 
+19:16:50.732 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 7).
+19:16:51.176 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 6; Defect = false).
+19:16:51.176 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:16:51.192 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 7).
+19:16:53.022 [qtp701614861-19] INFO  - [Report] -------- REPORT ---------- 
+19:16:53.030 [qtp701614861-19] INFO  - [Report] # Igniter: 0
+19:16:53.033 [qtp701614861-19] INFO  - [Report] # Propellant: 4
+19:16:53.033 [qtp701614861-19] INFO  - [Report] - ID:27; Amount: 500
+19:16:53.033 [qtp701614861-19] INFO  - [Report] - ID:10; Amount: 71
+19:16:53.034 [qtp701614861-19] INFO  - [Report] - ID:11; Amount: 500
+19:16:53.034 [qtp701614861-19] INFO  - [Report] - ID:28; Amount: 500
+19:16:53.036 [qtp701614861-19] INFO  - [Report] # WoodenStaff: 0
+19:16:53.037 [qtp701614861-19] INFO  - [Report] # EffectiveLoad: 0
+19:16:53.040 [qtp701614861-19] INFO  - [Report] # Produced rockets: 0
+19:16:53.044 [qtp701614861-19] INFO  - [Report] # Good rockets: 5
+19:16:53.047 [qtp701614861-19] INFO  - [Report] # Defect rockets: 1
+19:16:53.050 [qtp701614861-19] INFO  - [Report] # Packages: 0
+19:16:53.050 [qtp701614861-19] INFO  - [Report] -------- END REPORT ---------- 
+19:16:53.291 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 7; Defect = true).
+19:16:53.291 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:16:55.808 [qtp701614861-19] INFO  - [Report] -------- REPORT ---------- 
+19:16:55.812 [qtp701614861-19] INFO  - [Report] # Igniter: 0
+19:16:55.814 [qtp701614861-19] INFO  - [Report] # Propellant: 4
+19:16:55.815 [qtp701614861-19] INFO  - [Report] - ID:27; Amount: 500
+19:16:55.815 [qtp701614861-19] INFO  - [Report] - ID:10; Amount: 71
+19:16:55.815 [qtp701614861-19] INFO  - [Report] - ID:11; Amount: 500
+19:16:55.815 [qtp701614861-19] INFO  - [Report] - ID:28; Amount: 500
+19:16:55.816 [qtp701614861-19] INFO  - [Report] # WoodenStaff: 0
+19:16:55.818 [qtp701614861-19] INFO  - [Report] # EffectiveLoad: 0
+19:16:55.820 [qtp701614861-19] INFO  - [Report] # Produced rockets: 0
+19:16:55.824 [qtp701614861-19] INFO  - [Report] # Good rockets: 5
+19:16:55.827 [qtp701614861-19] INFO  - [Report] # Defect rockets: 2
+19:16:55.829 [qtp701614861-19] INFO  - [Report] # Packages: 0
+19:16:55.829 [qtp701614861-19] INFO  - [Report] -------- END REPORT ---------- 
+19:17:05.532 [qtp701614861-19] INFO  - [Report] -------- REPORT ---------- 
+19:17:05.562 [qtp701614861-19] INFO  - [Report] # Igniter: 0
+19:17:05.564 [qtp701614861-19] INFO  - [Report] # Propellant: 4
+19:17:05.564 [qtp701614861-19] INFO  - [Report] - ID:27; Amount: 500
+19:17:05.565 [qtp701614861-19] INFO  - [Report] - ID:10; Amount: 71
+19:17:05.565 [qtp701614861-19] INFO  - [Report] - ID:11; Amount: 500
+19:17:05.565 [qtp701614861-19] INFO  - [Report] - ID:28; Amount: 500
+19:17:05.567 [qtp701614861-19] INFO  - [Report] # WoodenStaff: 0
+19:17:05.568 [qtp701614861-19] INFO  - [Report] # EffectiveLoad: 0
+19:17:05.570 [qtp701614861-19] INFO  - [Report] # Produced rockets: 0
+19:17:05.574 [qtp701614861-19] INFO  - [Report] # Good rockets: 5
+19:17:05.577 [qtp701614861-19] INFO  - [Report] # Defect rockets: 2
+19:17:05.579 [qtp701614861-19] INFO  - [Report] # Packages: 0
+19:17:05.580 [qtp701614861-19] INFO  - [Report] -------- END REPORT ---------- 
+19:20:43.428 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] 7 started.
+19:20:43.428 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:20:48.851 [qtp701614861-89] INFO  - [Role] 8 started.
+19:21:01.747 [qtp701614861-47] INFO  - [Role] 8 started.
+19:21:01.842 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:21:01.894 [qtp701614861-54] INFO  - [Report] -------- REPORT ---------- 
+19:21:01.900 [qtp701614861-54] INFO  - [Report] # Igniter: 2
+19:21:01.902 [qtp701614861-54] INFO  - [Report] # Propellant: 5
+19:21:01.902 [qtp701614861-54] INFO  - [Report] - ID:27; Amount: 423
+19:21:01.902 [qtp701614861-54] INFO  - [Report] - ID:45; Amount: 500
+19:21:01.902 [qtp701614861-54] INFO  - [Report] - ID:11; Amount: 500
+19:21:01.902 [qtp701614861-54] INFO  - [Report] - ID:28; Amount: 500
+19:21:01.903 [qtp701614861-54] INFO  - [Report] - ID:44; Amount: 500
+19:21:01.904 [qtp701614861-54] INFO  - [Report] # WoodenStaff: 2
+19:21:01.905 [qtp701614861-54] INFO  - [Report] # EffectiveLoad: 6
+19:21:01.907 [qtp701614861-54] INFO  - [Report] # Produced rockets: 0
+19:21:01.911 [qtp701614861-54] INFO  - [Report] # Good rockets: 5
+19:21:01.913 [qtp701614861-54] INFO  - [Report] # Defect rockets: 2
+19:21:01.916 [qtp701614861-54] INFO  - [Report] # Packages: 0
+19:21:01.916 [qtp701614861-54] INFO  - [Report] -------- END REPORT ---------- 
+19:21:04.386 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 8).
+19:21:04.423 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:21:04.863 [qtp701614861-89] INFO  - [Report] -------- REPORT ---------- 
+19:21:04.870 [qtp701614861-89] INFO  - [Report] # Igniter: 1
+19:21:04.872 [qtp701614861-89] INFO  - [Report] # Propellant: 5
+19:21:04.873 [qtp701614861-89] INFO  - [Report] - ID:27; Amount: 285
+19:21:04.873 [qtp701614861-89] INFO  - [Report] - ID:45; Amount: 500
+19:21:04.873 [qtp701614861-89] INFO  - [Report] - ID:11; Amount: 500
+19:21:04.874 [qtp701614861-89] INFO  - [Report] - ID:28; Amount: 500
+19:21:04.874 [qtp701614861-89] INFO  - [Report] - ID:44; Amount: 500
+19:21:04.876 [qtp701614861-89] INFO  - [Report] # WoodenStaff: 1
+19:21:04.878 [qtp701614861-89] INFO  - [Report] # EffectiveLoad: 3
+19:21:04.882 [qtp701614861-89] INFO  - [Report] # Produced rockets: 0
+19:21:04.887 [qtp701614861-89] INFO  - [Report] # Good rockets: 5
+19:21:04.889 [qtp701614861-89] INFO  - [Report] # Defect rockets: 2
+19:21:04.892 [qtp701614861-89] INFO  - [Report] # Packages: 0
+19:21:04.892 [qtp701614861-89] INFO  - [Report] -------- END REPORT ---------- 
+19:21:05.988 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 9).
+19:21:06.003 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 9).
+19:21:06.040 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:21:07.399 [TcpSocket-1-111] WARN  - [TcpSocketSender] Maximum number of connection attempts (3) to localhost:3401 reached
+19:21:07.400 [TcpSocket-1-111] ERROR - [TcpSocketSender] Sending response message for request xvsm://localhost:3401/requests/50 failed
+19:21:08.179 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 10).
+19:21:08.860 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 9; Defect = false).
+19:21:08.875 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:21:08.875 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 10).
+19:21:10.257 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 10; Defect = false).
+19:21:10.257 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:21:30.788 [qtp701614861-47] INFO  - [Role] 9 started.
+19:21:44.077 [qtp701614861-54] INFO  - [Role] 9 started.
+19:21:44.204 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:21:44.267 [qtp701614861-89] INFO  - [Report] -------- REPORT ---------- 
+19:21:44.282 [qtp701614861-89] INFO  - [Report] # Igniter: 4
+19:21:44.282 [qtp701614861-89] INFO  - [Report] # Propellant: 8
+19:21:44.282 [qtp701614861-89] INFO  - [Report] - ID:27; Amount: 32
+19:21:44.282 [qtp701614861-89] INFO  - [Report] - ID:63; Amount: 500
+19:21:44.282 [qtp701614861-89] INFO  - [Report] - ID:45; Amount: 500
+19:21:44.282 [qtp701614861-89] INFO  - [Report] - ID:64; Amount: 500
+19:21:44.282 [qtp701614861-89] INFO  - [Report] - ID:11; Amount: 500
+19:21:44.282 [qtp701614861-89] INFO  - [Report] - ID:28; Amount: 500
+19:21:44.282 [qtp701614861-89] INFO  - [Report] - ID:65; Amount: 500
+19:21:44.282 [qtp701614861-89] INFO  - [Report] - ID:44; Amount: 500
+19:21:44.282 [qtp701614861-89] INFO  - [Report] # WoodenStaff: 4
+19:21:44.282 [qtp701614861-89] INFO  - [Report] # EffectiveLoad: 12
+19:21:44.282 [qtp701614861-89] INFO  - [Report] # Produced rockets: 0
+19:21:44.282 [qtp701614861-89] INFO  - [Report] # Good rockets: 7
+19:21:44.282 [qtp701614861-89] INFO  - [Report] # Defect rockets: 2
+19:21:44.282 [qtp701614861-89] INFO  - [Report] # Packages: 0
+19:21:44.282 [qtp701614861-89] INFO  - [Report] -------- END REPORT ---------- 
+19:21:46.620 [qtp701614861-47] INFO  - [Report] -------- REPORT ---------- 
+19:21:46.636 [qtp701614861-47] INFO  - [Report] # Igniter: 4
+19:21:46.637 [qtp701614861-47] INFO  - [Report] # Propellant: 8
+19:21:46.638 [qtp701614861-47] INFO  - [Report] - ID:27; Amount: 32
+19:21:46.638 [qtp701614861-47] INFO  - [Report] - ID:63; Amount: 500
+19:21:46.638 [qtp701614861-47] INFO  - [Report] - ID:45; Amount: 500
+19:21:46.638 [qtp701614861-47] INFO  - [Report] - ID:64; Amount: 500
+19:21:46.638 [qtp701614861-47] INFO  - [Report] - ID:11; Amount: 500
+19:21:46.638 [qtp701614861-47] INFO  - [Report] - ID:28; Amount: 500
+19:21:46.638 [qtp701614861-47] INFO  - [Report] - ID:65; Amount: 500
+19:21:46.638 [qtp701614861-47] INFO  - [Report] - ID:44; Amount: 500
+19:21:46.639 [qtp701614861-47] INFO  - [Report] # WoodenStaff: 4
+19:21:46.641 [qtp701614861-47] INFO  - [Report] # EffectiveLoad: 12
+19:21:46.643 [qtp701614861-47] INFO  - [Report] # Produced rockets: 0
+19:21:46.646 [qtp701614861-47] INFO  - [Report] # Good rockets: 7
+19:21:46.649 [qtp701614861-47] INFO  - [Report] # Defect rockets: 2
+19:21:46.650 [qtp701614861-47] INFO  - [Report] # Packages: 0
+19:21:46.651 [qtp701614861-47] INFO  - [Report] -------- END REPORT ---------- 
+19:21:46.769 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 11).
+19:21:46.771 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 11).
+19:21:46.794 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:21:48.747 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Filling quantity is less than 120.
+19:21:48.759 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 11; Defect = true).
+19:21:48.762 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:21:48.955 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 12).
+19:21:48.955 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 12).
+19:21:49.001 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:21:50.356 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 12; Defect = false).
+19:21:50.359 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:21:51.123 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 13).
+19:21:51.123 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 13).
+19:21:51.160 [qtp701614861-89] INFO  - [Report] -------- REPORT ---------- 
+19:21:51.165 [qtp701614861-89] INFO  - [Report] # Igniter: 1
+19:21:51.166 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:21:51.167 [qtp701614861-89] INFO  - [Report] # Propellant: 7
+19:21:51.167 [qtp701614861-89] INFO  - [Report] - ID:45; Amount: 500
+19:21:51.167 [qtp701614861-89] INFO  - [Report] - ID:64; Amount: 500
+19:21:51.167 [qtp701614861-89] INFO  - [Report] - ID:11; Amount: 500
+19:21:51.168 [qtp701614861-89] INFO  - [Report] - ID:28; Amount: 500
+19:21:51.168 [qtp701614861-89] INFO  - [Report] - ID:63; Amount: 164
+19:21:51.168 [qtp701614861-89] INFO  - [Report] - ID:65; Amount: 500
+19:21:51.168 [qtp701614861-89] INFO  - [Report] - ID:44; Amount: 500
+19:21:51.169 [qtp701614861-89] INFO  - [Report] # WoodenStaff: 1
+19:21:51.170 [qtp701614861-89] INFO  - [Report] # EffectiveLoad: 3
+19:21:51.172 [qtp701614861-89] INFO  - [Report] # Produced rockets: 0
+19:21:51.175 [qtp701614861-89] INFO  - [Report] # Good rockets: 8
+19:21:51.176 [qtp701614861-89] INFO  - [Report] # Defect rockets: 3
+19:21:51.178 [qtp701614861-89] INFO  - [Report] # Packages: 0
+19:21:51.178 [qtp701614861-89] INFO  - [Report] -------- END REPORT ---------- 
+19:21:52.347 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 14).
+19:21:52.380 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:21:52.604 [qtp701614861-47] INFO  - [Report] -------- REPORT ---------- 
+19:21:52.611 [qtp701614861-47] INFO  - [Report] # Igniter: 0
+19:21:52.613 [qtp701614861-47] INFO  - [Report] # Propellant: 7
+19:21:52.613 [qtp701614861-47] INFO  - [Report] - ID:63; Amount: 26
+19:21:52.614 [qtp701614861-47] INFO  - [Report] - ID:45; Amount: 500
+19:21:52.614 [qtp701614861-47] INFO  - [Report] - ID:64; Amount: 500
+19:21:52.614 [qtp701614861-47] INFO  - [Report] - ID:11; Amount: 500
+19:21:52.614 [qtp701614861-47] INFO  - [Report] - ID:28; Amount: 500
+19:21:52.615 [qtp701614861-47] INFO  - [Report] - ID:65; Amount: 500
+19:21:52.615 [qtp701614861-47] INFO  - [Report] - ID:44; Amount: 500
+19:21:52.616 [qtp701614861-47] INFO  - [Report] # WoodenStaff: 0
+19:21:52.617 [qtp701614861-47] INFO  - [Report] # EffectiveLoad: 0
+19:21:52.619 [qtp701614861-47] INFO  - [Report] # Produced rockets: 1
+19:21:52.621 [qtp701614861-47] INFO  - [Report] # Good rockets: 8
+19:21:52.623 [qtp701614861-47] INFO  - [Report] # Defect rockets: 3
+19:21:52.625 [qtp701614861-47] INFO  - [Report] # Packages: 0
+19:21:52.625 [qtp701614861-47] INFO  - [Report] -------- END REPORT ---------- 
+19:21:53.570 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 13; Defect = false).
+19:21:53.573 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:21:53.584 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 14).
+19:21:53.791 [qtp701614861-54] INFO  - [Report] -------- REPORT ---------- 
+19:21:53.794 [qtp701614861-54] INFO  - [Report] # Igniter: 0
+19:21:53.796 [qtp701614861-54] INFO  - [Report] # Propellant: 7
+19:21:53.796 [qtp701614861-54] INFO  - [Report] - ID:63; Amount: 26
+19:21:53.796 [qtp701614861-54] INFO  - [Report] - ID:45; Amount: 500
+19:21:53.796 [qtp701614861-54] INFO  - [Report] - ID:64; Amount: 500
+19:21:53.796 [qtp701614861-54] INFO  - [Report] - ID:11; Amount: 500
+19:21:53.796 [qtp701614861-54] INFO  - [Report] - ID:28; Amount: 500
+19:21:53.796 [qtp701614861-54] INFO  - [Report] - ID:65; Amount: 500
+19:21:53.796 [qtp701614861-54] INFO  - [Report] - ID:44; Amount: 500
+19:21:53.797 [qtp701614861-54] INFO  - [Report] # WoodenStaff: 0
+19:21:53.798 [qtp701614861-54] INFO  - [Report] # EffectiveLoad: 0
+19:21:53.799 [qtp701614861-54] INFO  - [Report] # Produced rockets: 0
+19:21:53.801 [qtp701614861-54] INFO  - [Report] # Good rockets: 9
+19:21:53.803 [qtp701614861-54] INFO  - [Report] # Defect rockets: 3
+19:21:53.804 [qtp701614861-54] INFO  - [Report] # Packages: 0
+19:21:53.805 [qtp701614861-54] INFO  - [Report] -------- END REPORT ---------- 
+19:21:54.010 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 15).
+19:21:54.873 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 14; Defect = false).
+19:21:54.873 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:21:54.873 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 15).
+19:21:56.762 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Filling quantity is less than 120.
+19:21:56.764 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 15; Defect = true).
+19:21:56.764 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:09.607 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] 10 started.
+19:23:09.622 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:16.908 [qtp701614861-131] INFO  - [Role] 11 started.
+19:23:32.170 [qtp701614861-130] INFO  - [Role] 11 started.
+19:23:32.361 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:32.502 [qtp701614861-54] INFO  - [Report] -------- REPORT ---------- 
+19:23:32.507 [qtp701614861-54] INFO  - [Report] # Igniter: 11
+19:23:32.508 [qtp701614861-54] INFO  - [Report] # Propellant: 10
+19:23:32.508 [qtp701614861-54] INFO  - [Report] - ID:99; Amount: 390
+19:23:32.508 [qtp701614861-54] INFO  - [Report] - ID:98; Amount: 500
+19:23:32.508 [qtp701614861-54] INFO  - [Report] - ID:45; Amount: 500
+19:23:32.508 [qtp701614861-54] INFO  - [Report] - ID:64; Amount: 500
+19:23:32.509 [qtp701614861-54] INFO  - [Report] - ID:11; Amount: 500
+19:23:32.509 [qtp701614861-54] INFO  - [Report] - ID:101; Amount: 500
+19:23:32.509 [qtp701614861-54] INFO  - [Report] - ID:28; Amount: 500
+19:23:32.509 [qtp701614861-54] INFO  - [Report] - ID:65; Amount: 500
+19:23:32.509 [qtp701614861-54] INFO  - [Report] - ID:100; Amount: 500
+19:23:32.509 [qtp701614861-54] INFO  - [Report] - ID:44; Amount: 500
+19:23:32.510 [qtp701614861-54] INFO  - [Report] # WoodenStaff: 11
+19:23:32.511 [qtp701614861-54] INFO  - [Report] # EffectiveLoad: 33
+19:23:32.513 [qtp701614861-54] INFO  - [Report] # Produced rockets: 0
+19:23:32.515 [qtp701614861-54] INFO  - [Report] # Good rockets: 10
+19:23:32.516 [qtp701614861-54] INFO  - [Report] # Defect rockets: 4
+19:23:32.517 [qtp701614861-54] INFO  - [Report] # Packages: 0
+19:23:32.518 [qtp701614861-54] INFO  - [Report] -------- END REPORT ---------- 
+19:23:35.101 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 16).
+19:23:35.132 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:37.373 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 17).
+19:23:37.388 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 17).
+19:23:37.404 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:38.104 [TcpSocket-1-169] WARN  - [TcpSocketSender] Maximum number of connection attempts (3) to localhost:3489 reached
+19:23:38.105 [TcpSocket-1-169] ERROR - [TcpSocketSender] Sending response message for request xvsm://localhost:3489/requests/50 failed
+19:23:38.478 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 17; Defect = false).
+19:23:38.482 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:39.609 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 18).
+19:23:39.609 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 18).
+19:23:39.653 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:42.026 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Filling quantity is less than 120.
+19:23:42.039 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 18; Defect = true).
+19:23:42.042 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:42.380 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 19).
+19:23:42.380 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 19).
+19:23:42.430 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:43.474 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 19; Defect = false).
+19:23:43.477 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:45.064 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 20).
+19:23:45.064 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 20).
+19:23:45.107 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:47.075 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 21).
+19:23:47.103 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:47.743 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Filling quantity is less than 120.
+19:23:47.754 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 20; Defect = true).
+19:23:47.758 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:47.768 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 21).
+19:23:49.724 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 22).
+19:23:49.762 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:50.157 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 21; Defect = false).
+19:23:50.160 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:50.170 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 22).
+19:23:52.438 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 23).
+19:23:52.469 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:52.890 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 22; Defect = false).
+19:23:52.890 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:52.906 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 23).
+19:23:53.878 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 24).
+19:23:53.910 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:54.107 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 23; Defect = false).
+19:23:54.107 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:54.123 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 24).
+19:23:55.415 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 25).
+19:23:55.429 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:23:55.899 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 24; Defect = false).
+19:23:55.902 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:55.913 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 25).
+19:23:57.888 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Filling quantity is less than 120.
+19:23:57.899 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 25; Defect = true).
+19:23:57.902 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:23:58.342 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 26).
+19:23:58.342 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 26).
+19:23:58.373 [sbcm.producer.Producer.main()] INFO  - [Role] Produce rocket.
+19:24:00.063 [sbcm.producer.Producer.main()] INFO  - [Role] 3 produced a rock (ID = 27).
+19:24:01.046 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 26; Defect = false).
+19:24:01.046 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:24:01.061 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Check rocket (Id = 27).
+19:24:02.515 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Rocket checked: (Id = 27; Defect = false).
+19:24:02.515 [sbcm.qsupervisor.QSupervisor.main()] INFO  - [Role] Waiting for work ... 
+19:24:06.782 [qtp701614861-131] INFO  - [Report] -------- REPORT ---------- 
+19:24:06.801 [qtp701614861-131] INFO  - [Report] # Igniter: 0
+19:24:06.804 [qtp701614861-131] INFO  - [Report] # Propellant: 7
+19:24:06.804 [qtp701614861-131] INFO  - [Report] - ID:64; Amount: 447
+19:24:06.804 [qtp701614861-131] INFO  - [Report] - ID:11; Amount: 500
+19:24:06.805 [qtp701614861-131] INFO  - [Report] - ID:101; Amount: 500
+19:24:06.805 [qtp701614861-131] INFO  - [Report] - ID:28; Amount: 500
+19:24:06.805 [qtp701614861-131] INFO  - [Report] - ID:65; Amount: 500
+19:24:06.805 [qtp701614861-131] INFO  - [Report] - ID:100; Amount: 500
+19:24:06.806 [qtp701614861-131] INFO  - [Report] - ID:44; Amount: 500
+19:24:06.807 [qtp701614861-131] INFO  - [Report] # WoodenStaff: 0
+19:24:06.807 [qtp701614861-131] INFO  - [Report] # EffectiveLoad: 0
+19:24:06.809 [qtp701614861-131] INFO  - [Report] # Produced rockets: 0
+19:24:06.811 [qtp701614861-131] INFO  - [Report] # Good rockets: 18
+19:24:06.813 [qtp701614861-131] INFO  - [Report] # Defect rockets: 7
+19:24:06.815 [qtp701614861-131] INFO  - [Report] # Packages: 0
+19:24:06.815 [qtp701614861-131] INFO  - [Report] -------- END REPORT ---------- 
+19:24:10.873 [qtp701614861-54] INFO  - [Report] -------- REPORT ---------- 
+19:24:10.882 [qtp701614861-54] INFO  - [Report] # Igniter: 0
+19:24:10.885 [qtp701614861-54] INFO  - [Report] # Propellant: 7
+19:24:10.885 [qtp701614861-54] INFO  - [Report] - ID:64; Amount: 447
+19:24:10.885 [qtp701614861-54] INFO  - [Report] - ID:11; Amount: 500
+19:24:10.886 [qtp701614861-54] INFO  - [Report] - ID:101; Amount: 500
+19:24:10.886 [qtp701614861-54] INFO  - [Report] - ID:28; Amount: 500
+19:24:10.886 [qtp701614861-54] INFO  - [Report] - ID:65; Amount: 500
+19:24:10.886 [qtp701614861-54] INFO  - [Report] - ID:100; Amount: 500
+19:24:10.886 [qtp701614861-54] INFO  - [Report] - ID:44; Amount: 500
+19:24:10.888 [qtp701614861-54] INFO  - [Report] # WoodenStaff: 0
+19:24:10.889 [qtp701614861-54] INFO  - [Report] # EffectiveLoad: 0
+19:24:10.891 [qtp701614861-54] INFO  - [Report] # Produced rockets: 0
+19:24:10.895 [qtp701614861-54] INFO  - [Report] # Good rockets: 18
+19:24:10.898 [qtp701614861-54] INFO  - [Report] # Defect rockets: 7
+19:24:10.900 [qtp701614861-54] INFO  - [Report] # Packages: 0
+19:24:10.900 [qtp701614861-54] INFO  - [Report] -------- END REPORT ---------- 
+19:24:12.315 [qtp701614861-130] INFO  - [Report] -------- REPORT ---------- 
+19:24:12.331 [qtp701614861-130] INFO  - [Report] # Igniter: 0
+19:24:12.332 [qtp701614861-130] INFO  - [Report] # Propellant: 7
+19:24:12.332 [qtp701614861-130] INFO  - [Report] - ID:64; Amount: 447
+19:24:12.332 [qtp701614861-130] INFO  - [Report] - ID:11; Amount: 500
+19:24:12.333 [qtp701614861-130] INFO  - [Report] - ID:101; Amount: 500
+19:24:12.333 [qtp701614861-130] INFO  - [Report] - ID:28; Amount: 500
+19:24:12.333 [qtp701614861-130] INFO  - [Report] - ID:65; Amount: 500
+19:24:12.333 [qtp701614861-130] INFO  - [Report] - ID:100; Amount: 500
+19:24:12.333 [qtp701614861-130] INFO  - [Report] - ID:44; Amount: 500
+19:24:12.334 [qtp701614861-130] INFO  - [Report] # WoodenStaff: 0
+19:24:12.334 [qtp701614861-130] INFO  - [Report] # EffectiveLoad: 0
+19:24:12.336 [qtp701614861-130] INFO  - [Report] # Produced rockets: 0
+19:24:12.338 [qtp701614861-130] INFO  - [Report] # Good rockets: 18
+19:24:12.340 [qtp701614861-130] INFO  - [Report] # Defect rockets: 7
+19:24:12.341 [qtp701614861-130] INFO  - [Report] # Packages: 0
+19:24:12.342 [qtp701614861-130] INFO  - [Report] -------- END REPORT ---------- 
+19:24:13.982 [qtp701614861-144] INFO  - [Report] -------- REPORT ---------- 
+19:24:13.987 [qtp701614861-144] INFO  - [Report] # Igniter: 0
+19:24:13.988 [qtp701614861-144] INFO  - [Report] # Propellant: 7
+19:24:13.988 [qtp701614861-144] INFO  - [Report] - ID:64; Amount: 447
+19:24:13.989 [qtp701614861-144] INFO  - [Report] - ID:11; Amount: 500
+19:24:13.989 [qtp701614861-144] INFO  - [Report] - ID:101; Amount: 500
+19:24:13.989 [qtp701614861-144] INFO  - [Report] - ID:28; Amount: 500
+19:24:13.989 [qtp701614861-144] INFO  - [Report] - ID:65; Amount: 500
+19:24:13.989 [qtp701614861-144] INFO  - [Report] - ID:100; Amount: 500
+19:24:13.989 [qtp701614861-144] INFO  - [Report] - ID:44; Amount: 500
+19:24:13.990 [qtp701614861-144] INFO  - [Report] # WoodenStaff: 0
+19:24:13.991 [qtp701614861-144] INFO  - [Report] # EffectiveLoad: 0
+19:24:13.993 [qtp701614861-144] INFO  - [Report] # Produced rockets: 0
+19:24:13.996 [qtp701614861-144] INFO  - [Report] # Good rockets: 18
+19:24:13.999 [qtp701614861-144] INFO  - [Report] # Defect rockets: 7
+19:24:14.002 [qtp701614861-144] INFO  - [Report] # Packages: 0
+19:24:14.002 [qtp701614861-144] INFO  - [Report] -------- END REPORT ---------- 

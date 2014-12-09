@@ -1,0 +1,1 @@
+mvn exec:java -pl qsupervisor -Dexec.mainClass="sbcm.qsupervisor.QSupervisor"
