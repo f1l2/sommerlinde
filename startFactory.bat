@@ -1,0 +1,1 @@
+mvn exec:java -pl factory -Dexec.mainClass="sbcm.factory.Factory"

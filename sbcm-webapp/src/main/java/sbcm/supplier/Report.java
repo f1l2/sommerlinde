@@ -58,12 +58,12 @@ public class Report {
 
 		logger.info("-------- REPORT ---------- ");
 
-		MozartSelector igniterSelector = new MozartSelector(LindaCoordinator.newSelector(new Igniter(), LindaSelector.COUNT_MAX));
-		MozartSelector propellantSelector = new MozartSelector(LindaCoordinator.newSelector(new Propellant(), LindaSelector.COUNT_MAX));
-		MozartSelector woodenStaffSelector = new MozartSelector(LindaCoordinator.newSelector(new WoodenStaff(), LindaSelector.COUNT_MAX));
-		MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(new EffectLoad(), LindaSelector.COUNT_MAX));
-		MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_MAX));
-		MozartSelector packageSelector = new MozartSelector(LindaCoordinator.newSelector(new RocketPackage(), LindaSelector.COUNT_MAX));
+		MozartSelector igniterSelector = new MozartSelector(LindaCoordinator.newSelector(new Igniter(), LindaSelector.COUNT_ALL));
+		MozartSelector propellantSelector = new MozartSelector(LindaCoordinator.newSelector(new Propellant(), LindaSelector.COUNT_ALL));
+		MozartSelector woodenStaffSelector = new MozartSelector(LindaCoordinator.newSelector(new WoodenStaff(), LindaSelector.COUNT_ALL));
+		MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(new EffectLoad(), LindaSelector.COUNT_ALL));
+		MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_ALL));
+		MozartSelector packageSelector = new MozartSelector(LindaCoordinator.newSelector(new RocketPackage(), LindaSelector.COUNT_ALL));
 
 		try {
 

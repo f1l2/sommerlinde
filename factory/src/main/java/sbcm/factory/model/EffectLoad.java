@@ -11,6 +11,8 @@ public class EffectLoad extends SpaceEntry implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Employee supplier;
+
 	private Boolean isDefect;
 
 	public EffectLoad() {
@@ -26,6 +28,14 @@ public class EffectLoad extends SpaceEntry implements Serializable {
 
 	public void setIsDefect(Boolean isDefect) {
 		this.isDefect = isDefect;
+	}
+
+	public Employee getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Employee supplier) {
+		this.supplier = supplier;
 	}
 
 }

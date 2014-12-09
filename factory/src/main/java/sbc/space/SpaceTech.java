@@ -18,6 +18,7 @@ public abstract class SpaceTech {
 	public static final String PRODUCER_COUNTER = "producerCounter";
 	public static final String PART_COUNTER = "partCounter";
 	public static final String ROCKET_COUNTER = "rocketCounter";
+	public static final String PACKAGE_COUNTER = "packageCounter";
 
 
 	public enum SelectorType {
@@ -39,12 +40,14 @@ public abstract class SpaceTech {
                         this.createContainer(PRODUCER_COUNTER, 1000);
                         this.createContainer(PART_COUNTER, 1000);
                         this.createContainer(ROCKET_COUNTER, 1000);
+			this.createContainer(PACKAGE_COUNTER, 1000);
 
                         // write inital value
                         SpaceTransaction mt = createTransaction();
                         write(findContainer(PART_COUNTER), mt, new Employee(1));
                         write(findContainer(PRODUCER_COUNTER), mt, new Employee(1));
                         write(findContainer(ROCKET_COUNTER), mt, new Employee(1));
+			write(this.findContainer(PACKAGE_COUNTER), mt, new Employee(1));
 
                         endTransaction(mt, TransactionEndType.TET_COMMIT);
 

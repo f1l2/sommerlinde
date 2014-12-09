@@ -49,7 +49,7 @@ public class Logistician extends Role {
 					rocket.getEmployee().add(new Employee(this.employeeId));
 				}
 
-				RocketPackage rp = new RocketPackage();
+				RocketPackage rp = new RocketPackage(this.mozartSpaces.getIDAndIncr(MozartSpaces.PACKAGE_COUNTER));
 				rp.setRocket1(result.get(0));
 				rp.setRocket2(result.get(1));
 				rp.setRocket3(result.get(2));

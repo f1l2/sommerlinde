@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 
 import sbc.space.MozartSpaces;
 import sbcm.factory.model.EffectLoad;
+import sbcm.factory.model.Employee;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Propellant;
 import sbcm.factory.model.WoodenStaff;
@@ -21,18 +22,18 @@ import sbcm.space.role.Role;
 public class Supplier extends Role {
 
 	private String name;
-	private Integer woodenstaff;
-	private Integer igniter;
-	private Integer propellant;
-	private Integer effectLoad;
-	private Integer errorRate;
+	private Integer woodenstaff = 0;
+	private Integer igniter = 0;
+	private Integer propellant = 0;
+	private Integer effectLoad = 0;
+	private Integer errorRate = 0;
 
 	public int getProducerId() {
 		return employeeId;
 	}
 
 	public void setProducerId(int producerId) {
-		this.employeeId = producerId;
+		employeeId = producerId;
 	}
 
 	public String getName() {
@@ -104,56 +105,10 @@ public class Supplier extends Role {
 	}
 
 	public void deliver() {
-		logger.info(this.employeeId + " started.");
 
-		for (int i = 1; i <= this.igniter; i++) {
+		DeliverProcess deliverProcess = new DeliverProcess();
 
-			Igniter ig = new Igniter(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-			try {
-				mozartSpaces.write(MozartSpaces.PARTS, ig);
-			} catch (Exception e) {
-				logger.error("Write igniter exception", e);
-			}
-		}
-
-		for (int i = 1; i <= this.propellant; i++) {
-
-			Propellant p = new Propellant(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-			p.setAmount(500);
-
-			try {
-				mozartSpaces.write(MozartSpaces.PARTS, p);
-			} catch (Exception e) {
-				logger.error("Write propellant exception", e);
-			}
-		}
-
-		for (int i = 1; i <= this.woodenstaff; i++) {
-
-			WoodenStaff w = new WoodenStaff(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-
-			try {
-				mozartSpaces.write(MozartSpaces.PARTS, w);
-			} catch (Exception e) {
-				logger.error("Write woodenstaff exception", e);
-			}
-		}
-
-		for (int i = 1; i <= this.effectLoad; i++) {
-
-			EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-
-			if (this.errorRate != null)
-				el.setIsDefect(this.isDefectRandom(this.errorRate));
-			else
-				el.setIsDefect(this.isDefectRandom(10));
-
-			try {
-				mozartSpaces.write(MozartSpaces.PARTS, el);
-			} catch (Exception e) {
-				logger.error("Write effectload exception", e);
-			}
-		}
+		deliverProcess.run();
 
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 
@@ -163,5 +118,70 @@ public class Supplier extends Role {
 			logger.error("", e);
 		}
 
+	}
+
+	class DeliverProcess implements Runnable {
+
+		public void run() {
+
+			try {
+				Thread.sleep(workRandomTime());
+			} catch (InterruptedException e) {
+				logger.error("", e);
+			}
+
+			for (int i = 1; i <= igniter; i++) {
+
+				Igniter ig = new Igniter(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				ig.setSupplier(new Employee(employeeId));
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, ig);
+				} catch (Exception e) {
+					logger.error("Write igniter exception", e);
+				}
+			}
+
+			for (int i = 1; i <= propellant; i++) {
+
+				Propellant p = new Propellant(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				p.setAmount(500);
+				p.setSupplier(new Employee(employeeId));
+
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, p);
+				} catch (Exception e) {
+					logger.error("Write propellant exception", e);
+				}
+			}
+
+			for (int i = 1; i <= woodenstaff; i++) {
+
+				WoodenStaff w = new WoodenStaff(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				w.setSupplier(new Employee(employeeId));
+
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, w);
+				} catch (Exception e) {
+					logger.error("Write woodenstaff exception", e);
+				}
+			}
+
+			for (int i = 1; i <= effectLoad; i++) {
+
+				EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				el.setSupplier(new Employee(employeeId));
+
+				if (errorRate != null)
+					el.setIsDefect(isDefectRandom(errorRate));
+				else
+					el.setIsDefect(isDefectRandom(10));
+
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, el);
+				} catch (Exception e) {
+					logger.error("Write effectload exception", e);
+				}
+			}
+		}
 	}
 }

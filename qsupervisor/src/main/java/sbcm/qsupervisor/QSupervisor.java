@@ -12,7 +12,6 @@ import sbc.space.MozartTransaction;
 import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Employee;
-import sbcm.factory.model.Propellant;
 import sbcm.factory.model.Rocket;
 import sbcm.space.role.Role;
 
@@ -51,12 +50,8 @@ public class QSupervisor extends Role {
 				/**
 				 * Propellant amount has to be more than 120.
 				 * 
-				 * Only one defect effective load is allowed.
+				 * Only one defect effect load is allowed.
 				 */
-				int amount = 0;
-				for (Propellant propellant : rocket.getPropellant()) {
-					amount += propellant.getAmount();
-				}
 
 				int cntDefectEffectiveLoad = 0;
 				for (EffectLoad effectiveLoad : rocket.getEffectiveLoad()) {
@@ -65,7 +60,11 @@ public class QSupervisor extends Role {
 				}
 
 				// rocket.getEmployee().add(new Employee(this.employeeId));
-				if ((amount < 120) || (cntDefectEffectiveLoad > 1)) {
+				if ((rocket.getFillingQuantity() < 120)) {
+					logger.info("Filling quantity is less than 120.");
+					rocket.setIsDefect(Boolean.TRUE);
+				} else if (cntDefectEffectiveLoad > 1) {
+					logger.info("More than one defect effect load");
 					rocket.setIsDefect(Boolean.TRUE);
 				} else {
 					rocket.setIsDefect(Boolean.FALSE);

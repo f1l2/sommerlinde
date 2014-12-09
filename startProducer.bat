@@ -1,0 +1,1 @@
+mvn exec:java -pl producer -Dexec.mainClass="sbcm.producer.Producer"
