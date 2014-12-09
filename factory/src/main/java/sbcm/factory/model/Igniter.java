@@ -11,7 +11,7 @@ public class Igniter extends SpaceEntry implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int supplierId;
+	private Employee supplier;
 
 	public Igniter() {
 
@@ -21,11 +21,11 @@ public class Igniter extends SpaceEntry implements Serializable {
 		super(id, 0, false, 0);
 	}
 
-	public int getSupplierId() {
-		return supplierId;
+	public Employee getSupplier() {
+		return supplier;
 	}
 
-	public void setSupplierId(int supplierId) {
-		this.supplierId = supplierId;
+	public void setSupplier(Employee supplier) {
+		this.supplier = supplier;
 	}
 }

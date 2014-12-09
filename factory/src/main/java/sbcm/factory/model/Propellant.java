@@ -11,12 +11,11 @@ public class Propellant extends SpaceEntry implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int supplierId;
+	private Employee supplier;
 
 	private Integer amount;
 
 	public Propellant() {
-
 	}
 
 	public Propellant(int id) {
@@ -31,12 +30,12 @@ public class Propellant extends SpaceEntry implements Serializable {
 		this.amount = amount;
 	}
 
-	public int getSupplierId() {
-		return supplierId;
+	public Employee getSupplier() {
+		return supplier;
 	}
 
-	public void setSupplierId(int supplierId) {
-		this.supplierId = supplierId;
+	public void setSupplier(Employee supplier) {
+		this.supplier = supplier;
 	}
 
 }

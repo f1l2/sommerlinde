@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 
 import sbc.space.MozartSpaces;
 import sbcm.factory.model.EffectLoad;
+import sbcm.factory.model.Employee;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Propellant;
 import sbcm.factory.model.WoodenStaff;
@@ -21,11 +22,11 @@ import sbcm.space.role.Role;
 public class Supplier extends Role {
 
 	private String name;
-	private Integer woodenstaff;
-	private Integer igniter;
-	private Integer propellant;
-	private Integer effectLoad;
-	private Integer errorRate;
+	private Integer woodenstaff = 0;
+	private Integer igniter = 0;
+	private Integer propellant = 0;
+	private Integer effectLoad = 0;
+	private Integer errorRate = 0;
 
 	public int getProducerId() {
 		return employeeId;
@@ -129,12 +130,10 @@ public class Supplier extends Role {
 				logger.error("", e);
 			}
 
-			logger.info(employeeId + " started.");
-
 			for (int i = 1; i <= igniter; i++) {
 
 				Igniter ig = new Igniter(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-				// ig.setSupplierId(employeeId);
+				ig.setSupplier(new Employee(employeeId));
 				try {
 					mozartSpaces.write(MozartSpaces.PARTS, ig);
 				} catch (Exception e) {
@@ -146,7 +145,7 @@ public class Supplier extends Role {
 
 				Propellant p = new Propellant(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
 				p.setAmount(500);
-				// p.setSupplierId(employeeId);
+				p.setSupplier(new Employee(employeeId));
 
 				try {
 					mozartSpaces.write(MozartSpaces.PARTS, p);
@@ -158,7 +157,7 @@ public class Supplier extends Role {
 			for (int i = 1; i <= woodenstaff; i++) {
 
 				WoodenStaff w = new WoodenStaff(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-				// w.setSupplierId(employeeId);
+				w.setSupplier(new Employee(employeeId));
 
 				try {
 					mozartSpaces.write(MozartSpaces.PARTS, w);
@@ -170,7 +169,7 @@ public class Supplier extends Role {
 			for (int i = 1; i <= effectLoad; i++) {
 
 				EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-				// el.setSupplierId(employeeId);
+				el.setSupplier(new Employee(employeeId));
 
 				if (errorRate != null)
 					el.setIsDefect(isDefectRandom(errorRate));
@@ -184,6 +183,5 @@ public class Supplier extends Role {
 				}
 			}
 		}
-
 	}
 }
