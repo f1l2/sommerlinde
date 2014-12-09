@@ -1,8 +1,10 @@
 package sbc.space;
 
 import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import sbcm.factory.Factory;
 import sbcm.factory.model.Employee;
 
@@ -20,7 +22,6 @@ public abstract class SpaceTech {
 	public static final String ROCKET_COUNTER = "rocketCounter";
 	public static final String PACKAGE_COUNTER = "packageCounter";
 
-
 	public enum SelectorType {
 		SEL_ANY, SEL_FIFO, SEL_LIFO, SEL_LINDA
 	}
@@ -31,29 +32,29 @@ public abstract class SpaceTech {
 
 	public void init() {
 		System.out.println("*** Initiating SpaceTech");
-                try {
-                        this.createContainer(PRODUCED_ROCKETS, 1000);
-                        this.createContainer(GOOD_ROCKETS, 1000);
-                        this.createContainer(DEFECT_ROCKETS, 1000);
-                        this.createContainer(ROCKET_PACKAGES, 1000);
-                        this.createContainer(PARTS, 1000);
-                        this.createContainer(PRODUCER_COUNTER, 1000);
-                        this.createContainer(PART_COUNTER, 1000);
-                        this.createContainer(ROCKET_COUNTER, 1000);
+		try {
+			this.createContainer(PRODUCED_ROCKETS, 1000);
+			this.createContainer(GOOD_ROCKETS, 1000);
+			this.createContainer(DEFECT_ROCKETS, 1000);
+			this.createContainer(ROCKET_PACKAGES, 1000);
+			this.createContainer(PARTS, 1000);
+			this.createContainer(PRODUCER_COUNTER, 1000);
+			this.createContainer(PART_COUNTER, 1000);
+			this.createContainer(ROCKET_COUNTER, 1000);
 			this.createContainer(PACKAGE_COUNTER, 1000);
 
-                        // write inital value
-                        SpaceTransaction mt = createTransaction();
-                        write(findContainer(PART_COUNTER), mt, new Employee(1));
-                        write(findContainer(PRODUCER_COUNTER), mt, new Employee(1));
-                        write(findContainer(ROCKET_COUNTER), mt, new Employee(1));
+			// write initial value
+			SpaceTransaction mt = createTransaction();
+			write(findContainer(PART_COUNTER), mt, new Employee(1));
+			write(findContainer(PRODUCER_COUNTER), mt, new Employee(1));
+			write(findContainer(ROCKET_COUNTER), mt, new Employee(1));
 			write(this.findContainer(PACKAGE_COUNTER), mt, new Employee(1));
 
-                        endTransaction(mt, TransactionEndType.TET_COMMIT);
+			endTransaction(mt, TransactionEndType.TET_COMMIT);
 
-                } catch (Exception e) {
-                        logger.error("Error initalising MozartSpaces", e);
-                }
+		} catch (Exception e) {
+			logger.error("Error initalising MozartSpaces", e);
+		}
 	}
 
 	public abstract void exit();
@@ -84,31 +85,31 @@ public abstract class SpaceTech {
 		timeout = to;
 	}
 
-        public int getIDAndIncr(String counter) {
-                ArrayList<SpaceEntry> entries = new ArrayList<SpaceEntry>();
-                int id = -1;
-                try {
+	public int getIDAndIncr(String counter) {
+		ArrayList<SpaceEntry> entries = new ArrayList<SpaceEntry>();
+		int id = -1;
+		try {
 
-                        SpaceTransaction mt = createTransaction();
+			SpaceTransaction mt = createTransaction();
 
-                        Container mc = findContainer(counter);
+			Container mc = findContainer(counter);
 
-                        entries = take(mc, mt, SelectorType.SEL_LIFO, 1);
+			entries = take(mc, mt, SelectorType.SEL_LIFO, 1);
 
-                        if (null != entries) {
+			if (null != entries) {
 
-                                id = entries.get(0).getId();
-                                write(mc, mt, new Employee(entries.get(0).getId() + 1));
-                        }
+				id = entries.get(0).getId();
+				write(mc, mt, new Employee(entries.get(0).getId() + 1));
+			}
 
-                        endTransaction(mt, TransactionEndType.TET_COMMIT);
+			endTransaction(mt, TransactionEndType.TET_COMMIT);
 
-                } catch (Exception e) {
-                        logger.error("", e);
-                }
+		} catch (Exception e) {
+			logger.error("", e);
+		}
 
-                return id;
+		return id;
 
-        }
+	}
 
 }

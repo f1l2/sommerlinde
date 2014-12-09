@@ -19,12 +19,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import sbcm.factory.Factory;
-import sbcm.factory.model.Employee;
 
 public class MozartSpaces extends SpaceTech {
 	private URI spaceURI;
 	private MzsCore core;
 	private Capi capi;
+
+	private static final Logger logger = LoggerFactory.getLogger(Factory.class);
 
 	public MozartSpaces(boolean newspace) {
 		try {
@@ -49,6 +50,8 @@ public class MozartSpaces extends SpaceTech {
 
 	public void init() {
 		logger.info("*** Initialising MozartSpaces");
+
+		super.init();
 	}
 
 	public void setCoordinator(int coordinator) {
@@ -85,14 +88,12 @@ public class MozartSpaces extends SpaceTech {
 		capi.write(new Entry(entry), mc.getContainer(), timeout, null);
 	}
 
-	// Manuel geändert
 	public <T extends SpaceEntry> ArrayList<T> read(MozartContainer mc, MozartTransaction mt, MozartSelector selector) throws Exception {
 		ArrayList<T> entries = capi.read(mc.getContainer(), selector.getSelector(), timeout, null);
 
 		return entries;
 	}
 
-	// Manuel geändert
 	public <T extends SpaceEntry> ArrayList<T> take(MozartContainer mc, MozartTransaction mt, MozartSelector selector) throws Exception {
 		ArrayList<T> entries = capi.take(mc.getContainer(), selector.getSelector(), timeout, null);
 
@@ -121,7 +122,6 @@ public class MozartSpaces extends SpaceTech {
 			break;
 		}
 	}
-
 
 	private TransactionReference _gT(MozartTransaction mt) {
 		if (mt != null)
