@@ -3,7 +3,7 @@ package sbc.space;
 import java.util.ArrayList;
 
 public abstract class SpaceTech {
-	protected long timeout = 100000;
+	protected long timeout = 1000000;
 
 	public enum SelectorType {
 		SEL_ANY, SEL_FIFO, SEL_LIFO, SEL_LINDA

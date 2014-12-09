@@ -1,30 +1,29 @@
 package sbcm.producer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.LindaCoordinator.LindaSelector;
-import org.mozartspaces.core.ContainerReference;
-import org.mozartspaces.core.Entry;
-import org.mozartspaces.core.MzsConstants.RequestTimeout;
 import org.mozartspaces.core.MzsConstants.TransactionTimeout;
-import org.mozartspaces.core.MzsCoreException;
-import org.mozartspaces.core.TransactionReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import sbcm.factory.FactoryCore;
-import sbcm.factory.model.EffectiveLoad;
+import sbc.space.MozartContainer;
+import sbc.space.MozartSpaces;
+import sbc.space.MozartTransaction;
+import sbc.space.SpaceTech.TransactionEndType;
+import sbcm.factory.model.EffectLoad;
+import sbcm.factory.model.Employee;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Propellant;
 import sbcm.factory.model.Rocket;
+import sbcm.factory.model.Role;
 import sbcm.factory.model.WoodenStaff;
 
-public class Producer {
-
-	private static final Logger logger = LoggerFactory.getLogger(Producer.class);
-
-	private int producerId;
+/**
+ * @author Manuel
+ * 
+ */
+public class Producer extends Role {
 
 	public static void main(String[] args) {
 
@@ -34,62 +33,51 @@ public class Producer {
 	}
 
 	public Producer() {
-
-		FactoryCore.initSpace(Boolean.FALSE);
-
-		// first receive producer id
-		this.producerId = FactoryCore.getIDAndIncr(FactoryCore.PRODUCER_COUNTER);
-
-		logger.info(this.producerId + " started.");
-
-		this.produce();
+		super();
 	}
 
-	public void produce() {
-
-		TransactionReference tReference = null;
+	@Override
+	protected void doAction() {
 
 		do {
+
+			MozartTransaction mt = null;
 
 			try {
 
 				LindaSelector igniterSelector = LindaCoordinator.newSelector(new Igniter(), 1);
 				LindaSelector propellantSelector = LindaCoordinator.newSelector(new Propellant(), 1);
 				LindaSelector woodenStaffSelector = LindaCoordinator.newSelector(new WoodenStaff(), 1);
-				LindaSelector effectiveLoadSelector = LindaCoordinator.newSelector(new EffectiveLoad(), 3);
+				LindaSelector effectLoadSelector = LindaCoordinator.newSelector(new EffectLoad(), 3);
 
-				tReference = FactoryCore.CAPI.createTransaction(RequestTimeout.INFINITE, FactoryCore.SPACE_URI);
-				ContainerReference cReference = FactoryCore.getOrCreateNamedContainer(FactoryCore.PARTS);
+				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
 
-				ArrayList<Igniter> resultIgniter = FactoryCore.CAPI.take(cReference, igniterSelector, TransactionTimeout.INFINITE,
-						tReference);
+				MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PARTS);
 
-				ArrayList<WoodenStaff> resultWoodenStaff = FactoryCore.CAPI.take(cReference, woodenStaffSelector,
-						TransactionTimeout.INFINITE, tReference);
+				ArrayList<Igniter> resultIgniter = this.mozartSpaces.take(mc, mt, igniterSelector, 1);
 
-				ArrayList<EffectiveLoad> resultEffectiveLoad = FactoryCore.CAPI.take(cReference, effectiveLoadSelector,
-						TransactionTimeout.INFINITE, tReference);
+				ArrayList<WoodenStaff> resultWoodenStaff = this.mozartSpaces.take(mc, mt, woodenStaffSelector, 1);
 
-				int propellantAmount = 110 + FactoryCore.workRandomValue();
+				ArrayList<EffectLoad> resultEffectLoad = this.mozartSpaces.take(mc, mt, effectLoadSelector, 3);
+
+				int propellantAmount = 110 + this.workRandomValue();
+
+				Rocket rocket = new Rocket(this.mozartSpaces.getIDAndIncr(MozartSpaces.ROCKET_COUNTER), null, false);
+				rocket.setFillingQuantity(propellantAmount);
+				rocket.setPropellant(new ArrayList<Propellant>());
+
 				Boolean isPropellantReached = false;
-
-				ArrayList<Propellant> resultPropellant = new ArrayList<Propellant>();
-
 				while (!isPropellantReached) {
 
-					ArrayList<Propellant> tempResultPropellant = FactoryCore.CAPI.take(cReference, propellantSelector,
-							TransactionTimeout.INFINITE, tReference);
-
-					Propellant propellant = tempResultPropellant.get(0);
-
-					resultPropellant.add(propellant);
+					Propellant propellant = (Propellant) this.mozartSpaces.take(mc, mt, propellantSelector, 3).get(0);
+					rocket.getPropellant().add(propellant);
 
 					if (propellant.getAmount() >= propellantAmount) {
 
 						propellant.setAmount(propellant.getAmount() - propellantAmount);
 
 						if (propellant.getAmount() > 0) {
-							FactoryCore.write(FactoryCore.PARTS, new Entry(propellant));
+							this.mozartSpaces.write(MozartSpaces.PARTS, propellant);
 						}
 
 						isPropellantReached = true;
@@ -100,37 +88,30 @@ public class Producer {
 				}
 
 				logger.info("Produce rocket.");
-				Thread.sleep(FactoryCore.workRandomTime());
+				Thread.sleep(this.workRandomTime());
 
-				Rocket rocket = new Rocket(null, null, false);
-				rocket.setId(FactoryCore.getIDAndIncr(FactoryCore.ROCKET_COUNTER));
-				rocket.setFillingQuantity(propellantAmount);
-				// rocket.addEmployee(new Employee(this.producerId));
+				List<Employee> employees = new ArrayList<Employee>();
+				employees.add(new Employee(this.employeeId));
+
+				rocket.setEmployee(employees);
 				rocket.setIgniter(resultIgniter.get(0));
 				rocket.setWoodenStaff(resultWoodenStaff.get(0));
-				rocket.setPropellant(resultPropellant);
-				rocket.setEffectiveLoad(resultEffectiveLoad);
+				rocket.setEffectiveLoad(resultEffectLoad);
 
-				FactoryCore.write(FactoryCore.PRODUCED_ROCKETS, new Entry(rocket));
+				this.mozartSpaces.write(MozartSpaces.PRODUCED_ROCKETS, rocket);
+				logger.info(this.employeeId + " produced a rock (ID = " + rocket.getId() + ").");
 
-				logger.info(this.producerId + " produced a rock (ID = " + rocket.getId() + ").");
+				this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
-				FactoryCore.CAPI.commitTransaction(tReference);
-
-			} catch (MzsCoreException e) {
+			} catch (Exception e) {
 
 				logger.error("", e);
 
 				try {
-					FactoryCore.CAPI.rollbackTransaction(tReference);
-				} catch (MzsCoreException e1) {
+					this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_ROLLBACK);
+				} catch (Exception e1) {
 					logger.error("", e1);
 				}
-
-			} catch (InterruptedException e) {
-
-				logger.error("", e);
-
 			}
 		} while (true);
 	}

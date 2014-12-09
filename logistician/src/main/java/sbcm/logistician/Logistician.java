@@ -1,30 +1,20 @@
 package sbcm.logistician;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.mozartspaces.capi3.FifoCoordinator;
-import org.mozartspaces.core.ContainerReference;
-import org.mozartspaces.core.Entry;
-import org.mozartspaces.core.MzsConstants.RequestTimeout;
 import org.mozartspaces.core.MzsConstants.TransactionTimeout;
-import org.mozartspaces.core.MzsCoreException;
-import org.mozartspaces.core.TransactionReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import sbc.space.MozartContainer;
 import sbc.space.MozartSpaces;
-import sbcm.factory.FactoryCore;
+import sbc.space.MozartTransaction;
+import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.Employee;
 import sbcm.factory.model.Rocket;
+import sbcm.factory.model.RocketPackage;
+import sbcm.factory.model.Role;
 
-public class Logistician {
-
-	private static final Logger logger = LoggerFactory.getLogger(Logistician.class);
-
-	private int employeeId;
-
-	private MozartSpaces mozartSpaces;
+public class Logistician extends Role {
 
 	public static void main(String[] args) {
 		new Logistician();
@@ -33,62 +23,57 @@ public class Logistician {
 	}
 
 	public Logistician() {
-
-		FactoryCore.initSpace(Boolean.FALSE);
-
-		// first receive producer id
-		this.employeeId = FactoryCore.getIDAndIncr(FactoryCore.PRODUCER_COUNTER);
-
-		logger.info(this.employeeId + " started.");
-
-		this.pack();
+		super();
 	}
 
-	public void pack() {
-
-		TransactionReference tReference = null;
+	@Override
+	protected void doAction() {
 
 		do {
 
+			MozartTransaction mt = null;
+
 			try {
 
-				tReference = FactoryCore.CAPI.createTransaction(RequestTimeout.INFINITE, FactoryCore.SPACE_URI);
+				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
 
-				ContainerReference cReference = FactoryCore.getOrCreateNamedContainer(FactoryCore.GOOD_ROCKETS);
+				MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS);
 
-				ArrayList<Rocket> result = FactoryCore.CAPI.take(cReference, FifoCoordinator.newSelector(5), TransactionTimeout.INFINITE,
-						tReference);
+				ArrayList<Rocket> result = this.mozartSpaces.take(mc, mt, FifoCoordinator.newSelector(5), 5);
 
 				logger.info("Package rockets ...");
-				Thread.sleep(FactoryCore.workRandomTime());
+				Thread.sleep(this.workRandomTime());
 
-				List<Entry> rocketPackage = new ArrayList<Entry>();
 				for (Rocket rocket : result) {
-					rocket.setReadyForPickUP(Boolean.TRUE);
 					rocket.getEmployee().add(new Employee(this.employeeId));
-					rocketPackage.add(new Entry(rocket));
 				}
 
-				FactoryCore.write(FactoryCore.ROCKET_PACKAGES, rocketPackage);
+				RocketPackage rp = new RocketPackage();
+				rp.setRocket1(result.get(0));
+				rp.setRocket2(result.get(1));
+				rp.setRocket3(result.get(2));
+				rp.setRocket4(result.get(3));
+				rp.setRocket5(result.get(4));
 
-				FactoryCore.CAPI.commitTransaction(tReference);
+				this.mozartSpaces.write(MozartSpaces.ROCKET_PACKAGES, rp);
+
+				this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
 				logger.info("Rocket package created.");
 
-			} catch (MzsCoreException e) {
+			} catch (Exception e) {
 
 				logger.error("", e);
 
 				try {
-					FactoryCore.CAPI.rollbackTransaction(tReference);
-				} catch (MzsCoreException e1) {
+					this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_ROLLBACK);
+
+				} catch (Exception e1) {
 					logger.error("", e1);
 				}
-
-			} catch (InterruptedException e) {
-				logger.error("", e);
 			}
 
 		} while (true);
+
 	}
 }

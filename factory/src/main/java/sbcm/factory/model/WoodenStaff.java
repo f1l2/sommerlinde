@@ -4,19 +4,19 @@ import java.io.Serializable;
 
 import org.mozartspaces.capi3.Queryable;
 
+import sbc.space.SpaceEntry;
+
 @Queryable(autoindex = true)
-public class WoodenStaff implements Serializable {
+public class WoodenStaff extends SpaceEntry implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
+	public WoodenStaff() {
 
-	public Integer getId() {
-		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public WoodenStaff(int id) {
+		super(id, 0, false, 0);
 	}
 
 }

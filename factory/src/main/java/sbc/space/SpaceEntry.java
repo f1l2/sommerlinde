@@ -6,6 +6,10 @@ public class SpaceEntry implements java.io.Serializable {
 	private boolean damaged;
 	private int quant;
 
+	public SpaceEntry() {
+
+	}
+
 	public SpaceEntry(int i, int t, boolean d, int q) {
 		id = i;
 		type = t;

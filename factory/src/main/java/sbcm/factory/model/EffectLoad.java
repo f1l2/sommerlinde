@@ -4,21 +4,20 @@ import java.io.Serializable;
 
 import org.mozartspaces.capi3.Queryable;
 
+import sbc.space.SpaceEntry;
+
 @Queryable(autoindex = true)
-public class EffectiveLoad implements Serializable {
+public class EffectLoad extends SpaceEntry implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
-
 	private Boolean isDefect;
 
-	public Integer getId() {
-		return id;
+	public EffectLoad() {
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public EffectLoad(int id) {
+		super(id, 0, false, 0);
 	}
 
 	public Boolean getIsDefect() {

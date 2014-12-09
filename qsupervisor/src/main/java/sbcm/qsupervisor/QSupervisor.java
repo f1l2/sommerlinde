@@ -4,64 +4,52 @@ import java.util.ArrayList;
 
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.LindaCoordinator.LindaSelector;
-import org.mozartspaces.core.ContainerReference;
-import org.mozartspaces.core.Entry;
-import org.mozartspaces.core.MzsConstants.RequestTimeout;
-import org.mozartspaces.core.MzsCoreException;
-import org.mozartspaces.core.TransactionReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 
-import sbcm.factory.FactoryCore;
-import sbcm.factory.model.EffectiveLoad;
+import sbc.space.MozartContainer;
+import sbc.space.MozartSpaces;
+import sbc.space.MozartTransaction;
+import sbc.space.SpaceTech.TransactionEndType;
+import sbcm.factory.model.EffectLoad;
+import sbcm.factory.model.Employee;
 import sbcm.factory.model.Propellant;
 import sbcm.factory.model.Rocket;
+import sbcm.factory.model.Role;
 
-public class QSupervisor {
-
-	private static final Logger logger = LoggerFactory.getLogger(QSupervisor.class);
-
-	private int employeeId;
+public class QSupervisor extends Role {
 
 	public static void main(String[] args) {
 		new QSupervisor();
 	}
 
 	public QSupervisor() {
-
-		FactoryCore.initSpace(Boolean.FALSE);
-
-		// first receive producer id
-		this.employeeId = FactoryCore.getIDAndIncr(FactoryCore.PRODUCER_COUNTER);
-
-		logger.info(this.employeeId + " started.");
-
-		this.check();
+		super();
 	}
 
-	public void check() {
+	@Override
+	protected void doAction() {
 
 		do {
-			TransactionReference tReference = null;
+			MozartTransaction mt = null;
 
-			Rocket rocketTemplate = new Rocket(null, null, false);
+			Rocket rocketTemplate = new Rocket();
 			LindaSelector rocketSelector = LindaCoordinator.newSelector(rocketTemplate, 1);
 			try {
 
 				logger.info("Waiting for work ... ");
 
-				tReference = FactoryCore.CAPI.createTransaction(RequestTimeout.INFINITE, FactoryCore.SPACE_URI);
-				ContainerReference cReference = FactoryCore.getOrCreateNamedContainer(FactoryCore.PRODUCED_ROCKETS);
+				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
+				MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
 
-				ArrayList<Rocket> result = FactoryCore.CAPI.take(cReference, rocketSelector, RequestTimeout.INFINITE, tReference);
+				ArrayList<Rocket> result = this.mozartSpaces.take(mc, mt, rocketSelector, 1);
 
 				logger.info("Check rocket (Id = " + result.get(0).getId() + ").");
-				Thread.sleep(FactoryCore.workRandomTime());
+				Thread.sleep(this.workRandomTime());
 
 				Rocket rocket = result.get(0);
 
 				/**
-				 * Propellant amount has to be more than 110.
+				 * Propellant amount has to be more than 120.
 				 * 
 				 * Only one defect effective load is allowed.
 				 */
@@ -71,38 +59,39 @@ public class QSupervisor {
 				}
 
 				int cntDefectEffectiveLoad = 0;
-				for (EffectiveLoad effectiveLoad : rocket.getEffectiveLoad()) {
+				for (EffectLoad effectiveLoad : rocket.getEffectiveLoad()) {
 					if (effectiveLoad.getIsDefect())
 						cntDefectEffectiveLoad++;
 				}
 
 				// rocket.getEmployee().add(new Employee(this.employeeId));
-				if ((amount <= 110) || (cntDefectEffectiveLoad >= 2))
+				if ((amount < 120) || (cntDefectEffectiveLoad > 1)) {
 					rocket.setIsDefect(Boolean.TRUE);
-				else
+				} else {
 					rocket.setIsDefect(Boolean.FALSE);
+				}
+
+				rocket.getEmployee().add(new Employee(this.employeeId));
 
 				if (rocket.getIsDefect()) {
-					FactoryCore.write(FactoryCore.DEFECT_ROCKETS, new Entry(rocket));
+					this.mozartSpaces.write(MozartSpaces.DEFECT_ROCKETS, rocket);
 				} else {
-					FactoryCore.write(FactoryCore.GOOD_ROCKETS, new Entry(rocket));
+					this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS, rocket);
 				}
 
 				logger.info("Rocket checked: (Id = " + result.get(0).getId() + "; Defect = " + rocket.getIsDefect() + ").");
 
-				FactoryCore.CAPI.commitTransaction(tReference);
+				this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
-			} catch (MzsCoreException e) {
+			} catch (Exception e) {
 
 				logger.error("", e);
 
 				try {
-					FactoryCore.CAPI.rollbackTransaction(tReference);
-				} catch (MzsCoreException e1) {
+					this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_ROLLBACK);
+				} catch (Exception e1) {
 					logger.error("", e1);
 				}
-			} catch (InterruptedException e) {
-				logger.error("", e);
 			}
 
 		} while (true);

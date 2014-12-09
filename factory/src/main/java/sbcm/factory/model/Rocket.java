@@ -1,23 +1,20 @@
 package sbcm.factory.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.mozartspaces.capi3.Queryable;
 
+import sbc.space.SpaceEntry;
+
 @Queryable(autoindex = true)
-public class Rocket implements Serializable {
+public class Rocket extends SpaceEntry implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private Integer id;
 
 	private List<Employee> employee;
 
 	private Boolean isDefect;
-
-	private Boolean readyForPickUP;
 
 	private Igniter igniter;
 
@@ -25,7 +22,7 @@ public class Rocket implements Serializable {
 
 	private List<Propellant> propellant;
 
-	private List<EffectiveLoad> effectiveLoad;
+	private List<EffectLoad> effectiveLoad;
 
 	private Integer fillingQuantity;
 
@@ -34,34 +31,14 @@ public class Rocket implements Serializable {
 	}
 
 	public Rocket() {
-
-		this.employee = new ArrayList<Employee>();
 	}
 
 	public Rocket(Integer id, Integer employeeId, Boolean isDefect) {
 
-		this.id = id;
+		super(id, 0, false, 0);
+
 		this.isDefect = isDefect;
 
-		this.employee = new ArrayList<Employee>();
-		if (employeeId != null)
-			this.employee.add(new Employee(employeeId));
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Boolean getReadyForPickUP() {
-		return readyForPickUP;
-	}
-
-	public void setReadyForPickUP(Boolean readyForPickUP) {
-		this.readyForPickUP = readyForPickUP;
 	}
 
 	public Boolean getIsDefect() {
@@ -96,11 +73,11 @@ public class Rocket implements Serializable {
 		this.propellant = propellant;
 	}
 
-	public List<EffectiveLoad> getEffectiveLoad() {
+	public List<EffectLoad> getEffectiveLoad() {
 		return effectiveLoad;
 	}
 
-	public void setEffectiveLoad(List<EffectiveLoad> effectiveLoad) {
+	public void setEffectiveLoad(List<EffectLoad> effectiveLoad) {
 		this.effectiveLoad = effectiveLoad;
 	}
 
@@ -119,4 +96,5 @@ public class Rocket implements Serializable {
 	public void setEmployee(List<Employee> employee) {
 		this.employee = employee;
 	}
+
 }

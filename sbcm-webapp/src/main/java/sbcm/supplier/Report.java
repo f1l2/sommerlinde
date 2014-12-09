@@ -7,16 +7,16 @@ import javax.faces.bean.ViewScoped;
 
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.LindaCoordinator.LindaSelector;
-import org.mozartspaces.core.ContainerReference;
-import org.mozartspaces.core.MzsCoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sbcm.factory.FactoryCore;
-import sbcm.factory.model.EffectiveLoad;
+import sbc.space.MozartContainer;
+import sbc.space.MozartSpaces;
+import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Propellant;
 import sbcm.factory.model.Rocket;
+import sbcm.factory.model.RocketPackage;
 import sbcm.factory.model.WoodenStaff;
 
 @ManagedBean
@@ -31,6 +31,9 @@ public class Report {
 	private List<Igniter> lIgniter;
 	private List<Propellant> lPropellant;
 	private List<WoodenStaff> lWoodenStaff;
+	private List<RocketPackage> packages;
+
+	private MozartSpaces mozartSpaces;
 
 	public List<Igniter> getlIgniter() {
 		return lIgniter;
@@ -45,9 +48,8 @@ public class Report {
 
 	public Report() {
 
-		FactoryCore.initSpace(Boolean.FALSE);
+		this.mozartSpaces = new MozartSpaces(false);
 
-		// first receive producer id
 		this.generateReport();
 	}
 
@@ -58,40 +60,46 @@ public class Report {
 		LindaSelector igniterSelector = LindaCoordinator.newSelector(new Igniter(), LindaSelector.COUNT_MAX);
 		LindaSelector propellantSelector = LindaCoordinator.newSelector(new Propellant(), LindaSelector.COUNT_MAX);
 		LindaSelector woodenStaffSelector = LindaCoordinator.newSelector(new WoodenStaff(), LindaSelector.COUNT_MAX);
-		LindaSelector effectiveLoadSelector = LindaCoordinator.newSelector(new EffectiveLoad(), LindaSelector.COUNT_MAX);
-		LindaSelector producedRocket = LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_MAX);
+		LindaSelector effectLoadSelector = LindaCoordinator.newSelector(new EffectLoad(), LindaSelector.COUNT_MAX);
+		LindaSelector rocketSelector = LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_MAX);
+		LindaSelector packageSelector = LindaCoordinator.newSelector(new RocketPackage(), LindaSelector.COUNT_MAX);
 
 		try {
-			ContainerReference container = FactoryCore.getOrCreateNamedContainer(FactoryCore.PARTS);
 
-			this.lIgniter = FactoryCore.CAPI.read(container, igniterSelector, new Long(0), null);
+			MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PARTS);
+
+			this.lIgniter = this.mozartSpaces.read(mc, null, igniterSelector, 1000);
 			logger.info("# Igniter: " + lIgniter.size());
 
-			this.lPropellant = FactoryCore.CAPI.read(container, propellantSelector, new Long(0), null);
+			this.lPropellant = this.mozartSpaces.read(mc, null, propellantSelector, 1000);
 			logger.info("# Propellant: " + lPropellant.size());
 			for (Propellant propellant : lPropellant) {
 				logger.info("- ID:" + propellant.getId() + "; Amount: " + propellant.getAmount());
 			}
 
-			this.lWoodenStaff = FactoryCore.CAPI.read(container, woodenStaffSelector, new Long(0), null);
+			this.lWoodenStaff = this.mozartSpaces.read(mc, null, woodenStaffSelector, 1000);
 			logger.info("# WoodenStaff: " + lWoodenStaff.size());
 
-			this.lEffectLoad = FactoryCore.CAPI.read(container, effectiveLoadSelector, new Long(0), null);
+			this.lEffectLoad = this.mozartSpaces.read(mc, null, effectLoadSelector, 1000);
 			logger.info("# EffectiveLoad: " + lEffectLoad.size());
 
-			container = FactoryCore.getOrCreateNamedContainer(FactoryCore.PRODUCED_ROCKETS);
-			this.producedRockets = FactoryCore.CAPI.read(container, producedRocket, new Long(0), null);
+			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
+			this.producedRockets = this.mozartSpaces.read(mc, null, rocketSelector, 1000);
 			logger.info("# Produced rockets: " + this.producedRockets.size());
 
-			container = FactoryCore.getOrCreateNamedContainer(FactoryCore.GOOD_ROCKETS);
-			this.goodRockets = FactoryCore.CAPI.read(container, producedRocket, new Long(0), null);
+			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS);
+			this.goodRockets = this.mozartSpaces.read(mc, null, rocketSelector, 1000);
 			logger.info("# Good rockets: " + this.goodRockets.size());
 
-			container = FactoryCore.getOrCreateNamedContainer(FactoryCore.DEFECT_ROCKETS);
-			this.defectRockets = FactoryCore.CAPI.read(container, producedRocket, new Long(0), null);
+			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.DEFECT_ROCKETS);
+			this.defectRockets = this.mozartSpaces.read(mc, null, rocketSelector, 1000);
 			logger.info("# Defect rockets: " + this.defectRockets.size());
 
-		} catch (MzsCoreException e) {
+			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ROCKET_PACKAGES);
+			this.packages = this.mozartSpaces.read(mc, null, packageSelector, 1000);
+			logger.info("# Packages: " + this.packages.size());
+
+		} catch (Exception e) {
 			logger.error("", e);
 		}
 
@@ -118,15 +126,15 @@ public class Report {
 		this.lWoodenStaff = lWoodenStaff;
 	}
 
-	public List<EffectiveLoad> getlEffectLoad() {
+	public List<EffectLoad> getlEffectLoad() {
 		return lEffectLoad;
 	}
 
-	public void setlEffectLoad(List<EffectiveLoad> lEffectLoad) {
+	public void setlEffectLoad(List<EffectLoad> lEffectLoad) {
 		this.lEffectLoad = lEffectLoad;
 	}
 
-	private List<EffectiveLoad> lEffectLoad;
+	private List<EffectLoad> lEffectLoad;
 
 	public List<Rocket> getDefectRockets() {
 		return defectRockets;
@@ -150,6 +158,14 @@ public class Report {
 
 	public void setProducedRockets(List<Rocket> producedRockets) {
 		this.producedRockets = producedRockets;
+	}
+
+	public List<RocketPackage> getPackages() {
+		return packages;
+	}
+
+	public void setPackages(List<RocketPackage> packages) {
+		this.packages = packages;
 	}
 
 }

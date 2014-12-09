@@ -1,23 +1,83 @@
 package sbcm.supplier;
 
-import org.mozartspaces.core.Entry;
-import org.mozartspaces.core.MzsCoreException;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import sbcm.factory.FactoryCore;
-import sbcm.factory.model.EffectiveLoad;
+import sbc.space.MozartSpaces;
+import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Propellant;
+import sbcm.factory.model.Role;
 import sbcm.factory.model.WoodenStaff;
 
-public class Supplier {
-
-	private static final Logger logger = LoggerFactory.getLogger(Supplier.class);
-
-	private int producerId;
+public class Supplier extends Role {
 
 	private int propDefect = 10;
+
+	private String name;
+	private Integer woodenstaff;
+	private Integer igniter;
+	private Integer propellant;
+	private Integer effectLoad;
+
+	public int getProducerId() {
+		return employeeId;
+	}
+
+	public void setProducerId(int producerId) {
+		this.employeeId = producerId;
+	}
+
+	public int getPropDefect() {
+		return propDefect;
+	}
+
+	public void setPropDefect(int propDefect) {
+		this.propDefect = propDefect;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getWoodenstaff() {
+		return woodenstaff;
+	}
+
+	public void setWoodenstaff(Integer woodenstaff) {
+		this.woodenstaff = woodenstaff;
+	}
+
+	public Integer getIgniter() {
+		return igniter;
+	}
+
+	public void setIgniter(Integer igniter) {
+		this.igniter = igniter;
+	}
+
+	public Integer getPropellant() {
+		return propellant;
+	}
+
+	public void setPropellant(Integer propellant) {
+		this.propellant = propellant;
+	}
+
+	public Integer getEffectLoad() {
+		return effectLoad;
+	}
+
+	public void setEffectLoad(Integer effectLoad) {
+		this.effectLoad = effectLoad;
+	}
+
+	public static Logger getLogger() {
+		return logger;
+	}
 
 	public static void main(String[] args) {
 
@@ -27,71 +87,57 @@ public class Supplier {
 	}
 
 	public Supplier() {
-
-		FactoryCore.initSpace(Boolean.FALSE);
-
-		// first receive producer id
-		this.producerId = FactoryCore.getIDAndIncr(FactoryCore.PRODUCER_COUNTER);
-
-		logger.info(this.producerId + " started.");
-
-		this.supply();
+		super();
 	}
 
-	public void supply() {
+	@Override
+	protected void doAction() {
+		logger.info(this.employeeId + " started.");
 
-		for (int i = 0; i <= 3; i++) {
+		for (int i = 1; i <= 4; i++) {
 
-			Igniter igniter = new Igniter();
-			igniter.setId(FactoryCore.getIDAndIncr(FactoryCore.PART_COUNTER));
-
+			Igniter ig = new Igniter(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
 			try {
-				FactoryCore.write(FactoryCore.PARTS, new Entry(igniter));
-			} catch (MzsCoreException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		for (int i = 0; i <= 1; i++) {
-
-			Propellant propellant = new Propellant();
-			propellant.setId(FactoryCore.getIDAndIncr(FactoryCore.PART_COUNTER));
-			propellant.setAmount(500);
-
-			try {
-				FactoryCore.write(FactoryCore.PARTS, new Entry(propellant));
-			} catch (MzsCoreException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		for (int i = 0; i <= 3; i++) {
-
-			WoodenStaff woodenStaff = new WoodenStaff();
-			woodenStaff.setId(FactoryCore.getIDAndIncr(FactoryCore.PART_COUNTER));
-
-			try {
-				FactoryCore.write(FactoryCore.PARTS, new Entry(woodenStaff));
-			} catch (MzsCoreException e) {
-				e.printStackTrace();
+				mozartSpaces.write(MozartSpaces.PARTS, ig);
+			} catch (Exception e) {
+				logger.error("Write igniter exception", e);
 			}
 		}
 
-		for (int i = 0; i <= 3; i++) {
+		for (int i = 1; i <= 4; i++) {
 
-			EffectiveLoad effectiveLoad = new EffectiveLoad();
-			effectiveLoad.setId(FactoryCore.getIDAndIncr(FactoryCore.PART_COUNTER));
-			effectiveLoad.setIsDefect(FactoryCore.isDefectRandom(this.propDefect));
+			Propellant p = new Propellant(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+			p.setAmount(500);
 
 			try {
-				FactoryCore.write(FactoryCore.PARTS, new Entry(effectiveLoad));
-			} catch (MzsCoreException e) {
-				e.printStackTrace();
+				mozartSpaces.write(MozartSpaces.PARTS, p);
+			} catch (Exception e) {
+				logger.error("Write propellant exception", e);
+			}
+		}
+
+		for (int i = 1; i <= 4; i++) {
+
+			WoodenStaff w = new WoodenStaff(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+
+			try {
+				mozartSpaces.write(MozartSpaces.PARTS, w);
+			} catch (Exception e) {
+				logger.error("Write woodenstaff exception", e);
+			}
+		}
+
+		for (int i = 1; i <= 4; i++) {
+
+			EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+			el.setIsDefect(this.isDefectRandom(this.propDefect));
+
+			try {
+				mozartSpaces.write(MozartSpaces.PARTS, el);
+			} catch (Exception e) {
+				logger.error("Write effectload exception", e);
 			}
 		}
 
 	}
-
 }

@@ -19,7 +19,7 @@
 			        <h:outputText value="#{rocket.id}" />
 			    </p:column>
 			 
-			    <p:column headerText="ID Mitarbeiter">
+			    <p:column headerText="ID Mitarbeiter (Produzent; Q-Kontrolleur; Logistik)">
 			        <ui:repeat value="#{rocket.employee}" var="item">
     					 <h:outputText value="#{item.id}" />
     					 <h:outputText value="; " />
@@ -42,9 +42,9 @@
         			</ui:repeat> 
 				</p:column>
 				
-			 	<p:column headerText="ID Effektladung">
+			 	<p:column headerText="ID Effektladung (Defekt)">
 			        <ui:repeat value="#{rocket.effectiveLoad}" var="item">
-    					 <h:outputText value="#{item.id} - #{item.isDefect}" />
+    					 <h:outputText value="#{item.id} (#{item.isDefect})" />
     					 <h:outputText value="; " />
 					</ui:repeat>
 			    </p:column>
@@ -66,7 +66,7 @@
 			        <h:outputText value="#{rocket.id}" />
 			    </p:column>
 			 
-			    <p:column headerText="ID Mitarbeiter">
+			    <p:column headerText="ID Mitarbeiter (Produzent; Q-Kontrolleur; Logistik)">
 			        <ui:repeat value="#{rocket.employee}" var="item">
     					 <h:outputText value="#{item.id}" />
     					 <h:outputText value="; " />
@@ -89,9 +89,9 @@
         			</ui:repeat> 
 				</p:column>
 				
-			 	<p:column headerText="ID Effektladung">
+			 	<p:column headerText="ID Effektladung (Defekt)">
 			        <ui:repeat value="#{rocket.effectiveLoad}" var="item">
-    					 <h:outputText value="#{item.id} - #{item.isDefect}" />
+    					 <h:outputText value="#{item.id} (#{item.isDefect})" />
     					 <h:outputText value="; " />
 					</ui:repeat>
 			    </p:column>
@@ -113,7 +113,7 @@
 			        <h:outputText value="#{rocket.id}" />
 			    </p:column>
 			 
-			    <p:column headerText="ID Mitarbeiter">
+			    <p:column headerText="ID Mitarbeiter (Produzent; Q-Kontrolleur; Logistik)">
 			        <ui:repeat value="#{rocket.employee}" var="item">
     					 <h:outputText value="#{item.id}" />
     					 <h:outputText value="; " />
@@ -136,9 +136,9 @@
         			</ui:repeat> 
 				</p:column>
 				
-			 	<p:column headerText="ID Effektladung">
+			 	<p:column headerText="ID Effektladung (Defekt)">
 			        <ui:repeat value="#{rocket.effectiveLoad}" var="item">
-    					 <h:outputText value="#{item.id} - #{item.isDefect}" />
+    					 <h:outputText value="#{item.id} (#{item.isDefect})" />
     					 <h:outputText value="; " />
 					</ui:repeat>
 			    </p:column>

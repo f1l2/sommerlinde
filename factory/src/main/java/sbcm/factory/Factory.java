@@ -1,9 +1,9 @@
 package sbcm.factory;
 
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import sbc.space.MozartSpaces;
 
 public class Factory {
 
@@ -13,26 +13,9 @@ public class Factory {
 
 		logger.info("Start space ...");
 
-		FactoryCore.initSpace(Boolean.TRUE);
+		MozartSpaces mozartSpaces = new MozartSpaces(true);
+		mozartSpaces.init();
 
 		logger.info("Space started.");
-
-		// RUN
-		Date time = new Date();
-		while ((time.getTime() + 660 * 1000) > new Date().getTime()) {
-
-			try {
-				Thread.sleep(200000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
-		FactoryCore.stopSpace();
-
-		logger.info("Space stopped.");
-
 	}
 }
