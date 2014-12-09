@@ -1,9 +1,24 @@
 package sbc.space;
 
 import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sbcm.factory.Factory;
+import sbcm.factory.model.Employee;
 
 public abstract class SpaceTech {
 	protected long timeout = 1000000;
+	protected static final Logger logger = LoggerFactory.getLogger(Factory.class);
+
+	public static final String PARTS = "parts";
+	public static final String PRODUCED_ROCKETS = "producedRockets";
+	public static final String GOOD_ROCKETS = "goodRockets";
+	public static final String DEFECT_ROCKETS = "defectRockets";
+	public static final String ROCKET_PACKAGES = "rocketPackages";
+	public static final String PRODUCER_COUNTER = "producerCounter";
+	public static final String PART_COUNTER = "partCounter";
+	public static final String ROCKET_COUNTER = "rocketCounter";
+
 
 	public enum SelectorType {
 		SEL_ANY, SEL_FIFO, SEL_LIFO, SEL_LINDA
@@ -15,6 +30,27 @@ public abstract class SpaceTech {
 
 	public void init() {
 		System.out.println("*** Initiating SpaceTech");
+                try {
+                        this.createContainer(PRODUCED_ROCKETS, 1000);
+                        this.createContainer(GOOD_ROCKETS, 1000);
+                        this.createContainer(DEFECT_ROCKETS, 1000);
+                        this.createContainer(ROCKET_PACKAGES, 1000);
+                        this.createContainer(PARTS, 1000);
+                        this.createContainer(PRODUCER_COUNTER, 1000);
+                        this.createContainer(PART_COUNTER, 1000);
+                        this.createContainer(ROCKET_COUNTER, 1000);
+
+                        // write inital value
+                        SpaceTransaction mt = createTransaction();
+                        write(findContainer(PART_COUNTER), mt, new Employee(1));
+                        write(findContainer(PRODUCER_COUNTER), mt, new Employee(1));
+                        write(findContainer(ROCKET_COUNTER), mt, new Employee(1));
+
+                        endTransaction(mt, TransactionEndType.TET_COMMIT);
+
+                } catch (Exception e) {
+                        logger.error("Error initalising MozartSpaces", e);
+                }
 	}
 
 	public abstract void exit();
@@ -44,4 +80,32 @@ public abstract class SpaceTech {
 	public void setTimeout(long to) {
 		timeout = to;
 	}
+
+        public int getIDAndIncr(String counter) {
+                ArrayList<SpaceEntry> entries = new ArrayList<SpaceEntry>();
+                int id = -1;
+                try {
+
+                        SpaceTransaction mt = createTransaction();
+
+                        Container mc = findContainer(counter);
+
+                        entries = take(mc, mt, SelectorType.SEL_LIFO, 1);
+
+                        if (null != entries) {
+
+                                id = entries.get(0).getId();
+                                write(mc, mt, new Employee(entries.get(0).getId() + 1));
+                        }
+
+                        endTransaction(mt, TransactionEndType.TET_COMMIT);
+
+                } catch (Exception e) {
+                        logger.error("", e);
+                }
+
+                return id;
+
+        }
+
 }

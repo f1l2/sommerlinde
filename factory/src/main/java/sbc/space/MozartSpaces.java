@@ -25,18 +25,6 @@ public class MozartSpaces extends SpaceTech {
 	private MzsCore core;
 	private Capi capi;
 
-	private static final Logger logger = LoggerFactory.getLogger(Factory.class);
-
-	// geändert Manuel
-	public static final String PARTS = "parts";
-	public static final String PRODUCED_ROCKETS = "producedRockets";
-	public static final String GOOD_ROCKETS = "goodRockets";
-	public static final String DEFECT_ROCKETS = "defectRockets";
-	public static final String ROCKET_PACKAGES = "rocketPackages";
-	public static final String PRODUCER_COUNTER = "producerCounter";
-	public static final String PART_COUNTER = "partCounter";
-	public static final String ROCKET_COUNTER = "rocketCounter";
-
 	public MozartSpaces(boolean newspace) {
 		try {
 			spaceURI = new URI("xvsm://localhost:9876/");
@@ -60,29 +48,6 @@ public class MozartSpaces extends SpaceTech {
 
 	public void init() {
 		logger.info("*** Initialising MozartSpaces");
-
-		// geändert Manuel
-		try {
-			this.createContainer(PRODUCED_ROCKETS, 1000);
-			this.createContainer(GOOD_ROCKETS, 1000);
-			this.createContainer(DEFECT_ROCKETS, 1000);
-			this.createContainer(ROCKET_PACKAGES, 1000);
-			this.createContainer(PARTS, 1000);
-			this.createContainer(PRODUCER_COUNTER, 1000);
-			this.createContainer(PART_COUNTER, 1000);
-			this.createContainer(ROCKET_COUNTER, 1000);
-
-			// write inital value
-			MozartTransaction mt = (MozartTransaction) this.createTransaction();
-			this.write(this.findContainer(PART_COUNTER), mt, new Employee(1));
-			this.write(this.findContainer(PRODUCER_COUNTER), mt, new Employee(1));
-			this.write(this.findContainer(ROCKET_COUNTER), mt, new Employee(1));
-
-			this.endTransaction(mt, TransactionEndType.TET_COMMIT);
-
-		} catch (Exception e) {
-			logger.error("Error initalising MozartSpaces", e);
-		}
 	}
 
 	public void setCoordinator(int coordinator) {
@@ -156,34 +121,6 @@ public class MozartSpaces extends SpaceTech {
 		}
 	}
 
-	public int getIDAndIncr(String counter) {
-		// geändert Manuel
-
-		ArrayList<SpaceEntry> entries = new ArrayList<SpaceEntry>();
-		int id = -1;
-		try {
-
-			MozartTransaction mt = (MozartTransaction) this.createTransaction();
-
-			MozartContainer mc = (MozartContainer) this.findContainer(counter);
-
-			entries = this.take(mc, mt, SelectorType.SEL_LIFO, 1);
-
-			if (null != entries) {
-
-				id = entries.get(0).getId();
-				this.write(mc, mt, new Employee(entries.get(0).getId() + 1));
-			}
-
-			this.endTransaction(mt, TransactionEndType.TET_COMMIT);
-
-		} catch (Exception e) {
-			logger.error("", e);
-		}
-
-		return id;
-
-	}
 
 	private TransactionReference _gT(MozartTransaction mt) {
 		if (mt != null)
