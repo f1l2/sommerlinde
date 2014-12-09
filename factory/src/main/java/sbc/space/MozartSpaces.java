@@ -37,6 +37,7 @@ public class MozartSpaces extends SpaceTech {
 	public static final String PRODUCER_COUNTER = "producerCounter";
 	public static final String PART_COUNTER = "partCounter";
 	public static final String ROCKET_COUNTER = "rocketCounter";
+	public static final String PACKAGE_COUNTER = "packageCounter";
 
 	public MozartSpaces(boolean newspace) {
 		try {
@@ -72,12 +73,14 @@ public class MozartSpaces extends SpaceTech {
 			this.createContainer(PRODUCER_COUNTER, 1000);
 			this.createContainer(PART_COUNTER, 1000);
 			this.createContainer(ROCKET_COUNTER, 1000);
+			this.createContainer(PACKAGE_COUNTER, 1000);
 
 			// write inital value
 			MozartTransaction mt = (MozartTransaction) this.createTransaction();
 			this.write(this.findContainer(PART_COUNTER), mt, new Employee(1));
 			this.write(this.findContainer(PRODUCER_COUNTER), mt, new Employee(1));
 			this.write(this.findContainer(ROCKET_COUNTER), mt, new Employee(1));
+			this.write(this.findContainer(PACKAGE_COUNTER), mt, new Employee(1));
 
 			this.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
