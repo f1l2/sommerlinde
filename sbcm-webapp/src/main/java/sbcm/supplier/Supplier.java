@@ -13,20 +13,19 @@ import sbc.space.MozartSpaces;
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Propellant;
-import sbcm.factory.model.Role;
 import sbcm.factory.model.WoodenStaff;
+import sbcm.space.role.Role;
 
 @ManagedBean(name = "supplier")
 @ViewScoped
 public class Supplier extends Role {
-
-	private int propDefect = 50;
 
 	private String name;
 	private Integer woodenstaff;
 	private Integer igniter;
 	private Integer propellant;
 	private Integer effectLoad;
+	private Integer errorRate;
 
 	public int getProducerId() {
 		return employeeId;
@@ -34,14 +33,6 @@ public class Supplier extends Role {
 
 	public void setProducerId(int producerId) {
 		this.employeeId = producerId;
-	}
-
-	public int getPropDefect() {
-		return propDefect;
-	}
-
-	public void setPropDefect(int propDefect) {
-		this.propDefect = propDefect;
 	}
 
 	public String getName() {
@@ -82,6 +73,14 @@ public class Supplier extends Role {
 
 	public void setEffectLoad(Integer effectLoad) {
 		this.effectLoad = effectLoad;
+	}
+
+	public Integer getErrorRate() {
+		return errorRate;
+	}
+
+	public void setErrorRate(Integer errorRate) {
+		this.errorRate = errorRate;
 	}
 
 	public static Logger getLogger() {
@@ -143,7 +142,11 @@ public class Supplier extends Role {
 		for (int i = 1; i <= this.effectLoad; i++) {
 
 			EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
-			el.setIsDefect(this.isDefectRandom(this.propDefect));
+
+			if (this.errorRate != null)
+				el.setIsDefect(this.isDefectRandom(this.errorRate));
+			else
+				el.setIsDefect(this.isDefectRandom(10));
 
 			try {
 				mozartSpaces.write(MozartSpaces.PARTS, el);

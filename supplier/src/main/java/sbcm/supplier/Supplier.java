@@ -6,8 +6,8 @@ import sbc.space.MozartSpaces;
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Propellant;
-import sbcm.factory.model.Role;
 import sbcm.factory.model.WoodenStaff;
+import sbcm.space.role.Role;
 
 public class Supplier extends Role {
 

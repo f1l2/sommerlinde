@@ -6,13 +6,14 @@ import org.mozartspaces.capi3.FifoCoordinator;
 import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 
 import sbc.space.MozartContainer;
+import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
 import sbc.space.MozartTransaction;
 import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.Employee;
 import sbcm.factory.model.Rocket;
 import sbcm.factory.model.RocketPackage;
-import sbcm.factory.model.Role;
+import sbcm.space.role.Role;
 
 public class Logistician extends Role {
 
@@ -39,7 +40,7 @@ public class Logistician extends Role {
 
 				MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS);
 
-				ArrayList<Rocket> result = this.mozartSpaces.take(mc, mt, FifoCoordinator.newSelector(5), 5);
+				ArrayList<Rocket> result = this.mozartSpaces.take(mc, mt, new MozartSelector(FifoCoordinator.newSelector(5)));
 
 				logger.info("Package rockets ...");
 				Thread.sleep(this.workRandomTime());

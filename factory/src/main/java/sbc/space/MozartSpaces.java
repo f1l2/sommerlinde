@@ -8,7 +8,6 @@ import org.mozartspaces.capi3.AnyCoordinator;
 import org.mozartspaces.capi3.FifoCoordinator;
 import org.mozartspaces.capi3.LifoCoordinator;
 import org.mozartspaces.capi3.LindaCoordinator;
-import org.mozartspaces.capi3.Selector;
 import org.mozartspaces.core.Capi;
 import org.mozartspaces.core.ContainerReference;
 import org.mozartspaces.core.DefaultMzsCore;
@@ -121,17 +120,15 @@ public class MozartSpaces extends SpaceTech {
 	}
 
 	// Manuel geändert
-	public <T extends SpaceEntry> ArrayList<T> read(MozartContainer mc, MozartTransaction mt, Selector selector, int count)
-			throws Exception {
-		ArrayList<T> entries = capi.read(mc.getContainer(), selector, timeout, null);
+	public <T extends SpaceEntry> ArrayList<T> read(MozartContainer mc, MozartTransaction mt, MozartSelector selector) throws Exception {
+		ArrayList<T> entries = capi.read(mc.getContainer(), selector.getSelector(), timeout, null);
 
 		return entries;
 	}
 
 	// Manuel geändert
-	public <T extends SpaceEntry> ArrayList<T> take(MozartContainer mc, MozartTransaction mt, Selector selector, int count)
-			throws Exception {
-		ArrayList<T> entries = capi.take(mc.getContainer(), selector, timeout, null);
+	public <T extends SpaceEntry> ArrayList<T> take(MozartContainer mc, MozartTransaction mt, MozartSelector selector) throws Exception {
+		ArrayList<T> entries = capi.take(mc.getContainer(), selector.getSelector(), timeout, null);
 
 		return entries;
 	}

@@ -3,10 +3,10 @@ package sbcm.qsupervisor;
 import java.util.ArrayList;
 
 import org.mozartspaces.capi3.LindaCoordinator;
-import org.mozartspaces.capi3.LindaCoordinator.LindaSelector;
 import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 
 import sbc.space.MozartContainer;
+import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
 import sbc.space.MozartTransaction;
 import sbc.space.SpaceTech.TransactionEndType;
@@ -14,7 +14,7 @@ import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Employee;
 import sbcm.factory.model.Propellant;
 import sbcm.factory.model.Rocket;
-import sbcm.factory.model.Role;
+import sbcm.space.role.Role;
 
 public class QSupervisor extends Role {
 
@@ -33,7 +33,7 @@ public class QSupervisor extends Role {
 			MozartTransaction mt = null;
 
 			Rocket rocketTemplate = new Rocket();
-			LindaSelector rocketSelector = LindaCoordinator.newSelector(rocketTemplate, 1);
+			MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(rocketTemplate, 1));
 			try {
 
 				logger.info("Waiting for work ... ");
@@ -41,7 +41,7 @@ public class QSupervisor extends Role {
 				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
 				MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
 
-				ArrayList<Rocket> result = this.mozartSpaces.take(mc, mt, rocketSelector, 1);
+				ArrayList<Rocket> result = this.mozartSpaces.take(mc, mt, rocketSelector);
 
 				logger.info("Check rocket (Id = " + result.get(0).getId() + ").");
 				Thread.sleep(this.workRandomTime());

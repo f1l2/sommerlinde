@@ -1,4 +1,4 @@
-package sbcm.factory.model;
+package sbcm.space.role;
 
 import java.util.Random;
 
