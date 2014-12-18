@@ -14,6 +14,8 @@ public class EffectLoad extends SpaceEntry implements Serializable {
 	private Employee supplier;
 
 	private Boolean isDefect;
+	
+	private EffectLoadColor color;
 
 	public EffectLoad() {
 	}
@@ -36,6 +38,14 @@ public class EffectLoad extends SpaceEntry implements Serializable {
 
 	public void setSupplier(Employee supplier) {
 		this.supplier = supplier;
+	}
+
+	public EffectLoadColor getColor() {
+		return color;
+	}
+
+	public void setColor(EffectLoadColor color) {
+		this.color = color;
 	}
 
 }

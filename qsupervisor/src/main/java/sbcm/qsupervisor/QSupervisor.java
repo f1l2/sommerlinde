@@ -12,6 +12,7 @@ import sbc.space.MozartTransaction;
 import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Employee;
+import sbcm.factory.model.QualityCategory;
 import sbcm.factory.model.Rocket;
 import sbcm.space.role.Role;
 
@@ -59,26 +60,27 @@ public class QSupervisor extends Role {
 						cntDefectEffectiveLoad++;
 				}
 
-				// rocket.getEmployee().add(new Employee(this.employeeId));
-				if ((rocket.getFillingQuantity() < 120)) {
-					logger.info("Filling quantity is less than 120.");
-					rocket.setIsDefect(Boolean.TRUE);
-				} else if (cntDefectEffectiveLoad > 1) {
-					logger.info("More than one defect effect load");
-					rocket.setIsDefect(Boolean.TRUE);
+		
+				if ((rocket.getFillingQuantity() >= 130) && (cntDefectEffectiveLoad == 0)) {
+					logger.info("Quality category A.");
+					rocket.setQualityCategory(QualityCategory.A);
+				} else if ((rocket.getFillingQuantity() >= 120) && (cntDefectEffectiveLoad <= 1)) {
+						logger.info("Quality category B.");
+					rocket.setQualityCategory(QualityCategory.B);
 				} else {
-					rocket.setIsDefect(Boolean.FALSE);
+					logger.info("Defect.");
+					rocket.setQualityCategory(QualityCategory.DEFEKT);
 				}
-
+				
 				rocket.getEmployee().add(new Employee(this.employeeId));
 
-				if (rocket.getIsDefect()) {
+				if (rocket.getQualityCategory().equals(QualityCategory.DEFEKT)) {
 					this.mozartSpaces.write(MozartSpaces.DEFECT_ROCKETS, rocket);
 				} else {
 					this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS, rocket);
 				}
 
-				logger.info("Rocket checked: (Id = " + result.get(0).getId() + "; Defect = " + rocket.getIsDefect() + ").");
+				logger.info("Rocket checked: (Id = " + result.get(0).getId() + "; QualityCategory = " + rocket.getQualityCategory() + ").");
 
 				this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 

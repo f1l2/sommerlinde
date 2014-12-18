@@ -42,9 +42,9 @@
         			</ui:repeat> 
 				</p:column>
 				
-			 	<p:column headerText="ID Effektladung (Defekt)">
+			 	<p:column headerText="ID Effektladung (Güteklasse)">
 			        <ui:repeat value="#{rocket.effectiveLoad}" var="item">
-    					 <h:outputText value="#{item.id} (#{item.isDefect})" />
+    					 <h:outputText value="#{item.id} (#{item.qualityCategory})" />
     					 <h:outputText value="; " />
 					</ui:repeat>
 			    </p:column>
@@ -89,9 +89,9 @@
         			</ui:repeat> 
 				</p:column>
 				
-			 	<p:column headerText="ID Effektladung (Defekt)">
+			 	<p:column headerText="ID Effektladung (Güteklasse)">
 			        <ui:repeat value="#{rocket.effectiveLoad}" var="item">
-    					 <h:outputText value="#{item.id} (#{item.isDefect})" />
+    					 <h:outputText value="#{item.id} (#{item.qualityAttribute})" />
     					 <h:outputText value="; " />
 					</ui:repeat>
 			    </p:column>
@@ -136,9 +136,9 @@
         			</ui:repeat> 
 				</p:column>
 				
-			 	<p:column headerText="ID Effektladung (Defekt)">
+			 	<p:column headerText="ID Effektladung (Güteklasse)">
 			        <ui:repeat value="#{rocket.effectiveLoad}" var="item">
-    					 <h:outputText value="#{item.id} (#{item.isDefect})" />
+    					 <h:outputText value="#{item.id} (#{item.qualityCategory})" />
     					 <h:outputText value="; " />
 					</ui:repeat>
 			    </p:column>

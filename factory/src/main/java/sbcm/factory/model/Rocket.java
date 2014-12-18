@@ -14,7 +14,7 @@ public class Rocket extends SpaceEntry implements Serializable {
 
 	private List<Employee> employee;
 
-	private Boolean isDefect;
+	private QualityCategory qualityCategory;
 
 	private Igniter igniter;
 
@@ -37,17 +37,10 @@ public class Rocket extends SpaceEntry implements Serializable {
 
 		super(id, 0, false, 0);
 
-		this.isDefect = isDefect;
-
+		this.qualityCategory = QualityCategory.UNKNOWN;
+		
 	}
 
-	public Boolean getIsDefect() {
-		return isDefect;
-	}
-
-	public void setIsDefect(Boolean isDefect) {
-		this.isDefect = isDefect;
-	}
 
 	public Igniter getIgniter() {
 		return igniter;
@@ -95,6 +88,14 @@ public class Rocket extends SpaceEntry implements Serializable {
 
 	public void setEmployee(List<Employee> employee) {
 		this.employee = employee;
+	}
+
+	public QualityCategory getQualityCategory() {
+		return qualityCategory;
+	}
+
+	public void setQualityCategory(QualityCategory qualityCategory) {
+		this.qualityCategory = qualityCategory;
 	}
 
 }

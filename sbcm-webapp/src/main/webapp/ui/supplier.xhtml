@@ -18,7 +18,9 @@
             		<p:watermark for="propellant" value="# Packung(en) mit 500g." />
             		<p:watermark for="woodenstaff" value="# Packung(en)" />
             		<p:watermark for="igniter" value="# Packung(en)" />
-            		<p:watermark for="effectLoad" value="# Packung(en)" />
+            		<p:watermark for="effectLoadRed" value="# Packung(en)" />
+            		<p:watermark for="effectLoadGreen" value="# Packung(en)" />
+            		<p:watermark for="effectLoadBlue" value="# Packung(en)" />
             	
     				<h:panelGrid id="grid" cellpadding="5" columns="2" style="margin-bottom:10px">
  
@@ -34,8 +36,14 @@
         				<p:outputLabel for="propellant" value="# Treibladungen:" />
         				<p:inputText id="propellant" value="#{supplier.propellant}" />
         				
-        				<p:outputLabel for="effectLoad" value="# Effektladungen:" />
-        				<p:inputText id="effectLoad" value="#{supplier.effectLoad}"  />
+        				<p:outputLabel for="effectLoadRed" value="# Effektladungen (rot):" />
+        				<p:inputText id="effectLoadRed" value="#{supplier.effectLoadRed}"  />
+        				
+        				<p:outputLabel for="effectLoadGreen" value="# Effektladungen (grün):" />
+        				<p:inputText id="effectLoadGreen" value="#{supplier.effectLoadGreen}"  />
+        				
+        				<p:outputLabel for="effectLoadBlue" value="# Effektladungen (blau):" />
+        				<p:inputText id="effectLoadBlue" value="#{supplier.effectLoadBlue}"  />
         				
         				<p:outputLabel for="errorRate" value="# Fehlerrate:" />
         				<p:inputText id="errorRate" value="#{supplier.errorRate}" />

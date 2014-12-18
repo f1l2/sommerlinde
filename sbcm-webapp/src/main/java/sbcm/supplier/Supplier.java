@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 
 import sbc.space.MozartSpaces;
 import sbcm.factory.model.EffectLoad;
+import sbcm.factory.model.EffectLoadColor;
 import sbcm.factory.model.Employee;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Propellant;
@@ -25,7 +26,9 @@ public class Supplier extends Role {
 	private Integer woodenstaff = 0;
 	private Integer igniter = 0;
 	private Integer propellant = 0;
-	private Integer effectLoad = 0;
+	private Integer effectLoadRed = 0;
+	private Integer effectLoadBlue = 0;
+	private Integer effectLoadGreen = 0;
 	private Integer errorRate = 0;
 
 	public int getProducerId() {
@@ -68,12 +71,28 @@ public class Supplier extends Role {
 		this.propellant = propellant;
 	}
 
-	public Integer getEffectLoad() {
-		return effectLoad;
+	public Integer getEffectLoadRed() {
+		return effectLoadRed;
 	}
 
-	public void setEffectLoad(Integer effectLoad) {
-		this.effectLoad = effectLoad;
+	public void setEffectLoadRed(Integer effectLoadRed) {
+		this.effectLoadRed = effectLoadRed;
+	}
+	
+	public Integer getEffectLoadBlue() {
+		return effectLoadBlue;
+	}
+
+	public void setEffectLoadBlue(Integer effectLoadBlue) {
+		this.effectLoadBlue = effectLoadBlue;
+	}
+
+	public Integer getEffectLoadGreen() {
+		return effectLoadGreen;
+	}
+
+	public void setEffectLoadGreen(Integer effectLoadGreen) {
+		this.effectLoadGreen = effectLoadGreen;
 	}
 
 	public Integer getErrorRate() {
@@ -166,11 +185,48 @@ public class Supplier extends Role {
 				}
 			}
 
-			for (int i = 1; i <= effectLoad; i++) {
+			for (int i = 1; i <= effectLoadRed; i++) {
 
 				EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
 				el.setSupplier(new Employee(employeeId));
+				el.setColor(EffectLoadColor.RED);
 
+				if (errorRate != null)
+					el.setIsDefect(isDefectRandom(errorRate));
+				else
+					el.setIsDefect(isDefectRandom(10));
+
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, el);
+				} catch (Exception e) {
+					logger.error("Write effectload exception", e);
+				}
+			}
+			
+			for (int i = 1; i <= effectLoadBlue; i++) {
+
+				EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				el.setSupplier(new Employee(employeeId));
+				el.setColor(EffectLoadColor.BLUE);
+
+				if (errorRate != null)
+					el.setIsDefect(isDefectRandom(errorRate));
+				else
+					el.setIsDefect(isDefectRandom(10));
+
+				try {
+					mozartSpaces.write(MozartSpaces.PARTS, el);
+				} catch (Exception e) {
+					logger.error("Write effectload exception", e);
+				}
+			}
+			
+			for (int i = 1; i <= effectLoadGreen; i++) {
+
+				EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				el.setSupplier(new Employee(employeeId));
+				el.setColor(EffectLoadColor.GREEN);
+				
 				if (errorRate != null)
 					el.setIsDefect(isDefectRandom(errorRate));
 				else
