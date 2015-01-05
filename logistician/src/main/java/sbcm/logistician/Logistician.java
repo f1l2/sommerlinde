@@ -3,7 +3,6 @@ package sbcm.logistician;
 import java.util.ArrayList;
 
 import org.mozartspaces.capi3.FifoCoordinator;
-import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 
 import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
@@ -30,15 +29,25 @@ public class Logistician extends Role {
 	@Override
 	protected void doAction() {
 
+		Boolean aOrB = Boolean.TRUE;
+
 		do {
 
 			MozartTransaction mt = null;
 
 			try {
 
-				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
+				// Transaction timeout 2 seconds
+				mt = (MozartTransaction) this.mozartSpaces.createTransaction(2000);
+				MozartContainer mc;
 
-				MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS);
+				if (aOrB) {
+					mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A);
+					aOrB = Boolean.FALSE;
+				} else {
+					mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B);
+					aOrB = Boolean.TRUE;
+				}
 
 				ArrayList<Rocket> result = this.mozartSpaces.take(mc, mt, new MozartSelector(FifoCoordinator.newSelector(5)));
 

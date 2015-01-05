@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:p="http://primefaces.org/ui">
+   <h:body>
+   
+
+       <ui:composition template="templates/common.xhtml">	
+         <ui:define name="content">				
+            <br/><br/>
+            	<h:form>
+            		
+            		<p:watermark for="quantityRockets" value="Anzahl Raketen" />
+            		<p:watermark for="colorEffectLoad" value="Farbkombination" />
+            		<p:watermark for="shippingAddress" value="Lieferadresse" />
+            		
+            	
+    				<h:panelGrid id="grid" cellpadding="5" columns="2" style="margin-bottom:10px">
+ 
+        				<p:outputLabel for="quantityRockets" value="# Raketen:" />
+        				<p:inputText id="quantityRockets" value="" />
+ 
+        				<p:outputLabel for="colorEffectLoad" value="Farbkombination:" />
+        				<p:inputText id="colorEffectLoad" value="" />
+        				
+        				<p:outputLabel for="shippingAddress" value="Lieferadresse" />
+        				<p:inputText id="shippingAddress" value=""  />
+        			
+        				
+        				<p:commandButton value="Auftrag abschicken" id="btnOrder" actionListener="" />
+        				
+    				</h:panelGrid>
+    			</h:form>		
+            <br/><br/>
+         </ui:define>
+      </ui:composition>
+
+   </h:body>
+</html>

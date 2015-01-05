@@ -88,7 +88,7 @@ public class Report {
 			this.producedRockets = this.mozartSpaces.read(mc, null, rocketSelector);
 			logger.info("# Produced rockets: " + this.producedRockets.size());
 
-			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS);
+			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A);
 			this.goodRockets = this.mozartSpaces.read(mc, null, rocketSelector);
 			logger.info("# Good rockets: " + this.goodRockets.size());
 

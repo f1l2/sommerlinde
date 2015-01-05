@@ -40,6 +40,19 @@ public class MozartSpaces extends SpaceTech {
 		}
 	}
 
+	public MozartSpaces(boolean newspace, String uri) {
+		try {
+			spaceURI = new URI(uri);
+			if (!newspace)
+				core = DefaultMzsCore.newInstanceWithoutSpace();
+			else
+				core = DefaultMzsCore.newInstance();
+			capi = new Capi(core);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void exit() {
 		try {
 			core.shutdown(true);
@@ -95,8 +108,7 @@ public class MozartSpaces extends SpaceTech {
 	}
 
 	public <T extends SpaceEntry> ArrayList<T> take(MozartContainer mc, MozartTransaction mt, MozartSelector selector) throws Exception {
-		ArrayList<T> entries = capi.take(mc.getContainer(), selector.getSelector(), timeout, null);
-
+		ArrayList<T> entries = capi.take(mc.getContainer(), selector.getSelector(), timeout, mt.getTransaction());
 		return entries;
 	}
 

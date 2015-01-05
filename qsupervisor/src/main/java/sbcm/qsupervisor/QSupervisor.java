@@ -60,24 +60,25 @@ public class QSupervisor extends Role {
 						cntDefectEffectiveLoad++;
 				}
 
-		
 				if ((rocket.getFillingQuantity() >= 130) && (cntDefectEffectiveLoad == 0)) {
 					logger.info("Quality category A.");
 					rocket.setQualityCategory(QualityCategory.A);
 				} else if ((rocket.getFillingQuantity() >= 120) && (cntDefectEffectiveLoad <= 1)) {
-						logger.info("Quality category B.");
+					logger.info("Quality category B.");
 					rocket.setQualityCategory(QualityCategory.B);
 				} else {
 					logger.info("Defect.");
 					rocket.setQualityCategory(QualityCategory.DEFEKT);
 				}
-				
+
 				rocket.getEmployee().add(new Employee(this.employeeId));
 
 				if (rocket.getQualityCategory().equals(QualityCategory.DEFEKT)) {
 					this.mozartSpaces.write(MozartSpaces.DEFECT_ROCKETS, rocket);
-				} else {
-					this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS, rocket);
+				} else if (rocket.getQualityCategory().equals(QualityCategory.A)) {
+					this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_A, rocket);
+				} else if (rocket.getQualityCategory().equals(QualityCategory.B)) {
+					this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_B, rocket);
 				}
 
 				logger.info("Rocket checked: (Id = " + result.get(0).getId() + "; QualityCategory = " + rocket.getQualityCategory() + ").");

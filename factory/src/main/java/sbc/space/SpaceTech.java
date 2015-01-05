@@ -14,7 +14,8 @@ public abstract class SpaceTech {
 
 	public static final String PARTS = "parts";
 	public static final String PRODUCED_ROCKETS = "producedRockets";
-	public static final String GOOD_ROCKETS = "goodRockets";
+	public static final String GOOD_ROCKETS_A = "goodRocketsA";
+	public static final String GOOD_ROCKETS_B = "goodRocketsA";
 	public static final String DEFECT_ROCKETS = "defectRockets";
 	public static final String ROCKET_PACKAGES = "rocketPackages";
 	public static final String PRODUCER_COUNTER = "producerCounter";
@@ -34,7 +35,8 @@ public abstract class SpaceTech {
 		System.out.println("*** Initiating SpaceTech");
 		try {
 			this.createContainer(PRODUCED_ROCKETS, 1000);
-			this.createContainer(GOOD_ROCKETS, 1000);
+			this.createContainer(GOOD_ROCKETS_A, 1000);
+			this.createContainer(GOOD_ROCKETS_B, 1000);
 			this.createContainer(DEFECT_ROCKETS, 1000);
 			this.createContainer(ROCKET_PACKAGES, 1000);
 			this.createContainer(PARTS, 1000);

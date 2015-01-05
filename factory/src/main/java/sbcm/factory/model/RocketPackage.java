@@ -21,6 +21,8 @@ public class RocketPackage extends SpaceEntry implements Serializable {
 
 	private Rocket rocket1, rocket2, rocket3, rocket4, rocket5;
 
+	private QualityCategory qualityCategory;
+
 	public Rocket getRocket1() {
 		return rocket1;
 	}
@@ -63,6 +65,14 @@ public class RocketPackage extends SpaceEntry implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public QualityCategory getQualityCategory() {
+		return qualityCategory;
+	}
+
+	public void setQualityCategory(QualityCategory qualityCategory) {
+		this.qualityCategory = qualityCategory;
 	}
 
 }
