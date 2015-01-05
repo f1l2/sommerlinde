@@ -15,6 +15,7 @@ import org.mozartspaces.core.DefaultMzsCore;
 import org.mozartspaces.core.Entry;
 import org.mozartspaces.core.MzsCore;
 import org.mozartspaces.core.TransactionReference;
+import org.mozartspaces.notifications.NotificationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,6 +74,10 @@ public class MozartSpaces extends SpaceTech {
 	public Container createContainer(String id, int size) throws Exception {
 		return (Container) new MozartContainer(capi.createContainer(id, spaceURI, size, Arrays.asList(new FifoCoordinator(),
 				new LifoCoordinator(), new AnyCoordinator(), new LindaCoordinator(), new QueryCoordinator()), null, null));
+	}
+
+	public NotificationManager createNotificationManager() throws Exception {
+		return new NotificationManager(capi.getCore());
 	}
 
 	public Container findContainer(String id) throws Exception {

@@ -72,6 +72,8 @@ public class Report {
 
 			MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PARTS);
 
+			logger.info("HERE");
+
 			this.lIgniter = this.mozartSpaces.read(mc, null, igniterSelector);
 			logger.info("# Igniter: " + lIgniter.size());
 
