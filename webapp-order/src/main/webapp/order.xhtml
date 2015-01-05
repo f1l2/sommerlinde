@@ -3,6 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
    xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core"
    xmlns:ui="http://java.sun.com/jsf/facelets"
    xmlns:p="http://primefaces.org/ui">
    <h:body>
@@ -14,23 +15,34 @@
             	<h:form>
             		
             		<p:watermark for="quantityRockets" value="Anzahl Raketen" />
-            		<p:watermark for="colorEffectLoad" value="Farbkombination" />
+            		
             		<p:watermark for="shippingAddress" value="Lieferadresse" />
             		
             	
     				<h:panelGrid id="grid" cellpadding="5" columns="2" style="margin-bottom:10px">
  
         				<p:outputLabel for="quantityRockets" value="# Raketen:" />
-        				<p:inputText id="quantityRockets" value="" />
- 
-        				<p:outputLabel for="colorEffectLoad" value="Farbkombination:" />
-        				<p:inputText id="colorEffectLoad" value="" />
+        				<p:inputText id="quantityRockets" value="#{orderBean.order.quantityRockets}" />
         				
         				<p:outputLabel for="shippingAddress" value="Lieferadresse" />
-        				<p:inputText id="shippingAddress" value=""  />
+        				<p:inputText id="shippingAddress" value="#{orderBean.order.shippingAddress}"  />
         			
+						<p:outputLabel for="color1" value="Farbe 1:" />
+ 						<p:selectOneMenu value="#{orderBean.order.effectLoadColor1}" id="color1" >
+        					<f:selectItems value="#{orderBean.color}" />
+						</p:selectOneMenu>
+						
+						<p:outputLabel for="color2" value="Farbe 2:" />
+						<p:selectOneMenu value="#{orderBean.order.effectLoadColor2}" id="color2" >
+    						<f:selectItems value="#{orderBean.color}" />
+						</p:selectOneMenu>
         				
-        				<p:commandButton value="Auftrag abschicken" id="btnOrder" actionListener="" />
+        				<p:outputLabel for="color3" value="Farbe 3:" />
+        				<p:selectOneMenu value="#{orderBean.order.effectLoadColor3}" id="color3" >
+    						<f:selectItems value="#{orderBean.color}" />
+						</p:selectOneMenu>
+        				
+        				<p:commandButton value="Auftrag abschicken" id="btnOrder" actionListener="#{orderBean.doOrder}" />
         				
     				</h:panelGrid>
     			</h:form>		

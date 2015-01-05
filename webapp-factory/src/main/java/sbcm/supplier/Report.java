@@ -15,6 +15,7 @@ import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Igniter;
+import sbcm.factory.model.Order;
 import sbcm.factory.model.Propellant;
 import sbcm.factory.model.Rocket;
 import sbcm.factory.model.RocketPackage;
@@ -33,6 +34,7 @@ public class Report {
 	private List<Propellant> lPropellant;
 	private List<WoodenStaff> lWoodenStaff;
 	private List<RocketPackage> packages;
+	private List<Order> orders;
 
 	private MozartSpaces mozartSpaces;
 
@@ -64,6 +66,7 @@ public class Report {
 		MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(new EffectLoad(), LindaSelector.COUNT_ALL));
 		MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_ALL));
 		MozartSelector packageSelector = new MozartSelector(LindaCoordinator.newSelector(new RocketPackage(), LindaSelector.COUNT_ALL));
+		MozartSelector orderSelector = new MozartSelector(LindaCoordinator.newSelector(new Order(), LindaSelector.COUNT_ALL));
 
 		try {
 
@@ -99,6 +102,10 @@ public class Report {
 			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ROCKET_PACKAGES);
 			this.packages = this.mozartSpaces.read(mc, null, packageSelector);
 			logger.info("# Packages: " + this.packages.size());
+
+			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
+			this.orders = this.mozartSpaces.read(mc, null, orderSelector);
+			logger.info("# Orders: " + this.orders.size());
 
 		} catch (Exception e) {
 			logger.error("", e);
@@ -167,6 +174,14 @@ public class Report {
 
 	public void setPackages(List<RocketPackage> packages) {
 		this.packages = packages;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 }

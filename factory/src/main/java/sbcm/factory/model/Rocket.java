@@ -26,6 +26,8 @@ public class Rocket extends SpaceEntry implements Serializable {
 
 	private Integer fillingQuantity;
 
+	private Order order;
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -38,9 +40,8 @@ public class Rocket extends SpaceEntry implements Serializable {
 		super(id, 0, false, 0);
 
 		this.qualityCategory = QualityCategory.UNKNOWN;
-		
-	}
 
+	}
 
 	public Igniter getIgniter() {
 		return igniter;
@@ -98,4 +99,11 @@ public class Rocket extends SpaceEntry implements Serializable {
 		this.qualityCategory = qualityCategory;
 	}
 
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 }

@@ -5,8 +5,8 @@ import java.io.Serializable;
 import org.mozartspaces.capi3.Queryable;
 
 @Queryable(autoindex = true)
-public enum EffectLoadColor implements Serializable {
+public enum OrderStatus implements Serializable {
 
-	RED, GREEN, BLUE
+	IN_PROCESS, DONE
 
 }

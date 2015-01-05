@@ -132,7 +132,7 @@ public class Supplier extends Role {
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 
 		try {
-			ec.redirect(ec.getRequestContextPath() + "/ui/parts.xhtml");
+			ec.redirect(ec.getRequestContextPath() + "/factory/parts.xhtml");
 		} catch (IOException e) {
 			logger.error("", e);
 		}

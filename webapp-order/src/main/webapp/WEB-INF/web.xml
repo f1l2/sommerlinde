@@ -2,29 +2,24 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
           http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
     version="2.5">
-    <display-name>Firework</display-name>
+    <display-name>Order</display-name>
 
 		<!-- Welcome page -->
 	<welcome-file-list>
-		<welcome-file>ui/index.xhtml</welcome-file>
+		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
  
 	<!-- JSF mapping -->
 	<servlet>
-		<servlet-name>Firework Servlet</servlet-name>
+		<servlet-name>Order Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
  
 	<!-- Map these files with JSF -->
 	<servlet-mapping>
-		<servlet-name>Firework Servlet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>Firework Servlet</servlet-name>
-		<url-pattern>/</url-pattern>
+		<servlet-name>Order Servlet</servlet-name>
+		<url-pattern>/order/*</url-pattern>
 	</servlet-mapping>
 	
 	<context-param>

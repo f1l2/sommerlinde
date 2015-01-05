@@ -7,16 +7,18 @@ import org.mozartspaces.capi3.ComparableProperty;
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.Query;
 import org.mozartspaces.capi3.QueryCoordinator;
-import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 
 import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
 import sbc.space.MozartTransaction;
+import sbc.space.SpaceEntry;
 import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Employee;
 import sbcm.factory.model.Igniter;
+import sbcm.factory.model.Order;
+import sbcm.factory.model.OrderStatus;
 import sbcm.factory.model.Propellant;
 import sbcm.factory.model.Rocket;
 import sbcm.factory.model.WoodenStaff;
@@ -48,20 +50,36 @@ public class Producer extends Role {
 
 			try {
 
+				Order order = new Order();
+				order.setStatus(OrderStatus.IN_PROCESS);
+				MozartSelector orderSelector = new MozartSelector(LindaCoordinator.newSelector(order, 1));
+
 				MozartSelector igniterSelector = new MozartSelector(LindaCoordinator.newSelector(new Igniter(), 1));
-				MozartSelector propellantSelector = new MozartSelector(LindaCoordinator.newSelector(new Propellant(), 1));
 				MozartSelector woodenStaffSelector = new MozartSelector(LindaCoordinator.newSelector(new WoodenStaff(), 1));
 				MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(new EffectLoad(), 3));
 
-				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
+				mt = (MozartTransaction) this.mozartSpaces.createTransaction(3000);
 
-				MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PARTS);
+				MozartContainer mcParts = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PARTS);
+				MozartContainer mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
 
-				ArrayList<Igniter> resultIgniter = this.mozartSpaces.take(mc, mt, igniterSelector);
+				ArrayList<SpaceEntry> orders = this.mozartSpaces.read(mcOrders, mt, orderSelector);
 
-				ArrayList<WoodenStaff> resultWoodenStaff = this.mozartSpaces.take(mc, mt, woodenStaffSelector);
+				if ((orders != null) && (orders.size() > 0)) {
 
-				ArrayList<EffectLoad> resultEffectLoad = this.mozartSpaces.take(mc, mt, effectLoadSelector);
+					// process order
+
+				} else {
+
+					// process rocket
+
+				}
+
+				ArrayList<Igniter> resultIgniter = this.mozartSpaces.take(mcParts, mt, igniterSelector);
+
+				ArrayList<WoodenStaff> resultWoodenStaff = this.mozartSpaces.take(mcParts, mt, woodenStaffSelector);
+
+				ArrayList<EffectLoad> resultEffectLoad = this.mozartSpaces.take(mcParts, mt, effectLoadSelector);
 
 				int propellantAmount = 110 + this.workRandomValue();
 
@@ -75,7 +93,7 @@ public class Producer extends Role {
 				Boolean isPropellantReached = false;
 				while (!isPropellantReached) {
 
-					Propellant propellant = (Propellant) this.mozartSpaces.take(mc, mt,
+					Propellant propellant = (Propellant) this.mozartSpaces.take(mcParts, mt,
 							new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
 
 					rocket.getPropellant().add(propellant);
