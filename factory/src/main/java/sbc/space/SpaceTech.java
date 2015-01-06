@@ -16,6 +16,7 @@ public abstract class SpaceTech {
 	public static final String PRODUCED_ROCKETS = "producedRockets";
 	public static final String GOOD_ROCKETS_A = "goodRocketsA";
 	public static final String GOOD_ROCKETS_B = "goodRocketsB";
+	public static final String GOOD_ROCKETS_ORDER = "goodRocketsOrder";
 	public static final String DEFECT_ROCKETS = "defectRockets";
 	public static final String ROCKET_PACKAGES = "rocketPackages";
 	public static final String ORDERS = "orders";
@@ -24,6 +25,7 @@ public abstract class SpaceTech {
 	public static final String ROCKET_COUNTER = "rocketCounter";
 	public static final String PACKAGE_COUNTER = "packageCounter";
 	public static final String ORDER_COUNTER = "orderCounter";
+	public static final String STOCK = "stock";
 
 	public enum SelectorType {
 		SEL_ANY, SEL_FIFO, SEL_LIFO, SEL_LINDA
@@ -39,6 +41,7 @@ public abstract class SpaceTech {
 			this.createContainer(PRODUCED_ROCKETS, 1000);
 			this.createContainer(GOOD_ROCKETS_A, 1000);
 			this.createContainer(GOOD_ROCKETS_B, 1000);
+			this.createContainer(GOOD_ROCKETS_ORDER, 1000);
 			this.createContainer(DEFECT_ROCKETS, 1000);
 			this.createContainer(ROCKET_PACKAGES, 1000);
 			this.createContainer(PARTS, 1000);
@@ -48,6 +51,7 @@ public abstract class SpaceTech {
 			this.createContainer(ROCKET_COUNTER, 1000);
 			this.createContainer(PACKAGE_COUNTER, 1000);
 			this.createContainer(ORDER_COUNTER, 1000);
+			this.createContainer(STOCK, 1000);
 
 			// write initial value
 			SpaceTransaction mt = createTransaction();

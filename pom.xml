@@ -14,6 +14,7 @@
 		<module>qsupervisor</module>
     	<module>webapp-factory</module>
     	<module>webapp-order</module>
+    <module>deliverer</module>
   </modules>
 	
 	<repositories>

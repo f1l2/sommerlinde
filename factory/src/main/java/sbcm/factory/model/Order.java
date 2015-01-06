@@ -11,7 +11,11 @@ public class Order extends SpaceEntry implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer quantityRockets;
+	private Integer requestedQuantity;
+
+	private Integer producedQuantity;
+
+	private Integer produceQuantity;
 
 	private String shippingAddress;
 
@@ -23,6 +27,8 @@ public class Order extends SpaceEntry implements Serializable {
 
 	private OrderStatus status;
 
+	private Integer ordererId;
+
 	public Order() {
 		super();
 	}
@@ -32,11 +38,11 @@ public class Order extends SpaceEntry implements Serializable {
 	}
 
 	public Integer getQuantityRockets() {
-		return quantityRockets;
+		return requestedQuantity;
 	}
 
 	public void setQuantityRockets(Integer quantityRockets) {
-		this.quantityRockets = quantityRockets;
+		this.requestedQuantity = quantityRockets;
 	}
 
 	public String getShippingAddress() {
@@ -79,4 +85,44 @@ public class Order extends SpaceEntry implements Serializable {
 		this.status = status;
 	}
 
+	public Integer getProducedQuantity() {
+		return producedQuantity;
+	}
+
+	public void setProducedQuantity(Integer producedQuantity) {
+		this.producedQuantity = producedQuantity;
+	}
+
+	public Integer getProduceQuantity() {
+		return produceQuantity;
+	}
+
+	public void setProduceQuantity(Integer produceQuantity) {
+		this.produceQuantity = produceQuantity;
+	}
+
+	public Integer getOrdererId() {
+		return ordererId;
+	}
+
+	public void setOrdererId(Integer ordererId) {
+		this.ordererId = ordererId;
+	}
+
+	public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("Id: ");
+		sb.append(this.getId());
+		sb.append("; quantityRockets: ");
+		sb.append(this.getQuantityRockets());
+		sb.append("; produceRockets: ");
+		sb.append(this.getProduceQuantity());
+		sb.append("; producedRockets: ");
+		sb.append(this.getProducedQuantity());
+		sb.append("; status: ");
+		sb.append(this.getStatus());
+
+		return sb.toString();
+	}
 }

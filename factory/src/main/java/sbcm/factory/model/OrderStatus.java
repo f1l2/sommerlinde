@@ -7,6 +7,6 @@ import org.mozartspaces.capi3.Queryable;
 @Queryable(autoindex = true)
 public enum OrderStatus implements Serializable {
 
-	IN_PROCESS, DONE
+	SCHEDULED, IN_PROCESS, PROCESSED, NOT_DELIVERED, DELIVERED
 
 }

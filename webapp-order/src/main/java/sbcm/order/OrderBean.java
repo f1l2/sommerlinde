@@ -12,6 +12,7 @@ import sbcm.factory.model.EffectLoadColor;
 import sbcm.factory.model.Order;
 import sbcm.factory.model.OrderStatus;
 import sbcm.space.role.Role;
+import sbcm.utility.SingleSpace;
 
 @ManagedBean(name = "orderBean")
 @ViewScoped
@@ -21,29 +22,31 @@ public class OrderBean extends Role {
 
 	public OrderBean() {
 		super();
+		// initialize
 		this.order = new Order();
 		this.order.setQuantityRockets(0);
+		this.order.setShippingAddress(SingleSpace.URI);
+
+		// create shipping space only once
+		SingleSpace.getInstance();
+
 	}
 
 	public void doOrder() {
 
-		Order saveOrder = new Order(this.mozartSpaces.getIDAndIncr(MozartSpaces.ORDER_COUNTER));
-		saveOrder.setEffectLoadColor1(this.order.getEffectLoadColor1());
-		saveOrder.setEffectLoadColor2(this.order.getEffectLoadColor2());
-		saveOrder.setEffectLoadColor3(this.order.getEffectLoadColor3());
-		saveOrder.setQuantityRockets(this.order.getQuantityRockets());
-		saveOrder.setShippingAddress(this.order.getShippingAddress());
-		saveOrder.setStatus(OrderStatus.IN_PROCESS);
+		Order forwardOrder = new Order(this.mozartSpaces.getIDAndIncr(MozartSpaces.ORDER_COUNTER));
+		forwardOrder.setEffectLoadColor1(this.order.getEffectLoadColor1());
+		forwardOrder.setEffectLoadColor2(this.order.getEffectLoadColor2());
+		forwardOrder.setEffectLoadColor3(this.order.getEffectLoadColor3());
+		forwardOrder.setProduceQuantity(this.order.getQuantityRockets());
+		forwardOrder.setQuantityRockets(this.order.getQuantityRockets());
+		forwardOrder.setShippingAddress(this.order.getShippingAddress());
+		forwardOrder.setOrdererId(this.employeeId);
+		forwardOrder.setStatus(OrderStatus.SCHEDULED);
 
 		try {
-			this.mozartSpaces.write(MozartSpaces.ORDERS, saveOrder);
+			this.mozartSpaces.write(MozartSpaces.ORDERS, forwardOrder);
 		} catch (Exception e) {
-			logger.error("", e);
-		}
-
-		try {
-			Thread.sleep(workRandomTime());
-		} catch (InterruptedException e) {
 			logger.error("", e);
 		}
 

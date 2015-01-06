@@ -1,0 +1,1 @@
+mvn exec:java -pl deliverer -Dexec.mainClass="sbcm.deliverer.Deliverer"

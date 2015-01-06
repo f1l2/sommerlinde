@@ -2,7 +2,10 @@ package sbcm.qsupervisor;
 
 import java.util.ArrayList;
 
+import org.mozartspaces.capi3.ComparableProperty;
 import org.mozartspaces.capi3.LindaCoordinator;
+import org.mozartspaces.capi3.Query;
+import org.mozartspaces.capi3.QueryCoordinator;
 import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 
 import sbc.space.MozartContainer;
@@ -12,11 +15,17 @@ import sbc.space.MozartTransaction;
 import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Employee;
+import sbcm.factory.model.Order;
+import sbcm.factory.model.OrderStatus;
 import sbcm.factory.model.QualityCategory;
 import sbcm.factory.model.Rocket;
 import sbcm.space.role.Role;
 
 public class QSupervisor extends Role {
+
+	private MozartTransaction mt = null;
+
+	private MozartContainer mcRockets = null, mcOrders = null;
 
 	public static void main(String[] args) {
 		new QSupervisor();
@@ -30,18 +39,16 @@ public class QSupervisor extends Role {
 	protected void doAction() {
 
 		do {
-			MozartTransaction mt = null;
 
-			Rocket rocketTemplate = new Rocket();
-			MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(rocketTemplate, 1));
 			try {
-
-				logger.info("Waiting for work ... ");
+				Rocket rocketTemplate = new Rocket();
+				MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(rocketTemplate, 1));
 
 				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
-				MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
+				mcRockets = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
+				mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
 
-				ArrayList<Rocket> result = this.mozartSpaces.take(mc, mt, rocketSelector);
+				ArrayList<Rocket> result = this.mozartSpaces.take(mcRockets, mt, rocketSelector);
 
 				logger.info("Check rocket (Id = " + result.get(0).getId() + ").");
 				Thread.sleep(this.workRandomTime());
@@ -74,13 +81,23 @@ public class QSupervisor extends Role {
 				rocket.getEmployee().add(new Employee(this.employeeId));
 
 				if (rocket.getQualityCategory().equals(QualityCategory.DEFEKT)) {
+					this.incrProduceQuantity(rocket);
+					rocket.setOrderId(null);
 					this.mozartSpaces.write(MozartSpaces.DEFECT_ROCKETS, rocket);
-				} else if (rocket.getQualityCategory().equals(QualityCategory.A)) {
-					this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_A, rocket);
-				} else if (rocket.getQualityCategory().equals(QualityCategory.B)) {
-					this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_B, rocket);
-				}
 
+				} else if (rocket.getQualityCategory().equals(QualityCategory.B)) {
+					this.incrProduceQuantity(rocket);
+					rocket.setOrderId(null);
+					this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_B, rocket);
+
+				} else if (rocket.getQualityCategory().equals(QualityCategory.A)) {
+					this.incrProducedQuantity(rocket);
+					if (rocket.getOrderId() != null) {
+						this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_ORDER, rocket);
+					} else {
+						this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_A, rocket);
+					}
+				}
 				logger.info("Rocket checked: (Id = " + result.get(0).getId() + "; QualityCategory = " + rocket.getQualityCategory() + ").");
 
 				this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
@@ -97,5 +114,52 @@ public class QSupervisor extends Role {
 			}
 
 		} while (true);
+	}
+
+	private void incrProducedQuantity(Rocket rocket) throws Exception {
+		if (null != rocket.getOrderId()) {
+
+			Order order = this.getOrderById(rocket.getOrderId());
+
+			if (order.getProducedQuantity() == null) {
+				order.setProducedQuantity(1);
+			} else {
+				order.setProducedQuantity(order.getProducedQuantity() + 1);
+			}
+
+			if (order.getQuantityRockets() <= order.getProducedQuantity()) {
+				order.setStatus(OrderStatus.PROCESSED);
+			}
+
+			logger.info("Write order " + order.toString());
+
+			this.mozartSpaces.write(MozartSpaces.ORDERS, order);
+		}
+	}
+
+	private void incrProduceQuantity(Rocket rocket) throws Exception {
+		if (null != rocket.getOrderId()) {
+
+			Order order = this.getOrderById(rocket.getOrderId());
+			if (order.getProduceQuantity() == null) {
+				order.setProduceQuantity(1);
+			} else {
+				order.setProduceQuantity(order.getProduceQuantity() + 1);
+			}
+
+			logger.info("Write order " + order.toString());
+
+			this.mozartSpaces.write(MozartSpaces.ORDERS, order);
+		}
+	}
+
+	private Order getOrderById(Integer id) throws Exception {
+
+		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
+		Order order = (Order) this.mozartSpaces.take(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
+
+		logger.info("Take order " + order.toString());
+
+		return order;
 	}
 }

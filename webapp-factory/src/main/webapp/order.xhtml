@@ -16,19 +16,19 @@
          	
          	<p:dataTable var="item" value="#{report.orders}">
          
-			    <p:column headerText="ID order">
+			    <p:column headerText="ID Auftrag">
 			        <h:outputText value="#{item.id}" />
 			    </p:column>
 			    
-			    <p:column headerText="Shipping address">
+			    <p:column headerText="Lieferadresse">
 			        <h:outputText value="#{item.shippingAddress}" />
 			    </p:column>
 
-				 <p:column headerText="Quantity rockets">
+				 <p:column headerText="Anzahl Raketen">
 			        <h:outputText value="#{item.quantityRockets}" />
 			    </p:column>
 			    
-			    <p:column headerText="Color combination">
+			    <p:column headerText="Farbkombination">
 			    	<h:outputText value="#{item.effectLoadColor1}; " />
 			    	<h:outputText value="#{item.effectLoadColor2}; " />
 			    	<h:outputText value="#{item.effectLoadColor3}; " />
@@ -36,6 +36,10 @@
 			 	
 			 	 <p:column headerText="Status">
 			 	 	<h:outputText value="#{item.status}" />
+				</p:column>
+				
+				<p:column headerText="Produzierte Rakete(n)">
+					<h:outputText value="#{item.producedQuantity}" />
 				</p:column>
 				
 			</p:dataTable>

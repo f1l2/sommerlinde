@@ -45,12 +45,12 @@ public class Logistician extends Role {
 			try {
 				this.readRockets(containerA, QualityCategory.A);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				logger.error(e.getMessage());
 			}
 			try {
 				this.readRockets(containerB, QualityCategory.B);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				logger.error(e.getMessage());
 			}
 			NotificationManager notifManager = this.mozartSpaces.createNotificationManager();
 
@@ -113,7 +113,7 @@ public class Logistician extends Role {
 				MozartContainer mc = (MozartContainer) mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A);
 				readRockets(mc, QualityCategory.A);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				logger.error(e.getMessage());
 			}
 		}
 
@@ -126,7 +126,7 @@ public class Logistician extends Role {
 				MozartContainer mc = (MozartContainer) mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B);
 				readRockets(mc, QualityCategory.B);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				logger.error(e.getMessage());
 			}
 
 		}

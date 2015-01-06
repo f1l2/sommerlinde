@@ -1,5 +1,6 @@
 package sbcm.supplier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -60,19 +61,17 @@ public class Report {
 
 		logger.info("-------- REPORT ---------- ");
 
-		MozartSelector igniterSelector = new MozartSelector(LindaCoordinator.newSelector(new Igniter(), LindaSelector.COUNT_ALL));
-		MozartSelector propellantSelector = new MozartSelector(LindaCoordinator.newSelector(new Propellant(), LindaSelector.COUNT_ALL));
-		MozartSelector woodenStaffSelector = new MozartSelector(LindaCoordinator.newSelector(new WoodenStaff(), LindaSelector.COUNT_ALL));
-		MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(new EffectLoad(), LindaSelector.COUNT_ALL));
-		MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_ALL));
-		MozartSelector packageSelector = new MozartSelector(LindaCoordinator.newSelector(new RocketPackage(), LindaSelector.COUNT_ALL));
-		MozartSelector orderSelector = new MozartSelector(LindaCoordinator.newSelector(new Order(), LindaSelector.COUNT_ALL));
+		MozartSelector igniterSelector = new MozartSelector(LindaCoordinator.newSelector(new Igniter(), LindaSelector.COUNT_MAX));
+		MozartSelector propellantSelector = new MozartSelector(LindaCoordinator.newSelector(new Propellant(), LindaSelector.COUNT_MAX));
+		MozartSelector woodenStaffSelector = new MozartSelector(LindaCoordinator.newSelector(new WoodenStaff(), LindaSelector.COUNT_MAX));
+		MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(new EffectLoad(), LindaSelector.COUNT_MAX));
+		MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_MAX));
+		MozartSelector packageSelector = new MozartSelector(LindaCoordinator.newSelector(new RocketPackage(), LindaSelector.COUNT_MAX));
+		MozartSelector orderSelector = new MozartSelector(LindaCoordinator.newSelector(new Order(), LindaSelector.COUNT_MAX));
 
 		try {
 
 			MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PARTS);
-
-			logger.info("HERE");
 
 			this.lIgniter = this.mozartSpaces.read(mc, null, igniterSelector);
 			logger.info("# Igniter: " + lIgniter.size());
@@ -95,6 +94,14 @@ public class Report {
 
 			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A);
 			this.goodRockets = this.mozartSpaces.read(mc, null, rocketSelector);
+
+			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B);
+			ArrayList<Rocket> tempResult = this.mozartSpaces.read(mc, null, rocketSelector);
+			this.goodRockets.addAll(tempResult);
+
+			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
+			tempResult = this.mozartSpaces.read(mc, null, rocketSelector);
+			this.goodRockets.addAll(tempResult);
 			logger.info("# Good rockets: " + this.goodRockets.size());
 
 			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.DEFECT_ROCKETS);

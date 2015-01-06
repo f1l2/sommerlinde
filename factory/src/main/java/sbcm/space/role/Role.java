@@ -18,7 +18,7 @@ public abstract class Role {
 	public Role() {
 
 		this.mozartSpaces = new MozartSpaces(false);
-		// first receive producer id
+		// first receive role id
 		this.employeeId = mozartSpaces.getIDAndIncr(MozartSpaces.PRODUCER_COUNTER);
 
 		logger.info(this.employeeId + " started.");

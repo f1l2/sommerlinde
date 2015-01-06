@@ -3,17 +3,68 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
    xmlns:h="http://java.sun.com/jsf/html"
-   xmlns:f="http://java.sun.com/jsf/core"
    xmlns:ui="http://java.sun.com/jsf/facelets"
-   xmlns:p="http://primefaces.org/ui">
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:c="http://java.sun.com/jsp/jstl/core">
+   
    <h:body>
    
+      <ui:composition template="templates/common.xhtml">	
+         <ui:define name="content">	
+         
+         	<h:outputLabel value="Delivered rockets:"/>			
+         
+            <p:dataTable var="rocket" value="#{stock.deliveredRockets}">
+ 
+			    <p:column headerText="Id">
+			        <h:outputText value="#{rocket.id}" />
+			    </p:column>
+			 
+			    <p:column headerText="ID Mitarbeiter (Produzent; Q-Kontrolleur; Logistik)">
+			        <ui:repeat value="#{rocket.employee}" var="item">
+    					 <h:outputText value="#{item.id}" />
+    					 <h:outputText value="; " />
+					</ui:repeat>
+			    </p:column>
+			    
+			    <p:column headerText="ID Holzstab">
+			        <h:outputText value="#{rocket.woodenStaff.id}" />
+			    </p:column>
 
-       <ui:composition template="templates/common.xhtml">	
-         <ui:define name="content">				
-            <br/><br/>
-            	
-            <br/><br/>
+				 <p:column headerText="ID Zünder">
+			        <h:outputText value="#{rocket.igniter.id}" />
+			    </p:column>
+			 	
+			 	 <p:column headerText="ID Treibladung">
+			 	 
+					<ui:repeat value="#{rocket.propellant}" var="item">
+            			<h:outputText value="#{item.id}" />
+            			<h:outputText value="; " />
+        			</ui:repeat> 
+				</p:column>
+				
+			 	<p:column headerText="ID Effektladung (Güteklasse)">
+			        <ui:repeat value="#{rocket.effectiveLoad}" var="item">
+    					 <h:outputText value="#{item.id} (#{item.isDefect})" />
+    					 <h:outputText value="; " />
+					</ui:repeat>
+			    </p:column>
+			    
+			    <p:column headerText="Füllmenge">
+			        <h:outputText value="#{rocket.fillingQuantity}" />
+			    </p:column>
+			 
+			    <p:column headerText="Defekt">
+			        <h:outputText value="#{rocket.qualityCategory}" />
+			    </p:column>
+
+				<p:column headerText="ID Auftrag">
+					<h:outputText value="#{rocket.orderId}" />
+				</p:column>
+
+			</p:dataTable>
+                    
+            
          </ui:define>
       </ui:composition>
 

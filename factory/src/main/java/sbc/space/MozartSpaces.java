@@ -31,10 +31,11 @@ public class MozartSpaces extends SpaceTech {
 	public MozartSpaces(boolean newspace) {
 		try {
 			spaceURI = new URI("xvsm://localhost:9876/");
-			if (!newspace)
+			if (!newspace) {
 				core = DefaultMzsCore.newInstanceWithoutSpace();
-			else
+			} else {
 				core = DefaultMzsCore.newInstance();
+			}
 			capi = new Capi(core);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,10 +45,12 @@ public class MozartSpaces extends SpaceTech {
 	public MozartSpaces(boolean newspace, String uri) {
 		try {
 			spaceURI = new URI(uri);
-			if (!newspace)
+			if (!newspace) {
 				core = DefaultMzsCore.newInstanceWithoutSpace();
-			else
-				core = DefaultMzsCore.newInstance();
+				core.getConfig().setBindHost(uri);
+			} else {
+				core = DefaultMzsCore.newInstance(spaceURI.getPort());
+			}
 			capi = new Capi(core);
 		} catch (Exception e) {
 			e.printStackTrace();

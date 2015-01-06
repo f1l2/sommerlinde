@@ -53,13 +53,17 @@
 			        <h:outputText value="#{rocket.fillingQuantity}" />
 			    </p:column>
 			 
-			    <p:column headerText="Defect">
+			    <p:column headerText="Defekt">
 			        <h:outputText value="#{rocket.qualityCategory}" />
+			    </p:column>
+			    
+			    <p:column headerText="ID Auftrag">
+			    	<h:outputText value="#{rocket.orderId}" />
 			    </p:column>
 
 			</p:dataTable>
          
-         	<h:outputLabel value="Good rockets:"/>			
+         	<h:outputLabel value="Raketen OK:"/>			
          
             <p:dataTable var="rocket" value="#{report.goodRockets}">
 			    <p:column headerText="Id">
@@ -103,10 +107,14 @@
 			    <p:column headerText="Defekt">
 			        <h:outputText value="#{rocket.qualityCategory}" />
 			    </p:column>
+			    
+			    <p:column headerText="ID Auftrag">
+			    	<h:outputText value="#{rocket.orderId}" />
+			    </p:column>
 
 			</p:dataTable>
          	
-         	<h:outputLabel value="Defect rockets:"/>			
+         	<h:outputLabel value="Defekte Raketen:"/>			
          	
          	<p:dataTable var="rocket" value="#{report.defectRockets}">
 			    <p:column headerText="Id">
@@ -147,7 +155,7 @@
 			        <h:outputText value="#{rocket.fillingQuantity}" />
 			    </p:column>
 			 
-			    <p:column headerText="Defect">
+			    <p:column headerText="Defekt">
 			        <h:outputText value="#{rocket.qualityCategory}" />
 			    </p:column>
 
