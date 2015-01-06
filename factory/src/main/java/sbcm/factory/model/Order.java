@@ -13,10 +13,6 @@ public class Order extends SpaceEntry implements Serializable {
 
 	private Integer requestedQuantity;
 
-	private Integer producedQuantity;
-
-	private Integer produceQuantity;
-
 	private String shippingAddress;
 
 	private EffectLoadColor effectLoadColor1;
@@ -85,22 +81,6 @@ public class Order extends SpaceEntry implements Serializable {
 		this.status = status;
 	}
 
-	public Integer getProducedQuantity() {
-		return producedQuantity;
-	}
-
-	public void setProducedQuantity(Integer producedQuantity) {
-		this.producedQuantity = producedQuantity;
-	}
-
-	public Integer getProduceQuantity() {
-		return produceQuantity;
-	}
-
-	public void setProduceQuantity(Integer produceQuantity) {
-		this.produceQuantity = produceQuantity;
-	}
-
 	public Integer getOrdererId() {
 		return ordererId;
 	}
@@ -116,10 +96,6 @@ public class Order extends SpaceEntry implements Serializable {
 		sb.append(this.getId());
 		sb.append("; quantityRockets: ");
 		sb.append(this.getQuantityRockets());
-		sb.append("; produceRockets: ");
-		sb.append(this.getProduceQuantity());
-		sb.append("; producedRockets: ");
-		sb.append(this.getProducedQuantity());
 		sb.append("; status: ");
 		sb.append(this.getStatus());
 

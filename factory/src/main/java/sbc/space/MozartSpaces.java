@@ -111,11 +111,22 @@ public class MozartSpaces extends SpaceTech {
 
 	public <T extends SpaceEntry> ArrayList<T> read(MozartContainer mc, MozartTransaction mt, MozartSelector selector) throws Exception {
 		ArrayList<T> entries = capi.read(mc.getContainer(), selector.getSelector(), timeout, null);
+		return entries;
+	}
 
+	public <T extends SpaceEntry> ArrayList<T> read(MozartContainer mc, MozartTransaction mt, MozartSelector selector, long timeout)
+			throws Exception {
+		ArrayList<T> entries = capi.read(mc.getContainer(), selector.getSelector(), timeout, null);
 		return entries;
 	}
 
 	public <T extends SpaceEntry> ArrayList<T> take(MozartContainer mc, MozartTransaction mt, MozartSelector selector) throws Exception {
+		ArrayList<T> entries = capi.take(mc.getContainer(), selector.getSelector(), timeout, mt.getTransaction());
+		return entries;
+	}
+
+	public <T extends SpaceEntry> ArrayList<T> take(MozartContainer mc, MozartTransaction mt, MozartSelector selector, long timeout)
+			throws Exception {
 		ArrayList<T> entries = capi.take(mc.getContainer(), selector.getSelector(), timeout, mt.getTransaction());
 		return entries;
 	}

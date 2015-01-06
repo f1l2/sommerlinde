@@ -121,28 +121,4 @@ public class Deliverer extends Role {
 			logger.error("", e);
 		}
 	}
-
-	private void debugData() throws Exception {
-		logger.info("Write order");
-
-		Order order = new Order(2);
-		order.setStatus(OrderStatus.PROCESSED);
-		order.setShippingAddress("xvsm://localhost:9874/");
-		this.mozartSpaces.write(MozartSpaces.ORDERS, order);
-
-		Rocket rocket1 = new Rocket(1, 1, null);
-		rocket1.setOrderId(order.getId());
-		this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_ORDER, rocket1);
-
-		Rocket rocket2 = new Rocket(2, 1, null);
-		rocket2.setOrderId(order.getId());
-		this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_ORDER, rocket2);
-
-		logger.info("wait");
-
-		this.workRandomTime();
-
-		logger.info("wait is over");
-
-	}
 }
