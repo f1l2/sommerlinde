@@ -11,6 +11,7 @@ import sbc.space.MozartSpaces;
 import sbcm.factory.model.EffectLoadColor;
 import sbcm.factory.model.Order;
 import sbcm.factory.model.OrderStatus;
+import sbcm.factory.model.Rocket;
 import sbcm.space.role.Role;
 import sbcm.utility.SingleSpace;
 
@@ -34,6 +35,8 @@ public class OrderBean extends Role {
 
 	public void doOrder() {
 
+		// create order and write requested rockets
+
 		Order forwardOrder = new Order(this.mozartSpaces.getIDAndIncr(MozartSpaces.ORDER_COUNTER));
 		forwardOrder.setEffectLoadColor1(this.order.getEffectLoadColor1());
 		forwardOrder.setEffectLoadColor2(this.order.getEffectLoadColor2());
@@ -46,6 +49,13 @@ public class OrderBean extends Role {
 
 		try {
 			this.mozartSpaces.write(MozartSpaces.ORDERS, forwardOrder);
+
+			for (int i = 0; i < forwardOrder.getQuantityRockets(); i++) {
+				Rocket rocket = new Rocket();
+				rocket.setOrderId(forwardOrder.getId());
+				this.mozartSpaces.write(MozartSpaces.REQUESTED_ROCKETS, rocket);
+			}
+
 		} catch (Exception e) {
 			logger.error("", e);
 		}

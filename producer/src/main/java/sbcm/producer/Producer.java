@@ -1,5 +1,6 @@
 package sbcm.producer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,10 @@ import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.Query;
 import org.mozartspaces.capi3.QueryCoordinator;
 import org.mozartspaces.core.MzsConstants.TransactionTimeout;
+import org.mozartspaces.notifications.Notification;
+import org.mozartspaces.notifications.NotificationListener;
+import org.mozartspaces.notifications.NotificationManager;
+import org.mozartspaces.notifications.Operation;
 
 import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
@@ -19,7 +24,6 @@ import sbcm.factory.model.EffectLoadColor;
 import sbcm.factory.model.Employee;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Order;
-import sbcm.factory.model.OrderStatus;
 import sbcm.factory.model.Propellant;
 import sbcm.factory.model.Rocket;
 import sbcm.factory.model.WoodenStaff;
@@ -29,11 +33,13 @@ import sbcm.space.role.Role;
  * @author Manuel
  * 
  */
-public class Producer extends Role {
+public class Producer extends Role implements NotificationListener {
+
+	private Boolean isOrder;
 
 	private MozartTransaction mt = null;
 
-	private MozartContainer mcParts = null, mcOrders = null;
+	private MozartContainer mcParts = null, mcOrders = null, mcRequested = null;
 
 	public static void main(String[] args) {
 
@@ -50,12 +56,22 @@ public class Producer extends Role {
 
 		this.init();
 
-		do {
-			Order nextOpenOrder = this.getNextOpenOrder();
+		// this.debugData();
 
-			if (null != nextOpenOrder) {
+		do {
+
+			Rocket rqRocket = null;
+			if (isOrder) {
+				rqRocket = this.getNextRequestedRocket();
+
+				if (null == rqRocket) {
+					isOrder = false;
+				}
+			}
+
+			if (isOrder) {
 				logger.info("--- Produce for order ...");
-				this.produceForOrder(nextOpenOrder);
+				this.produceForOrder(rqRocket);
 			} else {
 				logger.info("--- Produce for stock ...");
 				this.produceForStock();
@@ -64,33 +80,15 @@ public class Producer extends Role {
 		} while (true);
 	}
 
-	private void produceForOrder(Order order) {
+	private void produceForOrder(Rocket rqRocket) {
 		try {
-			Order updatedOrder = null;
-
-			for (int i = 0; i < order.getProduceQuantity(); i++) {
-				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
-				this.produceRocket(order);
-
-				updatedOrder = this.getOrderById(order.getId());
-				updatedOrder.setStatus(OrderStatus.IN_PROCESS);
-				updatedOrder.setProduceQuantity(updatedOrder.getProduceQuantity() - 1);
-
-				logger.info("Write order " + updatedOrder.toString());
-
-				this.mozartSpaces.write(MozartSpaces.ORDERS, updatedOrder);
-
-				this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
-			}
+			mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
+			Order order = this.getOrderById(rqRocket.getOrderId());
+			this.produceRocket(order);
+			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-
-			try {
-				this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_ROLLBACK);
-			} catch (Exception ex) {
-				logger.error(ex.getMessage());
-			}
+			logger.error("", e);
 		}
 	}
 
@@ -105,11 +103,20 @@ public class Producer extends Role {
 	}
 
 	private void init() {
+
+		isOrder = true;
+
 		try {
 			mcParts = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PARTS);
 			mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
+			mcRequested = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.REQUESTED_ROCKETS);
+
+			NotificationManager notifManager = this.mozartSpaces.createNotificationManager();
+
+			notifManager.createNotification(mcRequested.getContainer(), this, Operation.WRITE);
+
 		} catch (Exception e) {
-			logger.error("", e);
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -190,11 +197,10 @@ public class Producer extends Role {
 
 		logger.info("Get effectLoad: " + color);
 
-		EffectLoad el = new EffectLoad();
-		el.setColor(color);
-		MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(el, 1));
+		Query query = new Query().filter(ComparableProperty.forName("color").equalTo(color));
 
-		EffectLoad effectLoad = (EffectLoad) this.mozartSpaces.take(mcParts, mt, effectLoadSelector).get(0);
+		EffectLoad effectLoad = (EffectLoad) this.mozartSpaces.take(mcParts, mt, new MozartSelector(QueryCoordinator.newSelector(query)))
+				.get(0);
 
 		if (rocket.getEffectiveLoad() == null)
 			rocket.setEffectiveLoad(new ArrayList<EffectLoad>());
@@ -223,31 +229,19 @@ public class Producer extends Role {
 
 	}
 
-	private Order getNextOpenOrder() {
-
+	private Rocket getNextRequestedRocket() {
 		try {
 			mt = (MozartTransaction) this.mozartSpaces.createTransaction(1000);
-			Order template = new Order();
-			template.setStatus(OrderStatus.SCHEDULED);
 
-			Query query = new Query().filter(ComparableProperty.forName("produceQuantity").greaterThan(0)).cnt(1);
-
-			Order order = (Order) this.mozartSpaces.take(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
-
-			logger.info("Take order " + order.toString());
-
-			order.setStatus(OrderStatus.IN_PROCESS);
-
-			logger.info("Write order " + order.toString());
-
-			this.mozartSpaces.write(MozartSpaces.ORDERS, order);
+			MozartSelector requestedSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), 1));
+			ArrayList<Rocket> result = this.mozartSpaces.take(mcRequested, mt, requestedSelector);
 
 			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
-			return order;
+			return result.get(0);
 
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+
 			return null;
 		}
 	}
@@ -255,10 +249,98 @@ public class Producer extends Role {
 	private Order getOrderById(Integer id) throws Exception {
 
 		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
-		Order order = (Order) this.mozartSpaces.take(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
+		Order order = (Order) this.mozartSpaces.read(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
 
 		logger.info("Take order " + order.toString());
 
 		return order;
+	}
+
+	public void entryOperationFinished(Notification arg0, Operation arg1, List<? extends Serializable> arg2) {
+		this.isOrder = true;
+	}
+
+	@SuppressWarnings("unused")
+	private void debugData() {
+
+		try {
+
+			Order order = new Order(1);
+			order.setEffectLoadColor1(EffectLoadColor.RED);
+			order.setEffectLoadColor2(EffectLoadColor.BLUE);
+			order.setEffectLoadColor3(EffectLoadColor.GREEN);
+			order.setQuantityRockets(3);
+
+			this.mozartSpaces.write(MozartSpaces.ORDERS, order);
+
+			for (int i = 0; i < order.getQuantityRockets(); i++) {
+				Rocket rocket = new Rocket();
+				rocket.setOrderId(order.getId());
+				this.mozartSpaces.write(MozartSpaces.REQUESTED_ROCKETS, rocket);
+			}
+
+			for (int i = 1; i <= 1; i++) {
+
+				Igniter ig = new Igniter(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				ig.setSupplier(new Employee(employeeId));
+				mozartSpaces.write(MozartSpaces.PARTS, ig);
+
+			}
+
+			for (int i = 1; i <= 1; i++) {
+
+				Propellant p = new Propellant(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				p.setAmount(500);
+				p.setSupplier(new Employee(employeeId));
+
+				mozartSpaces.write(MozartSpaces.PARTS, p);
+
+			}
+
+			for (int i = 1; i <= 1; i++) {
+
+				WoodenStaff w = new WoodenStaff(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				w.setSupplier(new Employee(employeeId));
+
+				mozartSpaces.write(MozartSpaces.PARTS, w);
+
+			}
+
+			for (int i = 1; i <= 1; i++) {
+
+				EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				el.setSupplier(new Employee(employeeId));
+				el.setColor(EffectLoadColor.RED);
+				el.setIsDefect(Boolean.FALSE);
+
+				mozartSpaces.write(MozartSpaces.PARTS, el);
+			}
+
+			for (int i = 1; i <= 1; i++) {
+
+				EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				el.setSupplier(new Employee(employeeId));
+				el.setColor(EffectLoadColor.BLUE);
+				el.setIsDefect(Boolean.FALSE);
+
+				mozartSpaces.write(MozartSpaces.PARTS, el);
+
+			}
+
+			for (int i = 1; i <= 1; i++) {
+
+				EffectLoad el = new EffectLoad(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				el.setSupplier(new Employee(employeeId));
+				el.setColor(EffectLoadColor.GREEN);
+
+				el.setIsDefect(Boolean.FALSE);
+
+				mozartSpaces.write(MozartSpaces.PARTS, el);
+			}
+
+		} catch (Exception e) {
+
+		}
+
 	}
 }

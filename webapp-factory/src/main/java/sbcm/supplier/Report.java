@@ -15,6 +15,7 @@ import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
 import sbcm.factory.model.EffectLoad;
+import sbcm.factory.model.EffectLoadColor;
 import sbcm.factory.model.Igniter;
 import sbcm.factory.model.Order;
 import sbcm.factory.model.Propellant;
@@ -31,11 +32,15 @@ public class Report {
 	private List<Rocket> producedRockets;
 	private List<Rocket> goodRockets;
 	private List<Rocket> defectRockets;
+	private List<Rocket> rqRockets;
 	private List<Igniter> lIgniter;
 	private List<Propellant> lPropellant;
 	private List<WoodenStaff> lWoodenStaff;
 	private List<RocketPackage> packages;
 	private List<Order> orders;
+	private List<EffectLoad> lEffectLoad;
+
+	private int eLRed = 0, eLGreen = 0, eLBlue = 0;
 
 	private MozartSpaces mozartSpaces;
 
@@ -86,7 +91,17 @@ public class Report {
 			logger.info("# WoodenStaff: " + lWoodenStaff.size());
 
 			this.lEffectLoad = this.mozartSpaces.read(mc, null, effectLoadSelector);
-			logger.info("# EffectiveLoad: " + lEffectLoad.size());
+			logger.info("# EffectLoad: " + lEffectLoad.size());
+
+			for (EffectLoad el : lEffectLoad) {
+				if (EffectLoadColor.RED.equals(el.getColor())) {
+					this.seteLRed(this.geteLRed() + 1);
+				} else if (EffectLoadColor.GREEN.equals(el.getColor())) {
+					this.seteLGreen(this.geteLGreen() + 1);
+				} else if (EffectLoadColor.BLUE.equals(el.getColor())) {
+					this.seteLBlue(this.geteLBlue() + 1);
+				}
+			}
 
 			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
 			this.producedRockets = this.mozartSpaces.read(mc, null, rocketSelector);
@@ -115,6 +130,10 @@ public class Report {
 			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
 			this.orders = this.mozartSpaces.read(mc, null, orderSelector);
 			logger.info("# Orders: " + this.orders.size());
+
+			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.REQUESTED_ROCKETS);
+			this.rqRockets = this.mozartSpaces.read(mc, null, rocketSelector);
+			logger.info("# Requested rockets: " + this.rqRockets.size());
 
 		} catch (Exception e) {
 			logger.error("", e);
@@ -150,8 +169,6 @@ public class Report {
 	public void setlEffectLoad(List<EffectLoad> lEffectLoad) {
 		this.lEffectLoad = lEffectLoad;
 	}
-
-	private List<EffectLoad> lEffectLoad;
 
 	public List<Rocket> getDefectRockets() {
 		return defectRockets;
@@ -191,6 +208,30 @@ public class Report {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+
+	public int geteLRed() {
+		return eLRed;
+	}
+
+	public void seteLRed(int eLRed) {
+		this.eLRed = eLRed;
+	}
+
+	public int geteLGreen() {
+		return eLGreen;
+	}
+
+	public void seteLGreen(int eLGreen) {
+		this.eLGreen = eLGreen;
+	}
+
+	public int geteLBlue() {
+		return eLBlue;
+	}
+
+	public void seteLBlue(int eLBlue) {
+		this.eLBlue = eLBlue;
 	}
 
 }

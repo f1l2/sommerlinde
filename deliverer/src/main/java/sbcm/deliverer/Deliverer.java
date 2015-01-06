@@ -15,7 +15,6 @@ import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
 import sbc.space.MozartTransaction;
 import sbc.space.SpaceTech.TransactionEndType;
-import sbc.space.SpaceTransaction;
 import sbcm.factory.model.Order;
 import sbcm.factory.model.OrderStatus;
 import sbcm.factory.model.Rocket;
@@ -63,11 +62,12 @@ public class Deliverer extends Role {
 
 				logger.info("Found finished order. Id: " + finishedOrder.getId());
 
-				mt = (MozartTransaction) this.mozartSpaces.createTransaction(5000);
-
 				try {
+					// Test if shipping spaces is available
+
 					this.shippingSpaces = new MozartSpaces(false, finishedOrder.getShippingAddress());
-					SpaceTransaction createTransaction = this.shippingSpaces.createTransaction();
+					MozartTransaction trans = (MozartTransaction) this.shippingSpaces.createTransaction();
+					this.mozartSpaces.endTransaction(trans, TransactionEndType.TET_ROLLBACK);
 
 				} catch (Exception e) {
 					this.shippingSpaces = null;
@@ -75,8 +75,10 @@ public class Deliverer extends Role {
 
 				if (this.shippingSpaces != null) {
 
+					mt = (MozartTransaction) this.mozartSpaces.createTransaction(5000);
+
 					Rocket templRocket = new Rocket();
-					templRocket.setOrderId(finishedOrder.getOrdererId());
+					templRocket.setOrderId(finishedOrder.getId());
 					rockets = this.mozartSpaces.take(mcRockets, mt,
 							new MozartSelector(LindaCoordinator.newSelector(templRocket, Selecting.COUNT_ALL)));
 
@@ -95,14 +97,14 @@ public class Deliverer extends Role {
 					finishedOrder.setStatus(OrderStatus.DELIVERED);
 					this.mozartSpaces.write(MozartSpaces.ORDERS, finishedOrder);
 
+					this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
+
 				} else {
 
 					// update status of order
 					finishedOrder.setStatus(OrderStatus.NOT_DELIVERED);
 					this.mozartSpaces.write(MozartSpaces.ORDERS, finishedOrder);
 				}
-
-				this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
 			} catch (Exception e) {
 				logger.error("", e);

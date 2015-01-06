@@ -13,6 +13,7 @@ public abstract class SpaceTech {
 	protected static final Logger logger = LoggerFactory.getLogger(Factory.class);
 
 	public static final String PARTS = "parts";
+	public static final String REQUESTED_ROCKETS = "requestedRockets";
 	public static final String PRODUCED_ROCKETS = "producedRockets";
 	public static final String GOOD_ROCKETS_A = "goodRocketsA";
 	public static final String GOOD_ROCKETS_B = "goodRocketsB";
@@ -39,6 +40,7 @@ public abstract class SpaceTech {
 		System.out.println("*** Initiating SpaceTech");
 		try {
 			this.createContainer(PRODUCED_ROCKETS, 1000);
+			this.createContainer(REQUESTED_ROCKETS, 1000);
 			this.createContainer(GOOD_ROCKETS_A, 1000);
 			this.createContainer(GOOD_ROCKETS_B, 1000);
 			this.createContainer(GOOD_ROCKETS_ORDER, 1000);

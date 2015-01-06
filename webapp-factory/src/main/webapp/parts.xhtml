@@ -26,8 +26,15 @@
     					 	<h:outputText value="; " />
 						</ui:repeat>
         		
-        				<p:outputLabel for="effectLoad" value="# Effektladungen:" />
-        				<p:outputLabel id="effectLoad" value="#{report.lEffectLoad.size()}"  />
+        				<p:outputLabel for="effectLoadRed" value="# Effektladungen (rot):" />
+        				<p:outputLabel id="effectLoadRed" value="#{report.eLRed}"  />
+
+						<p:outputLabel for="effectLoadGreen" value="# Effektladungen (grün):" />
+        				<p:outputLabel id="effectLoadGreen" value="#{report.eLGreen}"  />
+						
+						<p:outputLabel for="effectLoadBlue" value="# Effektladungen (blau):" />
+        				<p:outputLabel id="effectLoadBlue" value="#{report.eLBlue}"  />
+						
 
     				</h:panelGrid>
     			</h:form>		

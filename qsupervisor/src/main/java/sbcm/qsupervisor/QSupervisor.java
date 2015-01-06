@@ -6,6 +6,7 @@ import org.mozartspaces.capi3.ComparableProperty;
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.Query;
 import org.mozartspaces.capi3.QueryCoordinator;
+import org.mozartspaces.core.MzsConstants.Selecting;
 import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 
 import sbc.space.MozartContainer;
@@ -25,7 +26,7 @@ public class QSupervisor extends Role {
 
 	private MozartTransaction mt = null;
 
-	private MozartContainer mcRockets = null, mcOrders = null;
+	private MozartContainer mcRockets = null, mcOrders = null, mcOrderRockets = null;
 
 	public static void main(String[] args) {
 		new QSupervisor();
@@ -47,6 +48,7 @@ public class QSupervisor extends Role {
 				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
 				mcRockets = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
 				mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
+				mcOrderRockets = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
 
 				ArrayList<Rocket> result = this.mozartSpaces.take(mcRockets, mt, rocketSelector);
 
@@ -81,19 +83,25 @@ public class QSupervisor extends Role {
 				rocket.getEmployee().add(new Employee(this.employeeId));
 
 				if (rocket.getQualityCategory().equals(QualityCategory.DEFEKT)) {
-					this.incrProduceQuantity(rocket);
-					rocket.setOrderId(null);
+
+					this.createSpareRequest(rocket);
+
 					this.mozartSpaces.write(MozartSpaces.DEFECT_ROCKETS, rocket);
 
 				} else if (rocket.getQualityCategory().equals(QualityCategory.B)) {
-					this.incrProduceQuantity(rocket);
-					rocket.setOrderId(null);
+
+					this.createSpareRequest(rocket);
+
 					this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_B, rocket);
 
 				} else if (rocket.getQualityCategory().equals(QualityCategory.A)) {
-					this.incrProducedQuantity(rocket);
+
 					if (rocket.getOrderId() != null) {
+
 						this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_ORDER, rocket);
+
+						this.checkIfOrderIsFinished(rocket);
+
 					} else {
 						this.mozartSpaces.write(MozartSpaces.GOOD_ROCKETS_A, rocket);
 					}
@@ -116,44 +124,47 @@ public class QSupervisor extends Role {
 		} while (true);
 	}
 
-	private void incrProducedQuantity(Rocket rocket) throws Exception {
-		if (null != rocket.getOrderId()) {
+	private void checkIfOrderIsFinished(Rocket rocket) throws Exception {
 
-			Order order = this.getOrderById(rocket.getOrderId());
+		Order order = this.readOrderById(rocket.getOrderId());
 
-			if (order.getProducedQuantity() == null) {
-				order.setProducedQuantity(1);
-			} else {
-				order.setProducedQuantity(order.getProducedQuantity() + 1);
-			}
+		Rocket templRocket = new Rocket();
+		templRocket.setOrderId(order.getId());
+		ArrayList<Rocket> rockets = this.mozartSpaces.read(mcOrderRockets, mt,
+				new MozartSelector(LindaCoordinator.newSelector(templRocket, Selecting.COUNT_ALL)));
 
-			if (order.getQuantityRockets() <= order.getProducedQuantity()) {
-				order.setStatus(OrderStatus.PROCESSED);
-			}
+		if (rockets.size() == order.getQuantityRockets()) {
+			Order takeOrder = this.takeOrderById(rocket.getOrderId());
+			takeOrder.setStatus(OrderStatus.PROCESSED);
+			logger.info("Write order " + takeOrder.toString());
 
-			logger.info("Write order " + order.toString());
-
-			this.mozartSpaces.write(MozartSpaces.ORDERS, order);
+			this.mozartSpaces.write(MozartSpaces.ORDERS, takeOrder);
 		}
 	}
 
-	private void incrProduceQuantity(Rocket rocket) throws Exception {
-		if (null != rocket.getOrderId()) {
+	private void createSpareRequest(Rocket rocket) throws Exception {
+		if (rocket.getOrderId() != null) {
+			Order order = this.readOrderById(rocket.getOrderId());
 
-			Order order = this.getOrderById(rocket.getOrderId());
-			if (order.getProduceQuantity() == null) {
-				order.setProduceQuantity(1);
-			} else {
-				order.setProduceQuantity(order.getProduceQuantity() + 1);
-			}
+			Rocket newRocket = new Rocket();
+			newRocket.setOrderId(order.getId());
+			this.mozartSpaces.write(MozartSpaces.REQUESTED_ROCKETS, newRocket);
 
-			logger.info("Write order " + order.toString());
-
-			this.mozartSpaces.write(MozartSpaces.ORDERS, order);
+			rocket.setOrderId(null);
 		}
 	}
 
-	private Order getOrderById(Integer id) throws Exception {
+	private Order readOrderById(Integer id) throws Exception {
+
+		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
+		Order order = (Order) this.mozartSpaces.read(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
+
+		logger.info("Read order " + order.toString());
+
+		return order;
+	}
+
+	private Order takeOrderById(Integer id) throws Exception {
 
 		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
 		Order order = (Order) this.mozartSpaces.take(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
