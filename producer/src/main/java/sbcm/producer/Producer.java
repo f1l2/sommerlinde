@@ -60,17 +60,14 @@ public class Producer extends Role implements NotificationListener {
 			Rocket rqRocket = null;
 			if (isOrder) {
 				rqRocket = this.getNextRequestedRocket();
-
-				if (null == rqRocket) {
-					isOrder = false;
-				}
+				isOrder = (rqRocket == null) ? false : true;
 			}
 
 			if (isOrder) {
-				logger.info("--- Produce for order ...");
+				logger.info("--- Produce for order ---");
 				this.produceForOrder(rqRocket);
 			} else {
-				logger.info("--- Produce for stock ...");
+				logger.info("--- Produce for stock ---");
 				this.produceForStock();
 			}
 
@@ -86,6 +83,7 @@ public class Producer extends Role implements NotificationListener {
 
 		} catch (Exception e) {
 			logger.error("", e);
+			this.rollback();
 		}
 	}
 
@@ -94,8 +92,10 @@ public class Producer extends Role implements NotificationListener {
 			mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
 			this.produceRocket(null);
 			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
+			mt = null;
 		} catch (Exception e) {
 			logger.error("", e);
+			this.rollback();
 		}
 	}
 
@@ -247,11 +247,20 @@ public class Producer extends Role implements NotificationListener {
 
 		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
 		Order order = (Order) this.mozartSpaces.read(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
-
 		return order;
 	}
 
 	public void entryOperationFinished(Notification arg0, Operation arg1, List<? extends Serializable> arg2) {
+
 		this.isOrder = true;
+	}
+
+	private void rollback() {
+		try {
+			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_ROLLBACK);
+			mt = null;
+		} catch (Exception e) {
+			logger.error("", e);
+		}
 	}
 }
