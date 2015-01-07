@@ -76,7 +76,7 @@ public class QSupervisor extends Role {
 					logger.info("Quality category B.");
 					rocket.setQualityCategory(QualityCategory.B);
 				} else {
-					logger.info("Defect.");
+					logger.info("Defect (" + rocket.getFillingQuantity() + "/" + cntDefectEffectiveLoad + ")");
 					rocket.setQualityCategory(QualityCategory.DEFEKT);
 				}
 

@@ -45,12 +45,12 @@ public class Logistician extends Role {
 			try {
 				this.readRockets(containerA, QualityCategory.A);
 			} catch (Exception e) {
-				logger.error(e.getMessage());
+				logger.error("Reading A rockets failed: " + e.getMessage());
 			}
 			try {
 				this.readRockets(containerB, QualityCategory.B);
 			} catch (Exception e) {
-				logger.error(e.getMessage());
+				logger.error("Reading B rockets failed: " + e.getMessage());
 			}
 			NotificationManager notifManager = this.mozartSpaces.createNotificationManager();
 

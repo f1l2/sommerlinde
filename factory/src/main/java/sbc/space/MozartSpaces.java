@@ -148,8 +148,11 @@ public class MozartSpaces extends SpaceTech {
 		case TET_COMMIT:
 			capi.commitTransaction(_gT(mt));
 			break;
+		case TET_ABORT:
 		case TET_ROLLBACK:
 			capi.rollbackTransaction(_gT(mt));
+			break;
+		default:
 			break;
 		}
 	}
@@ -172,6 +175,12 @@ public class MozartSpaces extends SpaceTech {
 			return FifoCoordinator.newSelector(count);
 		case SEL_LIFO:
 			return LifoCoordinator.newSelector(count);
+		case SEL_ANY:
+			break;
+		case SEL_LINDA:
+			break;
+		default:
+			break;
 		}
 		return AnyCoordinator.newSelector(count);
 	}
