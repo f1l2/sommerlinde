@@ -41,6 +41,8 @@ public class OrderBean extends Role {
 		this.order.setQuantityRockets(0);
 		this.order.setShippingAddress(SingleSpace.URI);
 
+		this.employeeId = 5;
+
 		this.fetchPendingOrders();
 	}
 
@@ -100,7 +102,7 @@ public class OrderBean extends Role {
 			Matchmaker ordererId = ComparableProperty.forName("ordererId").equalTo(this.employeeId);
 			Query query = new Query().filter(Matchmakers.and(status, ordererId));
 
-			ArrayList<Order> orders = this.mozartSpaces.read(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query)), 1000);
+			ArrayList<Order> orders = this.mozartSpaces.take(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query)), 1000);
 
 			logger.info("Found pending orders.");
 
