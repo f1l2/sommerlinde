@@ -5,7 +5,9 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sbc.space.AlterSpaceClient;
 import sbc.space.MozartSpaces;
+import sbc.space.SpaceTech;
 
 public abstract class Role {
 
@@ -13,11 +15,11 @@ public abstract class Role {
 
 	protected int employeeId;
 
-	protected MozartSpaces mozartSpaces;
+	protected SpaceTech mozartSpaces;
 
 	public Role() {
 
-		this.mozartSpaces = new MozartSpaces(false);
+		this.mozartSpaces = new AlterSpaceClient();
 		// first receive role id
 		this.employeeId = mozartSpaces.getIDAndIncr(MozartSpaces.PRODUCER_COUNTER);
 

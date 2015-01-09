@@ -11,6 +11,7 @@ public abstract class AlterSpace extends SpaceTech {
  
     public void init() {
 	System.err.println ("*** Initialising AlterSpace");
+	super.init();
     }
 
     public AlterSpace() {

@@ -2,6 +2,7 @@ package sbc.space;
 
 import java.util.ArrayList;
 
+import org.mozartspaces.core.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,7 +77,8 @@ public abstract class SpaceTech {
 
 	public abstract Container findContainer(String id) throws Exception;
 
-	public abstract SpaceTransaction createTransaction() throws Exception;
+	public abstract SpaceTransaction createTransaction(long timeout) throws Exception;
+	public SpaceTransaction createTransaction() throws Exception { return createTransaction(timeout); }
 
 	public abstract void endTransaction(SpaceTransaction transaction, TransactionEndType tet) throws Exception;
 
@@ -94,6 +96,10 @@ public abstract class SpaceTech {
 	 */
 	public abstract <T extends SpaceEntry> void write(Container c, SpaceTransaction t, T entry) throws Exception;
 
+	public <T extends SpaceEntry> void write(String containerId, T entry) throws Exception {
+		this.write(this.findContainer(containerId), null, entry);
+	}
+
 	public void setTimeout(long to) {
 		timeout = to;
 	}
@@ -103,19 +109,19 @@ public abstract class SpaceTech {
 		int id = -1;
 		try {
 
-			SpaceTransaction mt = createTransaction();
+//OPT			SpaceTransaction mt = createTransaction();
 
 			Container mc = findContainer(counter);
 
-			entries = take(mc, mt, SelectorType.SEL_LIFO, 1);
+			entries = take(mc, null, SelectorType.SEL_LIFO, 1);
 
 			if (null != entries) {
 
 				id = entries.get(0).getId();
-				write(mc, mt, new Employee(entries.get(0).getId() + 1));
+				write(mc, null, new Employee(entries.get(0).getId() + 1));
 			}
 
-			endTransaction(mt, TransactionEndType.TET_COMMIT);
+//OPT			endTransaction(mt, TransactionEndType.TET_COMMIT);
 
 		} catch (Exception e) {
 			logger.error("", e);

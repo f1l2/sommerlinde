@@ -70,7 +70,7 @@ public class AlterSpaceClient extends SpaceTech {
 	return (Container) ac;
     }
 
-    public SpaceTransaction createTransaction() {
+    public SpaceTransaction createTransaction(long timeout) {
 	AlterTransaction at = SendMessage(AlterMessage.AlterMessageType.START_TRANSACTION, null);
 	return (SpaceTransaction) at;
     }

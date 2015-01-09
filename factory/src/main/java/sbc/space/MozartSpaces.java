@@ -95,9 +95,9 @@ public class MozartSpaces extends SpaceTech {
 		this.write((MozartContainer) c, (MozartTransaction) t, entry);
 	}
 
-	public <T extends SpaceEntry> void write(String containerId, T entry) throws Exception {
+/*	public <T extends SpaceEntry> void write(String containerId, T entry) throws Exception {
 		capi.write(((MozartContainer) this.findContainer(containerId)).getContainer(), new Entry(entry));
-	}
+	}*/
 
 	public <T extends SpaceEntry> ArrayList<T> take(MozartContainer mc, MozartTransaction mt, SelectorType selector, int count)
 			throws Exception {
@@ -131,9 +131,9 @@ public class MozartSpaces extends SpaceTech {
 		return entries;
 	}
 
-	public SpaceTransaction createTransaction() throws Exception {
+/*	public SpaceTransaction createTransaction() throws Exception {
 		return (SpaceTransaction) new MozartTransaction(capi.createTransaction(timeout, spaceURI));
-	}
+	}*/
 
 	public SpaceTransaction createTransaction(long timeout) throws Exception {
 		return (SpaceTransaction) new MozartTransaction(capi.createTransaction(timeout, spaceURI));

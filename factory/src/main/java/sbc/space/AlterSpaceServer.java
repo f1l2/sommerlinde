@@ -14,6 +14,7 @@ public class AlterSpaceServer extends AlterSpace {
  
     public void init() {
 	System.err.println ("*** Initialising AlterSpaceServer");
+	super.init();
     }
 
     public AlterSpaceServer(boolean server) {
@@ -51,7 +52,7 @@ public class AlterSpaceServer extends AlterSpace {
 	return (Container) containers.get(id);
     }
 
-    public SpaceTransaction createTransaction() {
+    public SpaceTransaction createTransaction(long timeout) {
 	AlterSpaceTransaction ast = new AlterSpaceTransaction();
 /*	SpaceTransaction res = new SpaceTransaction();*/
 	AlterTransaction at = new AlterTransaction(++trans_count);

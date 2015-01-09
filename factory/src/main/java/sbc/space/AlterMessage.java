@@ -3,6 +3,10 @@ package sbc.space;
 import java.io.Serializable;
 
 public class AlterMessage implements Serializable {
+   /**
+	 * 
+	 */
+   private static final long serialVersionUID = 7821298011446112779L;
    public enum AlterMessageType {
 	GET_CONTAINER,
 	SET_CONTAINER,

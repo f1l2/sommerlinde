@@ -3,7 +3,8 @@ package sbcm.factory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sbc.space.MozartSpaces;
+import sbc.space.AlterSpaceServer;
+import sbc.space.SpaceTech;
 
 public class Factory {
 
@@ -13,7 +14,7 @@ public class Factory {
 
 		logger.info("Start space ...");
 
-		MozartSpaces mozartSpaces = new MozartSpaces(true);
+		SpaceTech mozartSpaces = new AlterSpaceServer(true);
 		mozartSpaces.init();
 
 		logger.info("Space started.");

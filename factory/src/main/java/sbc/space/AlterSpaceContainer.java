@@ -120,10 +120,26 @@ public class AlterSpaceContainer {
 
 	System.out.println ("Locked Container for something");
 	ast.addContainer(this);
+	
+	/* if only one entry exists, we ignore the selector and return that entry */
+	if (entries.size() == 1) {
+		off = 0;
+		T x = (T) entries.get(0);
+		AlterSpaceTransaction a = trans_map.get(x);
+		if (a == null || a == ast) {
+			res.add(x);
+			if (a == null) {
+				commited_entries--;
+				if (ast != null)
+					getOrSet(ast,t_del_entries).add(x);
+			}
+			if (a == ast) count_tw.put(ast, count_tw.get(ast)-1);
+		} else throw new Exception ("Code completely fucked up");
+	} else
 	switch (s) {
 		case SEL_ANY:
 		case SEL_FIFO:
-		        off = 0;
+		    off = 0;
 /*			off = 0;
 			res.addAll((Collection)entries.subList(0, count));
 			entries.removeAll((Collection)res);*/
