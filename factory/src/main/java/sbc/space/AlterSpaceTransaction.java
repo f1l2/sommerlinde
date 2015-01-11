@@ -23,7 +23,7 @@ public class AlterSpaceTransaction {
    }
 
    public void endTransaction(SpaceTech.TransactionEndType tet) {
-	System.err.println ("Ending Transaction for " + containers.size());
+//	System.err.println ("Ending Transaction for " + containers.size());
 	for (int i = 0; i < containers.size(); i++) {
 		containers.get(i).Lock();
 	}

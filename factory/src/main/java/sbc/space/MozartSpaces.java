@@ -90,7 +90,6 @@ public class MozartSpaces extends SpaceTech {
 	public Container findContainer(String id) throws Exception {
 		MozartContainer mc;
 		if ((mc = container_map.get(id)) == null) {
-			System.err.println ("findContainer: Have to lookup " + id);
 			mc = new MozartContainer(capi.lookupContainer(id, spaceURI, timeout, null));
 			container_map.put(id, mc);
 		}

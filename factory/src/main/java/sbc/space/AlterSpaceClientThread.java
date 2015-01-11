@@ -29,8 +29,8 @@ public class AlterSpaceClientThread extends Thread {
 		am = (AlterMessage) ois.readObject();
 		switch (am.getType()) {
 		    case GET_CONTAINER:
-			 System.out.println ("Looking for Container " + am.getId());
-			 System.out.println ("Result for Container " + space.findContainer(am.getId()));
+//			 System.out.println ("Looking for Container " + am.getId());
+//			 System.out.println ("Result for Container " + space.findContainer(am.getId()));
 			 oos.writeObject(space.findContainer(am.getId()));
 			 break;
 		    case SET_CONTAINER:
@@ -52,7 +52,7 @@ public class AlterSpaceClientThread extends Thread {
 		    case END_TRANSACTION:
 			 AlterMessageEndTransaction amet = (AlterMessageEndTransaction) am; //ois.readObject();
 			 space.endTransaction(amet.getTransaction(), amet.getTET());
-			 System.out.println ("Ended transaction...");
+//			 System.out.println ("Ended transaction...");
 			 oos.writeObject(new AlterMessage(AlterMessage.AlterMessageType.AMT_RESULT, null));
 			 break;
 		    case ACT_WRITE:

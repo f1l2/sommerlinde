@@ -37,18 +37,18 @@ public class AlterSpaceClient extends SpaceTech {
     }
 
     protected <T> T SendMessage(AlterMessage.AlterMessageType t, String id) {
-	System.out.println ("Sending message for id " + id);
+//	System.out.println ("Sending message for id " + id);
 	_sendMessage(new AlterMessage(t, id));
-	System.out.println ("Receiving message...");
+//	System.out.println ("Receiving message...");
 	T r = recvMessage();
-	System.out.println ("Received message...");
+//	System.out.println ("Received message...");
 	return r;
     }
 
     protected <T> T recvMessage() {
 	try {
 		T ret = (T) ois.readObject();
-		System.out.println ("Received Message: " + ret);
+//		System.out.println ("Received Message: " + ret);
 		return ret;
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -66,7 +66,7 @@ public class AlterSpaceClient extends SpaceTech {
     public Container findContainer(String id) {
 /*	_sendMessage(new AlterMessage(AlterMessage.AlterMessageType.GET_CONTAINER, id));*/
 	AlterContainer ac = SendMessage(AlterMessage.AlterMessageType.GET_CONTAINER, id);
-	System.out.println ("Find Container returned " + ac);
+//	System.out.println ("Find Container returned " + ac);
 	return (Container) ac;
     }
 
@@ -78,9 +78,9 @@ public class AlterSpaceClient extends SpaceTech {
     public void endTransaction(SpaceTransaction st, TransactionEndType tet) {
 /*	AlterMessage am = SendMessage(AlterMessage.AlterMessageType.END_TRANSACTION, null);*/
 	_sendMessage(new AlterMessageEndTransaction(st, tet));
-	System.out.println ("Getting message?");
+//	System.out.println ("Getting message?");
 	AlterMessage am = recvMessage();
-	System.out.println ("Got message");
+//	System.out.println ("Got message");
     }
 
     public <T extends SpaceEntry> ArrayList<T> take(Container c, SpaceTransaction t,
