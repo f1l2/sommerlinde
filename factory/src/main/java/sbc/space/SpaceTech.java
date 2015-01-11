@@ -39,21 +39,22 @@ public abstract class SpaceTech {
 	public void init() {
 		System.out.println("*** Initiating SpaceTech");
 		try {
-			this.createContainer(PRODUCED_ROCKETS, 1000);
-			this.createContainer(REQUESTED_ROCKETS, 1000);
-			this.createContainer(GOOD_ROCKETS_A, 1000);
-			this.createContainer(GOOD_ROCKETS_B, 1000);
-			this.createContainer(GOOD_ROCKETS_ORDER, 1000);
-			this.createContainer(DEFECT_ROCKETS, 1000);
-			this.createContainer(ROCKET_PACKAGES, 1000);
-			this.createContainer(PARTS, 1000);
-			this.createContainer(ORDERS, 1000);
-			this.createContainer(PRODUCER_COUNTER, 1000);
-			this.createContainer(PART_COUNTER, 1000);
-			this.createContainer(ROCKET_COUNTER, 1000);
-			this.createContainer(PACKAGE_COUNTER, 1000);
-			this.createContainer(ORDER_COUNTER, 1000);
-			this.createContainer(STOCK, 1000);
+			int container_size = 20000;
+			this.createContainer(PRODUCED_ROCKETS, container_size);
+			this.createContainer(REQUESTED_ROCKETS, container_size);
+			this.createContainer(GOOD_ROCKETS_A, container_size);
+			this.createContainer(GOOD_ROCKETS_B, container_size);
+			this.createContainer(GOOD_ROCKETS_ORDER, container_size);
+			this.createContainer(DEFECT_ROCKETS, container_size);
+			this.createContainer(ROCKET_PACKAGES, container_size);
+			this.createContainer(PARTS, container_size);
+			this.createContainer(ORDERS, container_size);
+			this.createContainer(PRODUCER_COUNTER, container_size);
+			this.createContainer(PART_COUNTER, container_size);
+			this.createContainer(ROCKET_COUNTER, container_size);
+			this.createContainer(PACKAGE_COUNTER, container_size);
+			this.createContainer(ORDER_COUNTER, container_size);
+			this.createContainer(STOCK, container_size);
 
 			// write initial value
 			SpaceTransaction mt = createTransaction();
