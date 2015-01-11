@@ -152,6 +152,7 @@ public class RunSupplier extends Role {
 			for (int i = 1; i <= igniter; i++) {
 
 				Igniter ig = new Igniter(mozartSpaces.getIDAndIncr(MozartSpaces.PART_COUNTER));
+				System.out.println ("Writing new Igniter");
 				ig.setSupplier(new Employee(employeeId));
 				try {
 					mozartSpaces.write(MozartSpaces.PARTS, ig);

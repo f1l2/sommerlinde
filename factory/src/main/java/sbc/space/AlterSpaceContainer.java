@@ -119,7 +119,8 @@ public class AlterSpaceContainer {
 	Lock();
 
 	System.out.println ("Locked Container for something");
-	ast.addContainer(this);
+	if (ast != null)
+	  ast.addContainer(this);
 	
 	/* if only one entry exists, we ignore the selector and return that entry */
 	if (entries.size() == 1) {
