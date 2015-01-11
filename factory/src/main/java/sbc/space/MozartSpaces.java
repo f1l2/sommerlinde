@@ -18,6 +18,7 @@ import org.mozartspaces.core.TransactionReference;
 import org.mozartspaces.notifications.NotificationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.HashMap;
 
 import sbcm.factory.Factory;
 
@@ -25,10 +26,12 @@ public class MozartSpaces extends SpaceTech {
 	private URI spaceURI;
 	private MzsCore core;
 	private Capi capi;
+	private HashMap<String,MozartContainer> container_map;
 
 	private static final Logger logger = LoggerFactory.getLogger(Factory.class);
 
 	public MozartSpaces(boolean newspace) {
+		container_map = new HashMap<String,MozartContainer>();
 		try {
 			spaceURI = new URI("xvsm://localhost:9876/");
 			if (!newspace) {
@@ -43,6 +46,7 @@ public class MozartSpaces extends SpaceTech {
 	}
 
 	public MozartSpaces(boolean newspace, String uri) {
+		container_map = new HashMap<String,MozartContainer>();
 		try {
 			spaceURI = new URI(uri);
 			if (!newspace) {
@@ -84,7 +88,14 @@ public class MozartSpaces extends SpaceTech {
 	}
 
 	public Container findContainer(String id) throws Exception {
-		return (Container) new MozartContainer(capi.lookupContainer(id, spaceURI, timeout, null));
+		MozartContainer mc;
+		if ((mc = container_map.get(id)) == null) {
+			System.err.println ("findContainer: Have to lookup " + id);
+			mc = new MozartContainer(capi.lookupContainer(id, spaceURI, timeout, null));
+			container_map.put(id, mc);
+		}
+		return mc;
+
 	}
 
 	public <T extends SpaceEntry> ArrayList<T> take(Container c, SpaceTransaction t, SelectorType selector, int count) throws Exception {

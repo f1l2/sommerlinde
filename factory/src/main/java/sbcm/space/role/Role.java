@@ -32,10 +32,11 @@ public abstract class Role {
 
 	protected int workRandomTime() {
 
-		int min = 1000, max = 3000;
+		return 0;
+/*		int min = 1000, max = 3000;
 		Random random = new Random();
 
-		return (random.nextInt(max - min) + min);
+		return (random.nextInt(max - min) + min);*/
 	}
 
 	protected boolean isDefectRandom(int probability) {
