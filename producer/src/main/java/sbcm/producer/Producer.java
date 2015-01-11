@@ -187,7 +187,7 @@ public class Producer extends Role {
 
 //		MozartSelector woodenStaffSelector = new MozartSelector(LindaCoordinator.newSelector(new WoodenStaff(), 1));
 		AlterQuery query = new AlterQuery();
-		query.getClass(new WoodenStaff());
+		query.getClass(new WoodenStaff()).cnt(1);
 
 		WoodenStaff resultWoodenStaff = (WoodenStaff) this.mozartSpaces.take(mcParts, mt, query).get(0);
 
@@ -199,7 +199,7 @@ public class Producer extends Role {
 		logger.info("Get effectLoad: " + color);
 
 		AlterQuery query = new AlterQuery();
-		query.prop("getColor").equaling(color);
+		query.prop("getColor").equaling(color).cnt(1);
 
 		EffectLoad effectLoad = (EffectLoad) this.mozartSpaces.take(mcParts, mt, query).get(0);
 

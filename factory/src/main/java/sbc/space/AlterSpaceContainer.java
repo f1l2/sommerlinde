@@ -111,6 +111,15 @@ public class AlterSpaceContainer {
 		}
     }
     
+    public <T extends SpaceEntry> ArrayList<T> compileList(ArrayList<T> entries, AlterSpaceTransaction ast) {
+    	ArrayList<T> res = new ArrayList<T>();
+    	for (int i=0;i<entries.size();i++) {
+    		T x = (T) entries.get(i);
+    		AlterSpaceTransaction a = trans_map.get(x);
+    		if (a == ast || a == null) res.add(x);
+    	}
+    	return res;
+    }
     public synchronized <T extends SpaceEntry> ArrayList<T> take(SpaceTech.SelectorType s,
 		AlterSpaceTransaction ast, int count, boolean peek, AlterQuery query) throws Exception {
 	int off;
@@ -135,11 +144,10 @@ public class AlterSpaceContainer {
 	  ast.addContainer(this);
 
 	if (query != null) {
-		@SuppressWarnings("unchecked")
 		int qgot = 0;
 		T t = null;
 		while (qgot < count) {
-			t = (T) query.exec(entries);
+			t = (T) query.exec(compileList(entries, ast));
 		
 //		T t = (T) query.exec(entries);
 			if (t == null) {

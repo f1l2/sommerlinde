@@ -166,7 +166,7 @@ public class QSupervisor extends Role {
 
 //		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
 		AlterQuery query = new AlterQuery();
-		query.prop("getId").equaling(id);
+		query.prop("getId").equaling(id).cnt(1);
 		Order order = (Order) this.mozartSpaces.read(mcOrders, mt, query).get(0);
 
 		logger.info("Read order " + order.toString());
@@ -178,7 +178,7 @@ public class QSupervisor extends Role {
 
 //		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
 		AlterQuery query = new AlterQuery();
-		query.prop("getId").equaling(id);
+		query.prop("getId").equaling(id).cnt(1);
 		Order order = (Order) this.mozartSpaces.take(mcOrders, mt, query).get(0);
 
 		logger.info("Take order " + order.toString());
