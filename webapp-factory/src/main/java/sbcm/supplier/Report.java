@@ -11,6 +11,7 @@ import org.mozartspaces.capi3.LindaCoordinator.LindaSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sbc.space.*;
 import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
@@ -25,7 +26,7 @@ import sbcm.factory.model.WoodenStaff;
 
 @ManagedBean
 @ViewScoped
-public class Report {
+public class Report extends Role {
 
 	private static final Logger logger = LoggerFactory.getLogger(Report.class);
 
@@ -42,7 +43,7 @@ public class Report {
 
 	private int eLRed = 0, eLGreen = 0, eLBlue = 0;
 
-	private MozartSpaces mozartSpaces;
+	private SpaceTech mozartSpaces;
 
 	public List<Igniter> getlIgniter() {
 		return lIgniter;

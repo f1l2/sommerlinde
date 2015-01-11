@@ -2,17 +2,22 @@ package sbcm.qsupervisor;
 
 import java.util.ArrayList;
 
-import org.mozartspaces.capi3.ComparableProperty;
+import sbc.space.AlterQuery;
+import sbc.space.Container;
+import sbc.space.SpaceTransaction;
+import sbc.space.*;
+
+/*import org.mozartspaces.capi3.ComparableProperty;
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.Query;
 import org.mozartspaces.capi3.QueryCoordinator;
 import org.mozartspaces.core.MzsConstants.Selecting;
-import org.mozartspaces.core.MzsConstants.TransactionTimeout;
+import org.mozartspaces.core.MzsConstants.TransactionTimeout;*/
 
-import sbc.space.MozartContainer;
+/*import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
-import sbc.space.MozartTransaction;
+import sbc.space.MozartTransaction;*/
 import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.Employee;
@@ -24,9 +29,9 @@ import sbcm.space.role.Role;
 
 public class QSupervisor extends Role {
 
-	private MozartTransaction mt = null;
+	private SpaceTransaction mt = null;
 
-	private MozartContainer mcRockets = null, mcOrders = null, mcOrderRockets = null;
+	private Container mcRockets = null, mcOrders = null, mcOrderRockets = null;
 
 	public static void main(String[] args) {
 		new QSupervisor();
@@ -43,14 +48,16 @@ public class QSupervisor extends Role {
 
 			try {
 				Rocket rocketTemplate = new Rocket();
-				MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(rocketTemplate, 1));
+//				MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(rocketTemplate, 1));
+				AlterQuery query = new AlterQuery();
+				query.getClass(new Rocket()).cnt(1);
 
-				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
-				mcRockets = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
-				mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
-				mcOrderRockets = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
+				mt = this.mozartSpaces.createTransaction(-1);
+				mcRockets = this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
+				mcOrders = this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
+				mcOrderRockets = this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
 
-				ArrayList<Rocket> result = this.mozartSpaces.take(mcRockets, mt, rocketSelector);
+				ArrayList<Rocket> result = this.mozartSpaces.take(mcRockets, mt, query);
 
 				logger.info("Check rocket (Id = " + result.get(0).getId() + ").");
 				Thread.sleep(this.workRandomTime());
@@ -126,7 +133,7 @@ public class QSupervisor extends Role {
 
 	private void checkIfOrderIsFinished(Rocket rocket) throws Exception {
 
-		Order order = this.readOrderById(rocket.getOrderId());
+/*		Order order = this.readOrderById(rocket.getOrderId());
 
 		Rocket templRocket = new Rocket();
 		templRocket.setOrderId(order.getId());
@@ -139,7 +146,8 @@ public class QSupervisor extends Role {
 			logger.info("Write order " + takeOrder.toString());
 
 			this.mozartSpaces.write(MozartSpaces.ORDERS, takeOrder);
-		}
+		}*/
+		System.err.println("TODO: Checking if order is finished");
 	}
 
 	private void createSpareRequest(Rocket rocket) throws Exception {
@@ -156,8 +164,10 @@ public class QSupervisor extends Role {
 
 	private Order readOrderById(Integer id) throws Exception {
 
-		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
-		Order order = (Order) this.mozartSpaces.read(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
+//		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
+		AlterQuery query = new AlterQuery();
+		query.prop("getId").equaling(id);
+		Order order = (Order) this.mozartSpaces.read(mcOrders, mt, query).get(0);
 
 		logger.info("Read order " + order.toString());
 
@@ -166,8 +176,10 @@ public class QSupervisor extends Role {
 
 	private Order takeOrderById(Integer id) throws Exception {
 
-		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
-		Order order = (Order) this.mozartSpaces.take(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
+//		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
+		AlterQuery query = new AlterQuery();
+		query.prop("getId").equaling(id);
+		Order order = (Order) this.mozartSpaces.take(mcOrders, mt, query).get(0);
 
 		logger.info("Take order " + order.toString());
 

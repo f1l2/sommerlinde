@@ -15,7 +15,7 @@ public abstract class Role {
 
 	protected int employeeId;
 
-	protected SpaceTech mozartSpaces;
+	protected AlterSpaceClient mozartSpaces;
 
 	public Role() {
 

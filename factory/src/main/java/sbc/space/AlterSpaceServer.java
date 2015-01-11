@@ -75,7 +75,7 @@ public class AlterSpaceServer extends AlterSpace {
     }
 
     public <T extends SpaceEntry> ArrayList<T> take(Container c, SpaceTransaction t,
-	SelectorType s, int count) throws Exception {
+    		SelectorType s, int count, AlterQuery query) throws Exception {
 	AlterSpaceContainer asc = getContainer(c); //container_map.get(((AlterContainer)c).getId());
 	if (asc == null) throw new Exception ("Invalid Container");
 /*	if (t != null) {
@@ -83,8 +83,12 @@ public class AlterSpaceServer extends AlterSpace {
 		if (ast == null) throw new Exception ("Invalid Transaction");
 		return ast.take(asc, s, count);
 	}*/
-	return asc.take(s, getTransaction(t), count, false);
+	return asc.take(s, getTransaction(t), count, false, query);
 /*	return new ArrayList<T>();*/
+    }
+    public <T extends SpaceEntry> ArrayList<T> take(Container c, SpaceTransaction t,
+    		SelectorType s, int count) throws Exception {
+    	return take(c,t,s,count,null);
     }
 
     public <T extends SpaceEntry> void write(Container c, SpaceTransaction t,

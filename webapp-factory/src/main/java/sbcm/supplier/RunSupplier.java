@@ -119,12 +119,12 @@ public class RunSupplier extends Role {
 		   3 Effektladungen
 		   130g Treibladung
 		 */
-		woodenstaff = new Integer(100);
-		igniter = new Integer(100);
-		propellant = new Integer(100);
-		effectLoadRed = new Integer(100);
-		effectLoadBlue = new Integer(100);
-		effectLoadGreen = new Integer(100);
+		woodenstaff = new Integer(10);
+		igniter = new Integer(10);
+		propellant = new Integer(10);
+		effectLoadRed = new Integer(10);
+		effectLoadBlue = new Integer(10);
+		effectLoadGreen = new Integer(10);
 		errorRate = new Integer(10);
 		deliver();
 	}

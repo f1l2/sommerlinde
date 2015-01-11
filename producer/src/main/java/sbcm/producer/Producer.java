@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mozartspaces.capi3.ComparableProperty;
+/*import org.mozartspaces.capi3.ComparableProperty;
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.Query;
 import org.mozartspaces.capi3.QueryCoordinator;
@@ -12,12 +12,13 @@ import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 import org.mozartspaces.notifications.Notification;
 import org.mozartspaces.notifications.NotificationListener;
 import org.mozartspaces.notifications.NotificationManager;
-import org.mozartspaces.notifications.Operation;
+import org.mozartspaces.notifications.Operation;*/
 
-import sbc.space.MozartContainer;
+import sbc.space.*;
+/*import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
-import sbc.space.MozartTransaction;
+import sbc.space.MozartTransaction;*/
 import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.EffectLoadColor;
@@ -33,13 +34,13 @@ import sbcm.space.role.Role;
  * @author Manuel
  * 
  */
-public class Producer extends Role implements NotificationListener {
+public class Producer extends Role {
 
 	private Boolean isOrder;
 
-	private MozartTransaction mt = null;
+	private SpaceTransaction mt = null;
 
-	private MozartContainer mcParts = null, mcOrders = null, mcRequested = null;
+	private Container mcParts = null, mcOrders = null, mcRequested = null;
 
 	public static void main(String[] args) {
 
@@ -76,7 +77,7 @@ public class Producer extends Role implements NotificationListener {
 
 	private void produceForOrder(Rocket rqRocket) {
 		try {
-			mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
+			mt = this.mozartSpaces.createTransaction(-1);
 			Order order = this.getOrderById(rqRocket.getOrderId());
 			this.produceRocket(order);
 			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
@@ -89,7 +90,7 @@ public class Producer extends Role implements NotificationListener {
 
 	private void produceForStock() {
 		try {
-			mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
+			mt = this.mozartSpaces.createTransaction(-1);
 			this.produceRocket(null);
 			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 			mt = null;
@@ -104,13 +105,13 @@ public class Producer extends Role implements NotificationListener {
 		isOrder = true;
 
 		try {
-			mcParts = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PARTS);
-			mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
-			mcRequested = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.REQUESTED_ROCKETS);
+			mcParts = this.mozartSpaces.findContainer(MozartSpaces.PARTS);
+			mcOrders = this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
+			mcRequested = this.mozartSpaces.findContainer(MozartSpaces.REQUESTED_ROCKETS);
 
-			NotificationManager notifManager = this.mozartSpaces.createNotificationManager();
+/*			NotificationManager notifManager = this.mozartSpaces.createNotificationManager();
 
-			notifManager.createNotification(mcRequested.getContainer(), this, Operation.WRITE);
+			notifManager.createNotification(mcRequested.getContainer(), this, Operation.WRITE);*/
 
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -153,14 +154,14 @@ public class Producer extends Role implements NotificationListener {
 		rocket.setFillingQuantity(propellantAmount);
 		rocket.setPropellant(new ArrayList<Propellant>());
 
-		ComparableProperty amount = ComparableProperty.forName("amount");
-		Query query = new Query().sortup(amount).cnt(1);
+//		ComparableProperty amount = ComparableProperty.forName("amount");
+		AlterQuery query = new AlterQuery();
+		query.sortup("getAmount").cnt(1);
 
 		Boolean isPropellantReached = false;
 		while (!isPropellantReached) {
 
-			Propellant propellant = (Propellant) this.mozartSpaces.take(mcParts, mt,
-					new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
+			Propellant propellant = (Propellant) this.mozartSpaces.take(mcParts, mt, query).get(0);
 
 			rocket.getPropellant().add(propellant);
 
@@ -184,20 +185,23 @@ public class Producer extends Role implements NotificationListener {
 
 		logger.info("Get woodenstaff.");
 
-		MozartSelector woodenStaffSelector = new MozartSelector(LindaCoordinator.newSelector(new WoodenStaff(), 1));
-		ArrayList<WoodenStaff> resultWoodenStaff = this.mozartSpaces.take(mcParts, mt, woodenStaffSelector);
+//		MozartSelector woodenStaffSelector = new MozartSelector(LindaCoordinator.newSelector(new WoodenStaff(), 1));
+		AlterQuery query = new AlterQuery();
+		query.getClass(new WoodenStaff());
 
-		rocket.setWoodenStaff(resultWoodenStaff.get(0));
+		WoodenStaff resultWoodenStaff = (WoodenStaff) this.mozartSpaces.take(mcParts, mt, query).get(0);
+
+		rocket.setWoodenStaff(resultWoodenStaff);
 	}
 
 	private void gatherSingleEffectLoad(Rocket rocket, EffectLoadColor color) throws Exception {
 
 		logger.info("Get effectLoad: " + color);
 
-		Query query = new Query().filter(ComparableProperty.forName("color").equalTo(color));
+		AlterQuery query = new AlterQuery();
+		query.prop("getColor").equaling(color);
 
-		EffectLoad effectLoad = (EffectLoad) this.mozartSpaces.take(mcParts, mt, new MozartSelector(QueryCoordinator.newSelector(query)))
-				.get(0);
+		EffectLoad effectLoad = (EffectLoad) this.mozartSpaces.take(mcParts, mt, query).get(0);
 
 		if (rocket.getEffectiveLoad() == null)
 			rocket.setEffectiveLoad(new ArrayList<EffectLoad>());
@@ -209,9 +213,11 @@ public class Producer extends Role implements NotificationListener {
 
 		logger.info("Get effectLoad.");
 
-		MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(new EffectLoad(), 3));
+//		MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(new EffectLoad(), 3));
+		AlterQuery query = new AlterQuery();
+		query.getClass(new EffectLoad()).cnt(3);
 
-		ArrayList<EffectLoad> resultEffectLoad = this.mozartSpaces.take(mcParts, mt, effectLoadSelector);
+		ArrayList<EffectLoad> resultEffectLoad = this.mozartSpaces.take(mcParts, mt, query);
 		rocket.setEffectiveLoad(resultEffectLoad);
 	}
 
@@ -219,10 +225,12 @@ public class Producer extends Role implements NotificationListener {
 
 		logger.info("Get igniter.");
 
-		MozartSelector igniterSelector = new MozartSelector(LindaCoordinator.newSelector(new Igniter(), 1));
+//		MozartSelector igniterSelector = new MozartSelector(LindaCoordinator.newSelector(new Igniter(), 1));
+		AlterQuery query = new AlterQuery();
+		query.getClass(new Igniter()).cnt(1);
 
-		ArrayList<Igniter> resultIgniter = this.mozartSpaces.take(mcParts, mt, igniterSelector);
-		rocket.setIgniter(resultIgniter.get(0));
+		Igniter resultIgniter = (Igniter) this.mozartSpaces.take(mcParts, mt, query).get(0);
+		rocket.setIgniter(resultIgniter);
 
 	}
 
@@ -230,12 +238,12 @@ public class Producer extends Role implements NotificationListener {
 		try {
 			mt = (MozartTransaction) this.mozartSpaces.createTransaction(2000);
 
-			MozartSelector requestedSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), 1));
-			ArrayList<Rocket> result = this.mozartSpaces.take(mcRequested, mt, requestedSelector, 1000);
+//			MozartSelector requestedSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), 1));
+			Rocket result = this.mozartSpaces.take(mcRequested, mt);
 
 			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
-			return result.get(0);
+			return result;
 
 		} catch (Exception e) {
 
@@ -245,15 +253,17 @@ public class Producer extends Role implements NotificationListener {
 
 	private Order getOrderById(Integer id) throws Exception {
 
-		Query query = new Query().filter(ComparableProperty.forName("id").equalTo(id)).cnt(1);
-		Order order = (Order) this.mozartSpaces.read(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query))).get(0);
+		AlterQuery query = new AlterQuery();
+		query.prop("getId").equaling(id).cnt(1);
+		Order order = (Order) (this.mozartSpaces.take(mcOrders, mt, query).get(0));
+		this.mozartSpaces.write(mcOrders, mt, order);
 		return order;
 	}
 
-	public void entryOperationFinished(Notification arg0, Operation arg1, List<? extends Serializable> arg2) {
+/*	public void entryOperationFinished(Notification arg0, Operation arg1, List<? extends Serializable> arg2) {
 
 		this.isOrder = true;
-	}
+	}*/
 
 	private void rollback() {
 		try {

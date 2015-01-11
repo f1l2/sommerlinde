@@ -82,7 +82,28 @@ public class AlterSpaceClient extends SpaceTech {
 	AlterMessage am = recvMessage();
 	System.out.println ("Got message");
     }
-
+ 
+    public <T extends SpaceEntry> ArrayList<T> take(Container c, SpaceTransaction t, AlterQuery q) {
+    	AlterMessageTake amt = new AlterMessageTake(SpaceTech.SelectorType.SEL_LINDA, q.getCount(),
+    			(AlterContainer)c, (AlterTransaction) t);
+    	amt.setQuery(q);
+    	_sendMessage(amt);
+    	ArrayList<T> res = new ArrayList<T>();
+    	AlterMessageGet amg = recvMessage();
+    	for (int i=0;i<amg.getCount();i++) {
+    	   T a = recvMessage();
+    	   res.add(a);
+    	}
+    	return res;
+   /* 	AlterMessageGet amg = recvMessage();
+    	T a = recvMessage();
+    	return a;*/
+    }
+    public <T extends SpaceEntry> T take(Container c, SpaceTransaction t) {
+    	ArrayList<T> r = take(c,t, SpaceTech.SelectorType.SEL_ANY, 1);
+    	if (r.size() > 0) return r.get(0);
+    	return null;
+    }
     public <T extends SpaceEntry> ArrayList<T> take(Container c, SpaceTransaction t,
 	SelectorType s, int count) {
 	_sendMessage(new AlterMessageTake(s, count, (AlterContainer)c, (AlterTransaction)t));
@@ -101,7 +122,13 @@ public class AlterSpaceClient extends SpaceTech {
 	_sendMessage(new AlterMessageWrite((AlterContainer)c, (AlterTransaction)t));
 	_sendMessage(entry);
     }
-    
+  
+    public <T extends SpaceEntry> ArrayList<T> read(Container c, SpaceTransaction t, AlterQuery q) {
+    	ArrayList<T> res = take(c, t, q);
+    	for (int i=0;i<res.size();i++)
+    		write(c, t, res.get(i));
+    	return res;
+    }
 /*
     public Container createContainer(String id, int size) {
 	AlterContainer a = new AlterContainer(id, size);

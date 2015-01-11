@@ -4,16 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mozartspaces.capi3.FifoCoordinator;
+/*import org.mozartspaces.capi3.FifoCoordinator;
 import org.mozartspaces.notifications.Notification;
 import org.mozartspaces.notifications.NotificationListener;
 import org.mozartspaces.notifications.NotificationManager;
-import org.mozartspaces.notifications.Operation;
+import org.mozartspaces.notifications.Operation;*/
 
-import sbc.space.MozartContainer;
-import sbc.space.MozartSelector;
+import sbc.space.*;
+//import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
-import sbc.space.MozartTransaction;
 import sbc.space.SpaceEntry;
 import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.Employee;
@@ -24,7 +23,7 @@ import sbcm.space.role.Role;
 
 public class Logistician extends Role {
 
-	private MozartContainer containerA, containerB;
+	private Container containerA, containerB;
 
 	public static void main(String[] args) {
 		new Logistician();
@@ -40,16 +39,20 @@ public class Logistician extends Role {
 
 		this.init();
 
-		do {
-			Thread.sleep(1000000);
-		} while (true);
+		/*do {
+			try {
+				Thread.sleep(1000000);
+			} catch (Exception e) {
+				continue;
+			}
+		} while (true);*/
 	}
 
 	private void init() {
 
 		try {
-			this.containerA = ((MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A));
-			this.containerB = ((MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B));
+			this.containerA = (this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A));
+			this.containerB = (this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B));
 
 			try {
 				this.readRockets(containerA, QualityCategory.A);
@@ -61,30 +64,37 @@ public class Logistician extends Role {
 			} catch (Exception e) {
 				logger.error("Reading B rockets failed: " + e.getMessage());
 			}
-			NotificationManager notifManager = this.mozartSpaces.createNotificationManager();
+/*			NotificationManager notifManager = this.mozartSpaces.createNotificationManager();
 
 			notifManager.createNotification(containerA.getContainer(), new Logistician.ListenerA(), Operation.WRITE);
 
-			notifManager.createNotification(containerB.getContainer(), new Logistician.ListenerB(), Operation.WRITE);
+			notifManager.createNotification(containerB.getContainer(), new Logistician.ListenerB(), Operation.WRITE);*/
+			Thread t1 = new Thread(new Logistician.ListenerA());
+			t1.start();
+			Thread t2 = new Thread(new Logistician.ListenerB());
+			t2.start();
+			
+			t1.join();
+			t2.join();
 
-			Thread.sleep(1000 * 60 * 10);
+			//Thread.sleep(1000 * 60 * 10);
 
 		} catch (Exception e) {
 			logger.error("", e);
 		}
 	}
 
-	private void readRockets(MozartContainer mc, QualityCategory qC) throws Exception {
+	private void readRockets(Container mc, QualityCategory qC) throws Exception {
 
-		MozartSelector ms = new MozartSelector(FifoCoordinator.newSelector(5));
+//		MozartSelector ms = new MozartSelector(FifoCoordinator.newSelector(5));
 
 		do {
 
 			int workRandomTime = this.workRandomTime();
 
-			MozartTransaction mt = (MozartTransaction) this.mozartSpaces.createTransaction(2000 + workRandomTime);
+			SpaceTransaction mt = this.mozartSpaces.createTransaction(2000 + workRandomTime);
 
-			this.createPackage(this.mozartSpaces.take(mc, mt, ms, 1000), qC);
+			this.createPackage(this.mozartSpaces.take(mc, mt, SpaceTech.SelectorType.SEL_FIFO, 5), qC);
 
 			logger.info("Package rockets ...");
 			Thread.sleep(workRandomTime);
@@ -114,9 +124,9 @@ public class Logistician extends Role {
 		this.mozartSpaces.write(MozartSpaces.ROCKET_PACKAGES, rp);
 	}
 
-	class ListenerA implements NotificationListener {
+	class ListenerA implements Runnable {
 
-		public void entryOperationFinished(Notification arg0, Operation arg1, List<? extends Serializable> arg2) {
+		public void run() {
 			try {
 				readRockets(containerA, QualityCategory.A);
 			} catch (Exception e) {
@@ -125,9 +135,9 @@ public class Logistician extends Role {
 		}
 	}
 
-	class ListenerB implements NotificationListener {
+	class ListenerB implements Runnable {
 
-		public void entryOperationFinished(Notification arg0, Operation arg1, List<? extends Serializable> arg2) {
+		public void run() {
 			try {
 				readRockets(containerB, QualityCategory.B);
 			} catch (Exception e) {

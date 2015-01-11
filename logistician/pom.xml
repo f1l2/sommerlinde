@@ -6,6 +6,7 @@
     <groupId>sbcm</groupId>
     <artifactId>sbcm</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
   
   <artifactId>logistician</artifactId>
@@ -17,7 +18,8 @@
   	 <dependency>
     	<groupId>sbcm</groupId>
     	<artifactId>factory</artifactId>
-    	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
+	<type>jar</type>
   	</dependency>
   	
     <dependency>

@@ -39,7 +39,7 @@ public class AlterSpaceClientThread extends Thread {
 		    case ACT_TAKE:
 			 AlterMessageTake amt = (AlterMessageTake) am;
 			 ArrayList<SpaceEntry> ol = space.take(amt.getContainer(), amt.getTransaction(),
-				amt.getSelector(), amt.getCount());
+				amt.getSelector(), amt.getCount(), amt.getQuery());
 			 AlterMessageGet amg = new AlterMessageGet(ol.size());
 			 oos.writeObject(amg);
 			 for (int i=0;i<ol.size();i++) {
