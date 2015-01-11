@@ -41,7 +41,11 @@ public class Logistician extends Role {
 		this.init();
 
 		do {
-			Thread.sleep(1000000);
+			try {
+				Thread.sleep(1000000);
+			} catch (Exception e) {
+				continue;
+			}
 		} while (true);
 	}
 
