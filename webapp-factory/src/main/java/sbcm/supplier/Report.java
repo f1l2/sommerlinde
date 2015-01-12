@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import sbc.space.*;
-import sbc.space.MozartContainer;
+/*import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
-import sbc.space.MozartSpaces;
+import sbc.space.MozartSpaces;*/
 import sbcm.factory.model.EffectLoad;
 import sbcm.factory.model.EffectLoadColor;
 import sbcm.factory.model.Igniter;
@@ -23,6 +23,7 @@ import sbcm.factory.model.Propellant;
 import sbcm.factory.model.Rocket;
 import sbcm.factory.model.RocketPackage;
 import sbcm.factory.model.WoodenStaff;
+import sbcm.space.role.*;
 
 @ManagedBean
 @ViewScoped
@@ -43,7 +44,7 @@ public class Report extends Role {
 
 	private int eLRed = 0, eLGreen = 0, eLBlue = 0;
 
-	private SpaceTech mozartSpaces;
+	private AlterSpaceClient mozartSpaces;
 
 	public List<Igniter> getlIgniter() {
 		return lIgniter;
@@ -58,7 +59,7 @@ public class Report extends Role {
 
 	public Report() {
 
-		this.mozartSpaces = new MozartSpaces(false);
+		this.mozartSpaces = new AlterSpaceClient();
 
 		this.generateReport();
 	}
@@ -67,22 +68,38 @@ public class Report extends Role {
 
 		logger.info("-------- REPORT ---------- ");
 
-		MozartSelector igniterSelector = new MozartSelector(LindaCoordinator.newSelector(new Igniter(), LindaSelector.COUNT_MAX));
+/*		MozartSelector igniterSelector = new MozartSelector(LindaCoordinator.newSelector(new Igniter(), LindaSelector.COUNT_MAX));
 		MozartSelector propellantSelector = new MozartSelector(LindaCoordinator.newSelector(new Propellant(), LindaSelector.COUNT_MAX));
 		MozartSelector woodenStaffSelector = new MozartSelector(LindaCoordinator.newSelector(new WoodenStaff(), LindaSelector.COUNT_MAX));
 		MozartSelector effectLoadSelector = new MozartSelector(LindaCoordinator.newSelector(new EffectLoad(), LindaSelector.COUNT_MAX));
 		MozartSelector rocketSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_MAX));
 		MozartSelector packageSelector = new MozartSelector(LindaCoordinator.newSelector(new RocketPackage(), LindaSelector.COUNT_MAX));
-		MozartSelector orderSelector = new MozartSelector(LindaCoordinator.newSelector(new Order(), LindaSelector.COUNT_MAX));
+		MozartSelector orderSelector = new MozartSelector(LindaCoordinator.newSelector(new Order(), LindaSelector.COUNT_MAX));*/
+		AlterQuery igniterSelector = new AlterQuery();
+		igniterSelector.getClass(new Igniter()).cnt(LindaSelector.COUNT_MAX);
+		AlterQuery propellantSelector = new AlterQuery();
+		propellantSelector.getClass(new Propellant()).cnt(LindaSelector.COUNT_MAX);
+		AlterQuery woodenStaffSelector = new AlterQuery();
+		woodenStaffSelector.getClass(new WoodenStaff()).cnt(LindaSelector.COUNT_MAX);
+		AlterQuery effectLoadSelector = new AlterQuery();
+		effectLoadSelector.getClass(new EffectLoad()).cnt(LindaSelector.COUNT_MAX);
+		AlterQuery rocketSelector = new AlterQuery();
+		rocketSelector.getClass(new Rocket()).cnt(LindaSelector.COUNT_MAX);
+		AlterQuery packageSelector = new AlterQuery();
+		packageSelector.getClass(new RocketPackage()).cnt(LindaSelector.COUNT_MAX);
+		AlterQuery orderSelector = new AlterQuery();
+		orderSelector.getClass(new Order()).cnt(LindaSelector.COUNT_MAX);
+
 
 		try {
 
-			MozartContainer mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PARTS);
+			SpaceTransaction mt = null;
+			Container mc = this.mozartSpaces.findContainer(MozartSpaces.PARTS);
 
-			this.lIgniter = this.mozartSpaces.read(mc, null, igniterSelector);
+			this.lIgniter = this.mozartSpaces.read(mc, mt, igniterSelector);
 			logger.info("# Igniter: " + lIgniter.size());
 
-			this.lPropellant = this.mozartSpaces.read(mc, null, propellantSelector);
+			this.lPropellant = this.mozartSpaces.read(mc, mt, propellantSelector);
 			logger.info("# Propellant: " + lPropellant.size());
 			for (Propellant propellant : lPropellant) {
 				logger.info("- ID:" + propellant.getId() + "; Amount: " + propellant.getAmount());
@@ -233,6 +250,13 @@ public class Report extends Role {
 
 	public void seteLBlue(int eLBlue) {
 		this.eLBlue = eLBlue;
+	}
+
+	@Override
+	protected void doAction() {
+		// Auto-generated method stub
+		System.err.println("Unused method called");
+		
 	}
 
 }
