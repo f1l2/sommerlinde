@@ -39,13 +39,13 @@ public class Logistician extends Role {
 
 		this.init();
 
-		/*do {
+		do {
 			try {
 				Thread.sleep(1000000);
 			} catch (Exception e) {
 				continue;
 			}
-		} while (true);*/
+		} while (true);
 	}
 
 	private void init() {

@@ -26,10 +26,10 @@ public class AlterSpaceContainer {
 		if (count_tw.get(ast) == null)
 			count_tw.put(ast,0);
 		count_tw.put(ast, count_tw.get(ast)+1);
-		System.out.println ("Putting entry " + t + " in transaction");
+//		System.out.println ("Putting entry " + t + " in transaction");
 	} else commited_entries++;
 	entries.add(t);
-	System.out.println ("Added entry");
+//	System.out.println ("Added entry");
 	Unlock();
 //	notify();
     }
@@ -130,13 +130,13 @@ public class AlterSpaceContainer {
 	synchronized(this) {
 	if (peek == false) {
 		while (commited_entries + getSaldo(ast) < count) {
-			System.out.println ("Waiting for " + count + " -> " + commited_entries + getSaldo(ast));
+//			System.out.println ("Waiting for " + count + " -> " + commited_entries + getSaldo(ast));
 			wait();
 		}
 	}
 	}
 
-	System.out.println ("Trying to lock Container for something");
+//	System.out.println ("Trying to lock Container for something");
 	Lock();
 
 	System.out.println ("Locked Container for something");
@@ -243,10 +243,14 @@ public class AlterSpaceContainer {
 
 	entries.removeAll((Collection)res);
 	Unlock();
+<<<<<<< HEAD
 	System.out.println ("TAKE: Returning " + res.size() + " entries");
 	if (res.size() == 0) {
 		System.out.println ("ERROR: 0 size!");
 	}
+=======
+//	System.out.println ("TAKE: Returning " + res.size() + " entries");
+>>>>>>> master
 	return res;
     }
     public synchronized <T extends SpaceEntry> ArrayList<T> take(SpaceTech.SelectorType s,
