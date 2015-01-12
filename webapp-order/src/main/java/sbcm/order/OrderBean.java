@@ -8,18 +8,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import org.mozartspaces.capi3.ComparableProperty;
-import org.mozartspaces.capi3.LindaCoordinator;
-import org.mozartspaces.capi3.Matchmaker;
-import org.mozartspaces.capi3.Matchmakers;
-import org.mozartspaces.capi3.Query;
-import org.mozartspaces.capi3.QueryCoordinator;
 import org.mozartspaces.core.MzsConstants.Selecting;
 
-import sbc.space.MozartContainer;
-import sbc.space.MozartSelector;
+import sbc.space.*;
+/*import sbc.space.MozartContainer;
+import sbc.space.MozartSelector;*/
 import sbc.space.MozartSpaces;
-import sbc.space.MozartTransaction;
+//import sbc.space.MozartTransaction;
 import sbc.space.SpaceTech.TransactionEndType;
 import sbcm.factory.model.EffectLoadColor;
 import sbcm.factory.model.Order;
@@ -83,7 +78,7 @@ public class OrderBean extends Role {
 
 	private void fetchPendingOrders() {
 
-		MozartTransaction mt = null;
+		SpaceTransaction mt = null;
 
 		try {
 
@@ -93,16 +88,19 @@ public class OrderBean extends Role {
 
 			MozartSpaces space = SingleSpace.getInstance().getShippingSpace();
 
-			mt = (MozartTransaction) this.mozartSpaces.createTransaction(1000);
+			mt = (SpaceTransaction) this.mozartSpaces.createTransaction(1000);
 
-			MozartContainer mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
-			MozartContainer mcRockets = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
+			Container mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
+			Container mcRockets = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
 
-			Matchmaker status = ComparableProperty.forName("status").equalTo(OrderStatus.NOT_DELIVERED);
+/*			Matchmaker status = ComparableProperty.forName("status").equalTo(OrderStatus.NOT_DELIVERED);
 			Matchmaker ordererId = ComparableProperty.forName("ordererId").equalTo(this.employeeId);
-			Query query = new Query().filter(Matchmakers.and(status, ordererId));
+			Query query = new Query().filter(Matchmakers.and(status, ordererId));*/
+			AlterQuery query = new AlterQuery();
+			query.prop("getStatus").equaling(OrderStatus.NOT_DELIVERED).prop("getOrderId").equaling(this.employeeId);
 
-			ArrayList<Order> orders = this.mozartSpaces.take(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query)), 1000);
+			
+			ArrayList<Order> orders = this.mozartSpaces.take(mcOrders, mt, query);
 
 			logger.info("Found pending orders.");
 
@@ -112,9 +110,10 @@ public class OrderBean extends Role {
 
 				Rocket templRocket = new Rocket();
 				templRocket.setOrderId(order.getId());
+				AlterQuery q = new AlterQuery();
+				query.getClass(templRocket).cnt(Selecting.COUNT_ALL);
 
-				ArrayList<Rocket> rockets = this.mozartSpaces.take(mcRockets, mt,
-						new MozartSelector(LindaCoordinator.newSelector(templRocket, Selecting.COUNT_ALL)));
+				ArrayList<Rocket> rockets = this.mozartSpaces.take(mcRockets, mt, q);
 
 				for (Rocket rocket : rockets) {
 					logger.info("- Fetch rocket: " + rocket.getId());
