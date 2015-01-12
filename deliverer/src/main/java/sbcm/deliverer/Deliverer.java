@@ -19,12 +19,13 @@ import sbcm.factory.model.Order;
 import sbcm.factory.model.OrderStatus;
 import sbcm.factory.model.Rocket;
 import sbcm.space.role.Role;
+import sbc.space.*;
 
 public class Deliverer extends Role {
 
-	private MozartSpaces shippingSpaces = null;
-	private MozartTransaction mt = null;
-	private MozartContainer mcOrders = null, mcRockets;
+	private SpaceTech shippingSpaces = null;
+	private SpaceTransaction mt = null;
+	private Container mcOrders = null, mcRockets;
 
 	public static void main(String[] args) {
 		new Deliverer();
@@ -45,16 +46,18 @@ public class Deliverer extends Role {
 
 			List<Rocket> rockets = new ArrayList<Rocket>();
 			Order finishedOrder = new Order();
-			Query query = null;
+//			Query query = null;
+			AlterQuery query = new AlterQuery();
 
 			// wait for finished orders
 			try {
 
 				// waiting for processed orders
-				mt = (MozartTransaction) this.mozartSpaces.createTransaction(TransactionTimeout.INFINITE);
+				mt = this.mozartSpaces.createTransaction(-1);
 
-				query = new Query().filter(ComparableProperty.forName("status").equalTo(OrderStatus.PROCESSED)).cnt(1);
-				finishedOrder = (Order) this.mozartSpaces.take(mcOrders, mt, new MozartSelector(QueryCoordinator.newSelector(query)))
+//				query = new Query().filter(ComparableProperty.forName("status").equalTo(OrderStatus.PROCESSED)).cnt(1);
+				query.prop("getStatus").equaling(OrderStatus.PROCESSED).cnt(1);
+				finishedOrder = (Order) this.mozartSpaces.take(mcOrders, mt, query)
 						.get(0);
 				this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
@@ -75,12 +78,13 @@ public class Deliverer extends Role {
 
 				if (this.shippingSpaces != null) {
 
-					mt = (MozartTransaction) this.mozartSpaces.createTransaction(5000);
+					AlterQuery q = new AlterQuery();
+					mt = this.mozartSpaces.createTransaction(5000);
 
 					Rocket templRocket = new Rocket();
 					templRocket.setOrderId(finishedOrder.getId());
-					rockets = this.mozartSpaces.take(mcRockets, mt,
-							new MozartSelector(LindaCoordinator.newSelector(templRocket, Selecting.COUNT_ALL)));
+					q.getClass(templRocket).cnt(Selecting.COUNT_ALL);
+					rockets = this.mozartSpaces.take(mcRockets, mt, q);
 
 					Thread.sleep(this.workRandomTime());
 
