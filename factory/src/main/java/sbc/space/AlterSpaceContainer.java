@@ -139,7 +139,7 @@ public class AlterSpaceContainer {
 //	System.out.println ("Trying to lock Container for something");
 	Lock();
 
-	System.out.println ("Locked Container for something");
+//	System.out.println ("Locked Container for something");
 	if (ast != null)
 	  ast.addContainer(this);
 
@@ -243,14 +243,10 @@ public class AlterSpaceContainer {
 
 	entries.removeAll((Collection)res);
 	Unlock();
-<<<<<<< HEAD
-	System.out.println ("TAKE: Returning " + res.size() + " entries");
-	if (res.size() == 0) {
-		System.out.println ("ERROR: 0 size!");
-	}
-=======
 //	System.out.println ("TAKE: Returning " + res.size() + " entries");
->>>>>>> master
+	if (res.size() == 0) {
+//		System.out.println ("ERROR: 0 size!");
+	}
 	return res;
     }
     public synchronized <T extends SpaceEntry> ArrayList<T> take(SpaceTech.SelectorType s,

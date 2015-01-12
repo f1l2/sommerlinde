@@ -113,12 +113,12 @@ public class RunBenchmark extends Role {
 
 	@Override
 	protected void doAction() {
-		woodenstaff = new Integer(1500);
-		igniter = new Integer(1500);
-		propellant = new Integer(500);
-		effectLoadRed = new Integer(500);
-		effectLoadBlue = new Integer(500);
-		effectLoadGreen = new Integer(500);
+		woodenstaff = new Integer(150);
+		igniter = new Integer(150);
+		propellant = new Integer(50);
+		effectLoadRed = new Integer(50);
+		effectLoadBlue = new Integer(50);
+		effectLoadGreen = new Integer(50);
 		errorRate = new Integer(5);
 		deliver();
 	}

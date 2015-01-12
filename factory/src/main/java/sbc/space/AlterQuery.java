@@ -54,7 +54,7 @@ public class AlterQuery implements Serializable {
 					if (e.getClass().getName().equals(cname))
 						return e;
 				}
-				System.err.println ("Searching for " + e);
+//				System.err.println ("Searching for " + e);
 				if (property != null) {
 					try { 
 					Method m = e.getClass().getMethod(property);
