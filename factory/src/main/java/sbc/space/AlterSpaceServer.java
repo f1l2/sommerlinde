@@ -40,7 +40,7 @@ public class AlterSpaceServer extends AlterSpace {
 
     public void exit() { }
 
-    public Container createContainer(String id, int size) {
+    public synchronized Container createContainer(String id, int size) {
 	AlterContainer a = new AlterContainer(id, size);
 	AlterSpaceContainer asc = new AlterSpaceContainer(id,size);
 	containers.put(id, a);
@@ -52,7 +52,11 @@ public class AlterSpaceServer extends AlterSpace {
 	return (Container) containers.get(id);
     }
 
-    public SpaceTransaction createTransaction(long timeout) {
+    public AlterSpaceTransaction mapTransaction(AlterTransaction  at) {
+    	return transaction_map.get(at);
+    }
+    
+    public synchronized SpaceTransaction createTransaction(long timeout) {
 	AlterSpaceTransaction ast = new AlterSpaceTransaction();
 /*	SpaceTransaction res = new SpaceTransaction();*/
 	AlterTransaction at = new AlterTransaction(++trans_count);
@@ -62,12 +66,14 @@ public class AlterSpaceServer extends AlterSpace {
     }
 
     public void endTransaction (SpaceTransaction st, TransactionEndType tet) throws Exception {
-	AlterSpaceTransaction ast = getTransaction(st); //transaction_map.get(((AlterTransaction)st).getId());
-	if (ast == null)
-		throw new Exception ("Null Pointer in Transaction");
-	/*XXX*/
-	ast.endTransaction(tet);
-	transaction_map.remove(ast);
+		AlterSpaceTransaction ast = getTransaction(st); //transaction_map.get(((AlterTransaction)st).getId());
+		if (ast == null)
+			throw new Exception ("Null Pointer in Transaction");
+		/*XXX*/
+		ast.endTransaction(tet);
+		synchronized(transaction_map) {
+			transaction_map.remove(ast);
+		}
     }
 
     protected AlterSpaceContainer getContainer(Container t) {

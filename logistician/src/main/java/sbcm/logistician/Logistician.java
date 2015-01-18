@@ -11,6 +11,7 @@ import org.mozartspaces.notifications.NotificationManager;
 import org.mozartspaces.notifications.Operation;*/
 
 import sbc.space.*;
+import sbc.space.AlterSpaceClient;
 //import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
 import sbc.space.SpaceEntry;
@@ -22,9 +23,6 @@ import sbcm.factory.model.RocketPackage;
 import sbcm.space.role.Role;
 
 public class Logistician extends Role {
-
-	private Container containerA, containerB;
-	private SpaceTech space1, space2;
 
 	public static void main(String[] args) {
 		new Logistician();
@@ -52,8 +50,8 @@ public class Logistician extends Role {
 	private void init() {
 
 		try {
-			this.containerA = (this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A));
-			this.containerB = (this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B));
+/*			this.containerA = (this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A));
+			this.containerB = (this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B));*/
 
 /*			try {
 				this.readRockets(containerA, QualityCategory.A);
@@ -70,9 +68,9 @@ public class Logistician extends Role {
 			notifManager.createNotification(containerA.getContainer(), new Logistician.ListenerA(), Operation.WRITE);
 
 			notifManager.createNotification(containerB.getContainer(), new Logistician.ListenerB(), Operation.WRITE);*/
-			Thread t1 = new Thread(new Logistician.ListenerA());
+			Thread t1 = new Thread(new Logistician.Listener(QualityCategory.A, MozartSpaces.GOOD_ROCKETS_A));
 			t1.start();
-			Thread t2 = new Thread(new Logistician.ListenerB());
+			Thread t2 = new Thread(new Logistician.Listener(QualityCategory.B, MozartSpaces.GOOD_ROCKETS_B));
 			t2.start();
 			
 			t1.join();
@@ -85,55 +83,59 @@ public class Logistician extends Role {
 		}
 	}
 
-	private void readRockets(Container mc, QualityCategory qC) throws Exception {
+	private void readRockets(AlterSpaceClient space, Container mc, QualityCategory qC) throws Exception {
+		int workRandomTime = this.workRandomTime();
 
-//		MozartSelector ms = new MozartSelector(FifoCoordinator.newSelector(5));
+		SpaceTransaction mt = space.createTransaction(2000 + workRandomTime);
 
-		//do
-		{
+		RocketPackage rp = this.createPackage(space, space.take(mc, mt, SpaceTech.SelectorType.SEL_FIFO, 5), qC);
 
-			int workRandomTime = this.workRandomTime();
+		space.write(space.findContainer(MozartSpaces.ROCKET_PACKAGES), mt, rp);
 
-			synchronized(this) {
-			SpaceTransaction mt = this.mozartSpaces.createTransaction(2000 + workRandomTime);
+		logger.info("Package rockets ...");
+		Thread.sleep(workRandomTime);
 
-			this.createPackage(this.mozartSpaces.take(mc, mt, SpaceTech.SelectorType.SEL_FIFO, 5), qC);
+		space.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
-			logger.info("Package rockets ...");
-			Thread.sleep(workRandomTime);
-
-			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
-			}
-
-			logger.info("Rocket package created.");
-
-		} //while (true);
-
+		logger.info("Rocket package created.");
 	}
 
-	private void createPackage(ArrayList<SpaceEntry> result, QualityCategory qC) throws Exception {
+	private RocketPackage createPackage(AlterSpaceClient space, ArrayList<SpaceEntry> result, QualityCategory qC) throws Exception {
 
 		for (SpaceEntry rocket : result) {
 			((Rocket) rocket).getEmployee().add(new Employee(this.employeeId));
 		}
 
-		RocketPackage rp = new RocketPackage(this.mozartSpaces.getIDAndIncr(MozartSpaces.PACKAGE_COUNTER));
+		RocketPackage rp = new RocketPackage(space.getIDAndIncr(MozartSpaces.PACKAGE_COUNTER));
 		rp.setRocket1((Rocket) result.get(0));
 		rp.setRocket2((Rocket) result.get(1));
 		rp.setRocket3((Rocket) result.get(2));
 		rp.setRocket4((Rocket) result.get(3));
 		rp.setRocket5((Rocket) result.get(4));
 		rp.setQualityCategory(qC);
-
-		this.mozartSpaces.write(MozartSpaces.ROCKET_PACKAGES, rp);
+		return rp;
 	}
 
-	class ListenerA implements Runnable {
-
+	class Listener implements Runnable {
+		private QualityCategory myQuality;
+		private String container_str;
+		private Container container;
+		private AlterSpaceClient space;
+		public Listener(QualityCategory qC, String c) {
+			super();
+			myQuality = qC;
+			container_str = c;
+			try {
+				space = new AlterSpaceClient();
+				container = space.findContainer(container_str);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		public void run() {
 			while (true) {
 				try {
-					readRockets(containerA, QualityCategory.A);
+					readRockets(space, container, myQuality);
 				} catch (Exception e) {
 					logger.error(e.getMessage());
 				}
@@ -141,7 +143,7 @@ public class Logistician extends Role {
 		}
 	}
 
-	class ListenerB implements Runnable {
+	/*class ListenerB implements Runnable {
 
 		public void run() {
 			while (true) {
@@ -152,5 +154,5 @@ public class Logistician extends Role {
 				}
 			}
 		}
-	}
+	}*/
 }

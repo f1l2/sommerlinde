@@ -71,15 +71,17 @@ public class AlterSpaceClientThread extends Thread {
 		}
 		oos.flush();
 	   } catch (java.io.EOFException eof) {
-		break;
+		 break;
 	   } catch (Exception e) {
 		System.err.println ("Exception while reading object -> " + e.getMessage());
 		e.printStackTrace();
 		break;
 	   }
 	  }
+	  System.err.println("Aborting client...");
+	  try { csock.close(); } catch (Exception e) {}
 	  for (int i=0;i<trans_map.size();i++) {
-		  AlterSpaceTransaction at = (AlterSpaceTransaction) trans_map.get(i);
+		  AlterSpaceTransaction at = space.mapTransaction((AlterTransaction)trans_map.get(i));
 		  at.endTransaction(TransactionEndType.TET_ROLLBACK);
 	  }
     }

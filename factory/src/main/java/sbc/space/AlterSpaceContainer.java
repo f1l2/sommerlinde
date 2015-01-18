@@ -12,8 +12,8 @@ public class AlterSpaceContainer {
     private HashMap<AlterSpaceTransaction,Integer> count_tw;
     private int commited_entries;
     private boolean locked;
-    private ReentrantLock lock;
-    private Condition waitEntries;
+/*    private ReentrantLock lock;
+    private Condition waitEntries;*/
 
     AlterSpaceContainer(String name, int size) {
 		id = name;
@@ -21,8 +21,8 @@ public class AlterSpaceContainer {
 		trans_map = new HashMap<SpaceEntry,AlterSpaceTransaction>();
 		t_del_entries = new HashMap<AlterSpaceTransaction,ArrayList<SpaceEntry>>();
 		count_tw = new HashMap<AlterSpaceTransaction,Integer>();
-		lock = new ReentrantLock();
-	    waitEntries = lock.newCondition();
+/*		lock = new ReentrantLock();
+	    waitEntries = lock.newCondition();*/
     }
     public synchronized <T extends SpaceEntry> void write(AlterSpaceTransaction ast, T t) {
 	Lock();
@@ -85,8 +85,8 @@ public class AlterSpaceContainer {
 			commited_entries++;
 		}
 	}
-	if (t_del_entries.get(ast) != null)
-		commited_entries -= t_del_entries.get(ast).size();
+/*	if (t_del_entries.get(ast) != null)
+		commited_entries -= t_del_entries.get(ast).size();*/
 	cleanTransaction(ast);
 //	t_del_entries.remove(ast);
 //	Unlock();
@@ -102,9 +102,10 @@ public class AlterSpaceContainer {
 		if (trans_map.get(se) == ast)
 			ls.remove();
 	}
-	if (t_del_entries.get(ast) != null)
+	if (t_del_entries.get(ast) != null) {
 		entries.addAll((Collection)t_del_entries.get(ast));
-	commited_entries += t_del_entries.get(ast).size();
+		commited_entries += t_del_entries.get(ast).size();
+	}
 	cleanTransaction(ast);
 //	t_del_entries.remove(ast);
 //	Unlock();
@@ -118,6 +119,7 @@ public class AlterSpaceContainer {
 //				commited_entries--;
 				if (ast != null)
 					getOrSet(ast,t_del_entries).add(x);
+				commited_entries--;
 			}
 			if (a == ast) count_tw.put(ast, count_tw.get(ast)-1);
 		}
@@ -141,35 +143,29 @@ public class AlterSpaceContainer {
 
 	if (count < -1) throw new Exception ("take: Invalid count: " + count);
 	
-	synchronized(this) {
-		if (count == -1) {
-			count = commited_entries + getSaldo(ast);
-		}
-		if (peek == false) {
-			while (commited_entries + getSaldo(ast) < count) {
-	//			System.out.println ("Waiting for " + count + " -> " + commited_entries + getSaldo(ast));
-				wait();
-			}
-		}
-		if (count == 0) {
-			System.err.println ("take: Warning zero entries requested");
-			return res;
+	if (count > 0) {
+		while (commited_entries + getSaldo(ast) < count) {
+			synchronized(entries) { entries.wait(); }
 		}
 	}
+	if (count == 0) {
+		System.err.println ("take: Warning zero entries requested");
+		return res;
+	}
 
-//	System.out.println ("Trying to lock Container for something");
 	Lock();
 
-//	System.out.println ("Locked Container for something");
+	if (count == -1) {
+		count = commited_entries + getSaldo(ast);
+	}
+
 	if (ast != null)
 	  ast.addContainer(this);
 
 	if (query != null) {
 		int qgot = 0;
-		T t = null;
 		while (qgot < count) {
 			ArrayList<T> qlist = (ArrayList<T>) query.execL(compileList(entries, ast)); 
-			//t = (T) query.exec(compileList(entries, ast));
 
 			for (int i=0;i<qlist.size();i++) {
 				manageEntry(qlist.get(i), ast, res);
@@ -178,22 +174,10 @@ public class AlterSpaceContainer {
 			if (query.getCount() == -1) // -1 = ALL
 				break;
 			if (qgot < count) {
-				Unlock();
+				UnlockOnly();
 				synchronized(entries) { entries.wait(); }
 				Lock();
 			}
-			/*
-//		T t = (T) query.exec(entries);
-			if (t == null) {
-				Unlock();
-//				entries.wait();
-				synchronized(entries) { entries.wait(); }
-				Lock();
-			}// else throw new Exception ("Query returned no entry");
-			else {
-				manageEntry(t, ast, res);
-				qgot++;
-			}*/
 		}
 		
 		off = -1;
@@ -203,25 +187,11 @@ public class AlterSpaceContainer {
 		off = 0;
 		T x = (T) entries.get(0);
 		manageEntry(x, ast, res);
-		/*AlterSpaceTransaction a = trans_map.get(x);
-
-		if (a == null || a == ast) {
-			res.add(x);
-			if (a == null) {
-//				commited_entries--;
-				if (ast != null)
-					getOrSet(ast,t_del_entries).add(x);
-			}
-			if (a == ast) count_tw.put(ast, count_tw.get(ast)-1);
-		} else throw new Exception ("Code completely fucked up");*/
 	} else
 	switch (s) {
 		case SEL_ANY:
 		case SEL_FIFO:
 		    off = 0;
-/*			off = 0;
-			res.addAll((Collection)entries.subList(0, count));
-			entries.removeAll((Collection)res);*/
 			if (ast != null) {
 				iter = (ListIterator<T>)entries.listIterator(off);
 				if (!iter.hasNext()) {
@@ -232,16 +202,6 @@ public class AlterSpaceContainer {
 					manageEntry(x, ast, res);
 					if (res.size() == count) break;
 				}
-/*					AlterSpaceTransaction a = trans_map.get(x);
-					if (a != null && a != ast) continue;
-					res.add(x);
-					if (a == null) {
-//						commited_entries--;
-						if (ast != null)
-							getOrSet(ast,t_del_entries).add(x);
-					}
-					if (a == ast) count_tw.put(ast, count_tw.get(ast)-1);
-				}*/
 			}
 			break;
 		case SEL_LIFO:
@@ -253,35 +213,22 @@ public class AlterSpaceContainer {
 					manageEntry(x, ast, res);
 					if (res.size() == count) break;
 				}
-/*					AlterSpaceTransaction a = trans_map.get(x);
-					if (a != null && a != ast) continue;
-					res.add(x);
-					if (a == null) {
-//						commited_entries--;
-						if (ast != null)
-							getOrSet(ast,t_del_entries).add(x);
-					}
-					if (a == ast) count_tw.put(ast, count_tw.get(ast)-1);
-//					if (a == ast) ast.decTW();
-				}*/
 			}
-/*			res.addAll((Collection)entries.subList(entries.size()-count, count));
-			entries.removeAll((Collection)res);*/
 			break;
 		default:
 			throw new Exception ("Unknown Selector: " + s);
 	}
-/*	ArrayList<T> res = new ArrayList<T>((Collection)entries.subList(off,count));*/
-
-	if (ast == null) {
-	    if (res.size() == 0)
+	
+/*	if (ast == null) {
+	    if (res.size() == 0 && count > 0)
 	    	res.addAll((Collection)entries.subList(off,count)); //XXX
 	    commited_entries -= count;
-	}
+	}*/
 
+	//commited_entries -= res.size();
 	entries.removeAll((Collection)res);
 	Unlock();
-//	System.out.println ("TAKE: Returning " + res.size() + " entries");
+
 	if (res.size() != count && query ==  null) {
 		System.out.println ("MISMATCH: " + entries.size() + " vs. " + count);
 		for (int i=0;i<entries.size();i++) {
@@ -297,6 +244,7 @@ public class AlterSpaceContainer {
 	}
 	return res;
     }
+    
     public synchronized <T extends SpaceEntry> ArrayList<T> take(SpaceTech.SelectorType s,
 		int count) throws Exception {
 	return take(s, null, count, false, null);
