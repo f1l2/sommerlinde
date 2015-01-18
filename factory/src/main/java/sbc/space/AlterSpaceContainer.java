@@ -168,8 +168,21 @@ public class AlterSpaceContainer {
 		int qgot = 0;
 		T t = null;
 		while (qgot < count) {
-			t = (T) query.exec(compileList(entries, ast));
-		
+			ArrayList<T> qlist = (ArrayList<T>) query.execL(compileList(entries, ast)); 
+			//t = (T) query.exec(compileList(entries, ast));
+
+			for (int i=0;i<qlist.size();i++) {
+				manageEntry(qlist.get(i), ast, res);
+				qgot++;
+			}
+			if (query.getCount() == -1) // -1 = ALL
+				break;
+			if (qgot < count) {
+				Unlock();
+				synchronized(entries) { entries.wait(); }
+				Lock();
+			}
+			/*
 //		T t = (T) query.exec(entries);
 			if (t == null) {
 				Unlock();
@@ -180,7 +193,7 @@ public class AlterSpaceContainer {
 			else {
 				manageEntry(t, ast, res);
 				qgot++;
-			}
+			}*/
 		}
 		
 		off = -1;
@@ -269,7 +282,7 @@ public class AlterSpaceContainer {
 	entries.removeAll((Collection)res);
 	Unlock();
 //	System.out.println ("TAKE: Returning " + res.size() + " entries");
-	if (res.size() != count) {
+	if (res.size() != count && query ==  null) {
 		System.out.println ("MISMATCH: " + entries.size() + " vs. " + count);
 		for (int i=0;i<entries.size();i++) {
 			T x = (T) entries.get(i);

@@ -32,6 +32,8 @@ public class AlterSpaceClient extends SpaceTech {
     protected void _sendMessageMany (Object msg) {
     	try {
     		oos.writeObject(msg);
+    	} catch (SocketException e) {
+    		System.exit(1);
     	} catch (Exception e) {
     		System.err.println ("Writing object failed");
     		e.printStackTrace();
@@ -39,13 +41,15 @@ public class AlterSpaceClient extends SpaceTech {
     }
     
     protected void _sendMessage(Object msg) {
-	try {
-		oos.writeObject(msg);
-		oos.flush();
-	} catch (Exception e) {
-		System.err.println ("Writing object failed");
-		e.printStackTrace();
-	}
+		try {
+			oos.writeObject(msg);
+			oos.flush();
+		} catch (SocketException e) {
+			System.exit(1);
+		} catch (Exception e) {
+			System.err.println ("Writing object failed");
+			e.printStackTrace();
+		}
     }
 
     protected <T> T SendMessage(AlterMessage.AlterMessageType t, String id) {
