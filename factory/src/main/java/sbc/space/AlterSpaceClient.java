@@ -11,22 +11,30 @@ public class AlterSpaceClient extends SpaceTech {
     private ObjectOutputStream oos;
     private BufferedOutputStream bos;
     private ObjectInputStream ois;
+    private HashMap<String, Container> c_map;
  
     public void init() {
 	System.err.println ("*** Initialising AlterSpace");
     }
 
-    public AlterSpaceClient() {
-	try {
-	    sock = new Socket ("localhost", port);
-	    bos = new BufferedOutputStream(sock.getOutputStream());
-	    oos = new ObjectOutputStream(bos);
-//	    ois = new ObjectInputStream(sock.getInputStream());
-	} catch (Exception e) {
-	    System.err.println ("Connection to localhost:"+port + " failed: " + e.getMessage());
-	}
+    public void AlterSpaceClientCommonInit(String url) {
+		try {
+		    sock = new Socket (url, port);
+		    bos = new BufferedOutputStream(sock.getOutputStream());
+		    oos = new ObjectOutputStream(bos);
+	//	    ois = new ObjectInputStream(sock.getInputStream());
+		    c_map = new HashMap<String, Container>();
+		} catch (Exception e) {
+		    System.err.println ("Connection to localhost:"+port + " failed: " + e.getMessage());
+		}
     }
 
+    public AlterSpaceClient(String url) {
+    	AlterSpaceClientCommonInit(url);
+    }
+    public AlterSpaceClient() {
+    	AlterSpaceClientCommonInit("localhost");
+    }
     public void exit() { }
 
     protected void _sendMessageMany (Object msg) {
@@ -77,16 +85,20 @@ public class AlterSpaceClient extends SpaceTech {
     }
 
     public Container createContainer(String id, int size) {
-/*	_sendMessage(new AlterMessage(AlterMessage.AlterMessageType.SET_CONTAINER, null));*/
-	AlterContainer ac = SendMessage(AlterMessage.AlterMessageType.SET_CONTAINER, id);
-	return (Container) ac;
+	/*	_sendMessage(new AlterMessage(AlterMessage.AlterMessageType.SET_CONTAINER, null));*/
+		AlterContainer ac = SendMessage(AlterMessage.AlterMessageType.SET_CONTAINER, id);
+		c_map.put(id, ac);
+		return (Container) ac;
     }
 
     public Container findContainer(String id) {
-/*	_sendMessage(new AlterMessage(AlterMessage.AlterMessageType.GET_CONTAINER, id));*/
-	AlterContainer ac = SendMessage(AlterMessage.AlterMessageType.GET_CONTAINER, id);
-//	System.out.println ("Find Container returned " + ac);
-	return (Container) ac;
+    	if (c_map.get(id) != null)
+    		return c_map.get(id);
+	/*	_sendMessage(new AlterMessage(AlterMessage.AlterMessageType.GET_CONTAINER, id));*/
+		AlterContainer ac = SendMessage(AlterMessage.AlterMessageType.GET_CONTAINER, id);
+	//	System.out.println ("Find Container returned " + ac);
+		c_map.put(id,  ac);
+		return (Container) ac;
     }
 
     public SpaceTransaction createTransaction(long timeout) {

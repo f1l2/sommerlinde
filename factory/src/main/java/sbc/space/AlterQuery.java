@@ -14,7 +14,9 @@ public class AlterQuery implements Serializable {
 	private int sortstyle;
 	private String sortprop;
 	private int count;
+	ArrayList<String> properties;
 	private String property;
+	ArrayList<Object> propvals;
 	private Object propval;
 	private String cname;
 	private boolean sorting;
@@ -38,11 +40,25 @@ public class AlterQuery implements Serializable {
 		return this;
 	}*/
 	public AlterQuery prop(String propname) {
-		property = propname;
+		if (property != null) {
+			if (properties == null) {
+				properties = new ArrayList<String>();
+				properties.add(property);
+			}
+			properties.add(propname);
+		} else
+			property = propname;
 		return this;
 	}
 	public AlterQuery equaling(Object t) {
-		propval = t;
+		if (propval != null) {
+			if (propvals == null) {
+				propvals = new ArrayList<Object>();
+				propvals.add(propval);
+			}
+			propvals.add(t);
+		} else
+			propval = t;
 		return this;
 	}
 	
@@ -65,26 +81,33 @@ public class AlterQuery implements Serializable {
 						continue;
 					}
 				}
-//				System.err.println ("Searching for " + e);
 				if (property != null) {
 					try { 
 						Method m = e.getClass().getMethod(property);
 						Object o = m.invoke(e);
 						
 						if (propval != null && o.equals(propval)) {
+							int x = 0;
+							if (properties != null) {
+								for (x=0;x<properties.size();x++) {
+									Method m2 = e.getClass().getMethod(properties.get(x));
+									Object o2 = m2.invoke(e);
+									
+									if (propvals.get(x) == null || !o2.equals(propvals.get(x)))
+										break;
+								}
+								if (x == properties.size())
+									x = 0;
+								else x = 1;
+							}
+							if (x != 0)
+								continue;
+						}
+						if (sorting)
+							map.put(ref, e);
+						else {
 							res.add(e);
 							cnt++;
-							continue;
-						}
-					
-						if (sorting) {
-/*							if ((Integer)o > ref) {
-								ref = (Integer) o;
-								idx = i;
-								map.put(ref, e);
-								cnt++;
-							}*/
-							map.put(ref, e);
 						}
 					} catch (Exception ex) {
 						continue;

@@ -3,12 +3,13 @@ package sbcm.deliverer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mozartspaces.capi3.ComparableProperty;
+/*import org.mozartspaces.capi3.ComparableProperty;
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.Query;
 import org.mozartspaces.capi3.QueryCoordinator;
+import org.mozartspaces.core.MzsConstants.TransactionTimeout;*/
+
 import org.mozartspaces.core.MzsConstants.Selecting;
-import org.mozartspaces.core.MzsConstants.TransactionTimeout;
 
 import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
@@ -68,8 +69,8 @@ public class Deliverer extends Role {
 				try {
 					// Test if shipping spaces is available
 
-					this.shippingSpaces = new MozartSpaces(false, finishedOrder.getShippingAddress());
-					MozartTransaction trans = (MozartTransaction) this.shippingSpaces.createTransaction();
+					this.shippingSpaces = new AlterSpaceClient(finishedOrder.getShippingAddress());
+					SpaceTransaction trans = this.shippingSpaces.createTransaction();
 					this.mozartSpaces.endTransaction(trans, TransactionEndType.TET_ROLLBACK);
 
 				} catch (Exception e) {
@@ -88,7 +89,7 @@ public class Deliverer extends Role {
 
 					Thread.sleep(this.workRandomTime());
 
-					this.shippingSpaces = new MozartSpaces(false, finishedOrder.getShippingAddress());
+					this.shippingSpaces = new AlterSpaceClient(finishedOrder.getShippingAddress());
 
 					for (Rocket rocket : rockets) {
 
@@ -118,8 +119,8 @@ public class Deliverer extends Role {
 
 	private void init() {
 		try {
-			mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
-			mcRockets = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
+			mcOrders = this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
+			mcRockets = this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
 
 		} catch (Exception e) {
 			logger.error("", e);

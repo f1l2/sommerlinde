@@ -82,7 +82,8 @@ public class AlterSpaceClientThread extends Thread {
 	  try { csock.close(); } catch (Exception e) {}
 	  for (int i=0;i<trans_map.size();i++) {
 		  AlterSpaceTransaction at = space.mapTransaction((AlterTransaction)trans_map.get(i));
-		  at.endTransaction(TransactionEndType.TET_ROLLBACK);
+		  if (at != null)
+			  at.endTransaction(TransactionEndType.TET_ROLLBACK);
 	  }
     }
 }

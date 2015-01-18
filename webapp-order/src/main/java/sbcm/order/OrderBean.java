@@ -88,10 +88,10 @@ public class OrderBean extends Role {
 
 			MozartSpaces space = SingleSpace.getInstance().getShippingSpace();
 
-			mt = (SpaceTransaction) this.mozartSpaces.createTransaction(1000);
+			mt = this.mozartSpaces.createTransaction(1000);
 
-			Container mcOrders = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
-			Container mcRockets = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
+			Container mcOrders = this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
+			Container mcRockets = this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
 
 /*			Matchmaker status = ComparableProperty.forName("status").equalTo(OrderStatus.NOT_DELIVERED);
 			Matchmaker ordererId = ComparableProperty.forName("ordererId").equalTo(this.employeeId);
