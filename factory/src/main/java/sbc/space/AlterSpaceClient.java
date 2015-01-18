@@ -9,6 +9,7 @@ public class AlterSpaceClient extends SpaceTech {
     private Socket sock;
     private int port = 1234;
     private ObjectOutputStream oos;
+    private BufferedOutputStream bos;
     private ObjectInputStream ois;
  
     public void init() {
@@ -18,8 +19,9 @@ public class AlterSpaceClient extends SpaceTech {
     public AlterSpaceClient() {
 	try {
 	    sock = new Socket ("localhost", port);
-	    oos = new ObjectOutputStream(sock.getOutputStream());
-	    ois = new ObjectInputStream(sock.getInputStream());
+	    bos = new BufferedOutputStream(sock.getOutputStream());
+	    oos = new ObjectOutputStream(bos);
+//	    ois = new ObjectInputStream(sock.getInputStream());
 	} catch (Exception e) {
 	    System.err.println ("Connection to localhost:"+port + " failed: " + e.getMessage());
 	}
@@ -27,9 +29,19 @@ public class AlterSpaceClient extends SpaceTech {
 
     public void exit() { }
 
+    protected void _sendMessageMany (Object msg) {
+    	try {
+    		oos.writeObject(msg);
+    	} catch (Exception e) {
+    		System.err.println ("Writing object failed");
+    		e.printStackTrace();
+    	}
+    }
+    
     protected void _sendMessage(Object msg) {
 	try {
 		oos.writeObject(msg);
+		oos.flush();
 	} catch (Exception e) {
 		System.err.println ("Writing object failed");
 		e.printStackTrace();
@@ -47,6 +59,9 @@ public class AlterSpaceClient extends SpaceTech {
 
     protected <T> T recvMessage() {
 	try {
+		if (ois == null) {
+			ois = new ObjectInputStream(sock.getInputStream());
+		}
 		T ret = (T) ois.readObject();
 //		System.out.println ("Received Message: " + ret);
 		return ret;
@@ -119,8 +134,9 @@ public class AlterSpaceClient extends SpaceTech {
     }
 
     public <T extends SpaceEntry> void write(Container c, SpaceTransaction t, T entry) {
-	_sendMessage(new AlterMessageWrite((AlterContainer)c, (AlterTransaction)t));
+	_sendMessageMany(new AlterMessageWrite((AlterContainer)c, (AlterTransaction)t));
 	_sendMessage(entry);
+	AlterMessage am = recvMessage();
     }
   
     public <T extends SpaceEntry> ArrayList<T> read(Container c, SpaceTransaction t, AlterQuery q) {

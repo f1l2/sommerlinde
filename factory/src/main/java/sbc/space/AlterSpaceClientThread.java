@@ -5,25 +5,29 @@ import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
 
+import sbc.space.SpaceTech.TransactionEndType;
+
 public class AlterSpaceClientThread extends Thread {
     private Socket csock;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private AlterSpaceServer space;
+    private ArrayList<SpaceTransaction> trans_map;
 
     AlterSpaceClientThread(Socket client, AlterSpaceServer as) {
 	space = as;
 	try {
 		csock = client;
 		ois = new ObjectInputStream(csock.getInputStream());
-		oos = new ObjectOutputStream(csock.getOutputStream());
+		oos = new ObjectOutputStream(new BufferedOutputStream(csock.getOutputStream()));
+		trans_map = new ArrayList<SpaceTransaction>();
 	} catch (Exception e) {
 		System.err.println ("AlterSpaceClient: Exception in client init: " + e.getMessage());
 	}
     }
 
     public void run() {
-	while (true) {
+	  while (true) {
 	   AlterMessage am;
 	   try {
 		am = (AlterMessage) ois.readObject();
@@ -47,11 +51,14 @@ public class AlterSpaceClientThread extends Thread {
 			 }
 			 break;
 		    case START_TRANSACTION:
-			 oos.writeObject(space.createTransaction());
+		     SpaceTransaction at = space.createTransaction();
+		     trans_map.add(at);
+			 oos.writeObject(at);
 			 break;
 		    case END_TRANSACTION:
 			 AlterMessageEndTransaction amet = (AlterMessageEndTransaction) am; //ois.readObject();
 			 space.endTransaction(amet.getTransaction(), amet.getTET());
+			 trans_map.remove(amet.getTransaction());
 //			 System.out.println ("Ended transaction...");
 			 oos.writeObject(new AlterMessage(AlterMessage.AlterMessageType.AMT_RESULT, null));
 			 break;
@@ -59,15 +66,21 @@ public class AlterSpaceClientThread extends Thread {
 			 AlterMessageWrite amw = (AlterMessageWrite) am;
 			 SpaceEntry se = (SpaceEntry) ois.readObject();
 			 space.write(amw.getContainer(), amw.getTransaction(), se);
+			 oos.writeObject(new AlterMessage(AlterMessage.AlterMessageType.AMT_RESULT, null));
 			 break;
 		}
+		oos.flush();
 	   } catch (java.io.EOFException eof) {
-		return;
+		break;
 	   } catch (Exception e) {
 		System.err.println ("Exception while reading object -> " + e.getMessage());
 		e.printStackTrace();
 		break;
 	   }
-	}
+	  }
+	  for (int i=0;i<trans_map.size();i++) {
+		  AlterSpaceTransaction at = (AlterSpaceTransaction) trans_map.get(i);
+		  at.endTransaction(TransactionEndType.TET_ROLLBACK);
+	  }
     }
 }

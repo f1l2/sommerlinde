@@ -2,7 +2,7 @@ package sbc.space;
 
 import java.util.*;
 
-public class AlterSpaceTransaction {
+public class AlterSpaceTransaction extends SpaceTransaction {
    private HashMap<AlterSpaceContainer,ArrayList<SpaceEntry>> take_entries;
    private HashMap<AlterSpaceContainer,ArrayList<SpaceEntry>> write_entries;
    private ArrayList<AlterSpaceContainer> containers;

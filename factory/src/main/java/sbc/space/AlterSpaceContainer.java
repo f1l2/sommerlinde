@@ -1,6 +1,8 @@
 package sbc.space;
 
 import java.util.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AlterSpaceContainer {
     private String id;
@@ -10,13 +12,17 @@ public class AlterSpaceContainer {
     private HashMap<AlterSpaceTransaction,Integer> count_tw;
     private int commited_entries;
     private boolean locked;
+    private ReentrantLock lock;
+    private Condition waitEntries;
 
     AlterSpaceContainer(String name, int size) {
-	id = name;
-	entries = new ArrayList<SpaceEntry>();
-	trans_map = new HashMap<SpaceEntry,AlterSpaceTransaction>();
-	t_del_entries = new HashMap<AlterSpaceTransaction,ArrayList<SpaceEntry>>();
-	count_tw = new HashMap<AlterSpaceTransaction,Integer>();
+		id = name;
+		entries = new ArrayList<SpaceEntry>();
+		trans_map = new HashMap<SpaceEntry,AlterSpaceTransaction>();
+		t_del_entries = new HashMap<AlterSpaceTransaction,ArrayList<SpaceEntry>>();
+		count_tw = new HashMap<AlterSpaceTransaction,Integer>();
+		lock = new ReentrantLock();
+	    waitEntries = lock.newCondition();
     }
     public synchronized <T extends SpaceEntry> void write(AlterSpaceTransaction ast, T t) {
 	Lock();
@@ -34,21 +40,25 @@ public class AlterSpaceContainer {
 //	notify();
     }
     public synchronized void Lock() {
-	try {
-		while (locked) wait();
-	} catch (Exception e) {
-		System.err.println ("Locking failed!");
-	}
-	locked = true;
+		try {
+			while (locked) wait();
+		} catch (Exception e) {
+			System.err.println ("Locking failed!");
+		}
+		locked = true;
+    }
+    public synchronized void UnlockOnly() {
+		locked = false;
+		notify (); 	
     }
     public synchronized void Unlock() {
-	locked = false;
-	notify ();
+    	UnlockOnly();
+    	synchronized(entries) { entries.notify(); }
     }
     protected int getSaldo(AlterSpaceTransaction ast) {
-	if (count_tw.get(ast) == null) count_tw.put(ast,0);
-	if (ast != null) return count_tw.get(ast) > 0 ? count_tw.get(ast) : 0;
-	return 0;
+		if (count_tw.get(ast) == null) count_tw.put(ast,0);
+		if (ast != null) return count_tw.get(ast) > 0 ? count_tw.get(ast) : 0;
+		return 0;
     }
 
     protected synchronized ArrayList<SpaceEntry> getOrSet(AlterSpaceTransaction c,
@@ -75,6 +85,8 @@ public class AlterSpaceContainer {
 			commited_entries++;
 		}
 	}
+	if (t_del_entries.get(ast) != null)
+		commited_entries -= t_del_entries.get(ast).size();
 	cleanTransaction(ast);
 //	t_del_entries.remove(ast);
 //	Unlock();
@@ -120,20 +132,29 @@ public class AlterSpaceContainer {
     	}
     	return res;
     }
-    public synchronized <T extends SpaceEntry> ArrayList<T> take(SpaceTech.SelectorType s,
+    public <T extends SpaceEntry> ArrayList<T> take(SpaceTech.SelectorType s,
 		AlterSpaceTransaction ast, int count, boolean peek, AlterQuery query) throws Exception {
 	int off;
 	ListIterator<T> iter;
 	ArrayList<T> res = new ArrayList<T>();
 
 
+	if (count < -1) throw new Exception ("take: Invalid count: " + count);
+	
 	synchronized(this) {
-	if (peek == false) {
-		while (commited_entries + getSaldo(ast) < count) {
-//			System.out.println ("Waiting for " + count + " -> " + commited_entries + getSaldo(ast));
-			wait();
+		if (count == -1) {
+			count = commited_entries + getSaldo(ast);
 		}
-	}
+		if (peek == false) {
+			while (commited_entries + getSaldo(ast) < count) {
+	//			System.out.println ("Waiting for " + count + " -> " + commited_entries + getSaldo(ast));
+				wait();
+			}
+		}
+		if (count == 0) {
+			System.err.println ("take: Warning zero entries requested");
+			return res;
+		}
 	}
 
 //	System.out.println ("Trying to lock Container for something");
@@ -152,7 +173,8 @@ public class AlterSpaceContainer {
 //		T t = (T) query.exec(entries);
 			if (t == null) {
 				Unlock();
-				wait();
+//				entries.wait();
+				synchronized(entries) { entries.wait(); }
 				Lock();
 			}// else throw new Exception ("Query returned no entry");
 			else {
@@ -189,6 +211,9 @@ public class AlterSpaceContainer {
 			entries.removeAll((Collection)res);*/
 			if (ast != null) {
 				iter = (ListIterator<T>)entries.listIterator(off);
+				if (!iter.hasNext()) {
+					System.out.println ("Dubios: " + commited_entries + " - " + count);
+				}
 				while (iter.hasNext()) {
 					T x = iter.next();
 					manageEntry(x, ast, res);
@@ -237,14 +262,24 @@ public class AlterSpaceContainer {
 
 	if (ast == null) {
 	    if (res.size() == 0)
-	    	res.addAll((Collection)entries.subList(off,count));
+	    	res.addAll((Collection)entries.subList(off,count)); //XXX
 	    commited_entries -= count;
 	}
 
 	entries.removeAll((Collection)res);
 	Unlock();
 //	System.out.println ("TAKE: Returning " + res.size() + " entries");
-	if (res.size() == 0) {
+	if (res.size() != count) {
+		System.out.println ("MISMATCH: " + entries.size() + " vs. " + count);
+		for (int i=0;i<entries.size();i++) {
+			T x = (T) entries.get(i);
+			System.out.println ("++ size: " + x);
+		}
+		iter = (ListIterator<T>)entries.listIterator(0);
+		while (iter.hasNext()) {
+			T x = iter.next();
+			System.out.println("-- Iterator: " + x);
+		}
 //		System.out.println ("ERROR: 0 size!");
 	}
 	return res;

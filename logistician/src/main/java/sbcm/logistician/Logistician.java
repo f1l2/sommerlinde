@@ -24,6 +24,7 @@ import sbcm.space.role.Role;
 public class Logistician extends Role {
 
 	private Container containerA, containerB;
+	private SpaceTech space1, space2;
 
 	public static void main(String[] args) {
 		new Logistician();
@@ -54,7 +55,7 @@ public class Logistician extends Role {
 			this.containerA = (this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A));
 			this.containerB = (this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B));
 
-			try {
+/*			try {
 				this.readRockets(containerA, QualityCategory.A);
 			} catch (Exception e) {
 				logger.error("Reading A rockets failed: " + e.getMessage());
@@ -63,7 +64,7 @@ public class Logistician extends Role {
 				this.readRockets(containerB, QualityCategory.B);
 			} catch (Exception e) {
 				logger.error("Reading B rockets failed: " + e.getMessage());
-			}
+			}*/
 /*			NotificationManager notifManager = this.mozartSpaces.createNotificationManager();
 
 			notifManager.createNotification(containerA.getContainer(), new Logistician.ListenerA(), Operation.WRITE);
@@ -88,10 +89,12 @@ public class Logistician extends Role {
 
 //		MozartSelector ms = new MozartSelector(FifoCoordinator.newSelector(5));
 
-		do {
+		//do
+		{
 
 			int workRandomTime = this.workRandomTime();
 
+			synchronized(this) {
 			SpaceTransaction mt = this.mozartSpaces.createTransaction(2000 + workRandomTime);
 
 			this.createPackage(this.mozartSpaces.take(mc, mt, SpaceTech.SelectorType.SEL_FIFO, 5), qC);
@@ -100,10 +103,11 @@ public class Logistician extends Role {
 			Thread.sleep(workRandomTime);
 
 			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
+			}
 
 			logger.info("Rocket package created.");
 
-		} while (true);
+		} //while (true);
 
 	}
 
@@ -127,10 +131,12 @@ public class Logistician extends Role {
 	class ListenerA implements Runnable {
 
 		public void run() {
-			try {
-				readRockets(containerA, QualityCategory.A);
-			} catch (Exception e) {
-				logger.error(e.getMessage());
+			while (true) {
+				try {
+					readRockets(containerA, QualityCategory.A);
+				} catch (Exception e) {
+					logger.error(e.getMessage());
+				}
 			}
 		}
 	}
@@ -138,12 +144,13 @@ public class Logistician extends Role {
 	class ListenerB implements Runnable {
 
 		public void run() {
-			try {
-				readRockets(containerB, QualityCategory.B);
-			} catch (Exception e) {
-				logger.error(e.getMessage());
+			while (true) {
+				try {
+					readRockets(containerB, QualityCategory.B);
+				} catch (Exception e) {
+					logger.error(e.getMessage());
+				}
 			}
-
 		}
 	}
 }

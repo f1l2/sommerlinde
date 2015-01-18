@@ -6,7 +6,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.mozartspaces.capi3.LindaCoordinator;
+//import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.LindaCoordinator.LindaSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,35 +121,35 @@ public class Report extends Role {
 				}
 			}
 
-			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
+			mc = this.mozartSpaces.findContainer(MozartSpaces.PRODUCED_ROCKETS);
 			this.producedRockets = this.mozartSpaces.read(mc, null, rocketSelector);
 			logger.info("# Produced rockets: " + this.producedRockets.size());
 
-			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A);
+			mc = this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_A);
 			this.goodRockets = this.mozartSpaces.read(mc, null, rocketSelector);
 
-			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B);
+			mc = this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_B);
 			ArrayList<Rocket> tempResult = this.mozartSpaces.read(mc, null, rocketSelector);
 			this.goodRockets.addAll(tempResult);
 
-			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
+			mc = this.mozartSpaces.findContainer(MozartSpaces.GOOD_ROCKETS_ORDER);
 			tempResult = this.mozartSpaces.read(mc, null, rocketSelector);
 			this.goodRockets.addAll(tempResult);
 			logger.info("# Good rockets: " + this.goodRockets.size());
 
-			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.DEFECT_ROCKETS);
+			mc = this.mozartSpaces.findContainer(MozartSpaces.DEFECT_ROCKETS);
 			this.defectRockets = this.mozartSpaces.read(mc, null, rocketSelector);
 			logger.info("# Defect rockets: " + this.defectRockets.size());
 
-			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ROCKET_PACKAGES);
+			mc = this.mozartSpaces.findContainer(MozartSpaces.ROCKET_PACKAGES);
 			this.packages = this.mozartSpaces.read(mc, null, packageSelector);
 			logger.info("# Packages: " + this.packages.size());
 
-			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
+			mc = this.mozartSpaces.findContainer(MozartSpaces.ORDERS);
 			this.orders = this.mozartSpaces.read(mc, null, orderSelector);
 			logger.info("# Orders: " + this.orders.size());
 
-			mc = (MozartContainer) this.mozartSpaces.findContainer(MozartSpaces.REQUESTED_ROCKETS);
+			mc = this.mozartSpaces.findContainer(MozartSpaces.REQUESTED_ROCKETS);
 			this.rqRockets = this.mozartSpaces.read(mc, null, rocketSelector);
 			logger.info("# Requested rockets: " + this.rqRockets.size());
 

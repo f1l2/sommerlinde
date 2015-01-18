@@ -102,6 +102,7 @@ public class RunBenchmark extends Role {
 
 	public static void main(String[] args) {
 
+		System.out.println("Initialising benchmark");
 		new RunBenchmark();
 
 		System.exit(0);
@@ -113,12 +114,12 @@ public class RunBenchmark extends Role {
 
 	@Override
 	protected void doAction() {
-		woodenstaff = new Integer(150);
-		igniter = new Integer(150);
-		propellant = new Integer(50);
-		effectLoadRed = new Integer(50);
-		effectLoadBlue = new Integer(50);
-		effectLoadGreen = new Integer(50);
+		woodenstaff = new Integer(500);
+		igniter = new Integer(500);
+		propellant = new Integer(500);
+		effectLoadRed = new Integer(500);
+		effectLoadBlue = new Integer(500);
+		effectLoadGreen = new Integer(500);
 		errorRate = new Integer(5);
 		deliver();
 	}

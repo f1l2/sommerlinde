@@ -63,8 +63,11 @@ public class AlterSpaceServer extends AlterSpace {
 
     public void endTransaction (SpaceTransaction st, TransactionEndType tet) throws Exception {
 	AlterSpaceTransaction ast = getTransaction(st); //transaction_map.get(((AlterTransaction)st).getId());
-	if (ast == null) throw new Exception ("Null Pointer in Transaction"); /*XXX*/
+	if (ast == null)
+		throw new Exception ("Null Pointer in Transaction");
+	/*XXX*/
 	ast.endTransaction(tet);
+	transaction_map.remove(ast);
     }
 
     protected AlterSpaceContainer getContainer(Container t) {
