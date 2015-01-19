@@ -5,13 +5,13 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.mozartspaces.capi3.LindaCoordinator;
-import org.mozartspaces.capi3.LindaCoordinator.LindaSelector;
+import org.mozartspaces.core.MzsConstants.Selecting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sbc.space.MozartContainer;
-import sbc.space.MozartSelector;
+import sbc.space.AlterQuery;
+import sbc.space.Container;
+import sbc.space.AlterSpaceServer;
 import sbc.space.MozartSpaces;
 import sbcm.factory.model.Rocket;
 import sbcm.utility.SingleSpace;
@@ -24,7 +24,7 @@ public class StockBean {
 
 	private List<Rocket> deliveredRockets;
 
-	private MozartSpaces shippingSpaces;
+	private AlterSpaceServer shippingSpaces;
 
 	public StockBean() {
 
@@ -37,13 +37,15 @@ public class StockBean {
 
 		logger.info("-------- STOCK ---------- ");
 
-		MozartSelector ms = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_MAX));
+//		MozartSelector ms = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), LindaSelector.COUNT_MAX));
+		AlterQuery query = new AlterQuery();
+		query.getClass(new Rocket()).cnt(Selecting.COUNT_MAX);
 
 		try {
 
-			MozartContainer mc = (MozartContainer) this.shippingSpaces.findContainer(MozartSpaces.STOCK);
+			Container mc = this.shippingSpaces.findContainer(MozartSpaces.STOCK);
 
-			this.deliveredRockets = this.shippingSpaces.read(mc, null, ms);
+			this.deliveredRockets = this.shippingSpaces.read(mc, null, query);
 			logger.info("# Rockets: " + this.deliveredRockets.size());
 
 		} catch (Exception e) {

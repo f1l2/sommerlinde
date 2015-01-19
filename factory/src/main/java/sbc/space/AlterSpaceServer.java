@@ -3,6 +3,9 @@ package sbc.space;
 import java.net.*;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.List;
+
+import sbcm.factory.model.Rocket;
 
 public class AlterSpaceServer extends AlterSpace {
     private ServerSocket ssock;
@@ -113,4 +116,11 @@ public class AlterSpaceServer extends AlterSpace {
 		}*/
 		asc.write(getTransaction(t), entry);
     }
+
+	public <T extends SpaceEntry> ArrayList<T> read(Container mc, SpaceTransaction t, AlterQuery query) throws Exception {
+		ArrayList<T> res = take(mc, t, SpaceTech.SelectorType.SEL_ANY, 0, query);
+		for (T entry : res)
+			write(mc, t, entry);
+		return null;
+	}
 }
