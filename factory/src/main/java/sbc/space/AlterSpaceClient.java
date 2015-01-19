@@ -17,9 +17,10 @@ public class AlterSpaceClient extends SpaceTech {
 	System.err.println ("*** Initialising AlterSpace");
     }
 
-    public void AlterSpaceClientCommonInit(String url) {
+    public void AlterSpaceClientCommonInit(String url, int xport) {
 		try {
-		    sock = new Socket (url, port);
+		    sock = new Socket (url, xport);
+		    port = xport;
 		    bos = new BufferedOutputStream(sock.getOutputStream());
 		    oos = new ObjectOutputStream(bos);
 	//	    ois = new ObjectInputStream(sock.getInputStream());
@@ -30,10 +31,11 @@ public class AlterSpaceClient extends SpaceTech {
     }
 
     public AlterSpaceClient(String url) {
-    	AlterSpaceClientCommonInit(url);
+    	String[] s = url.split(":");
+    	AlterSpaceClientCommonInit(s[0], new Integer(s[1]));
     }
     public AlterSpaceClient() {
-    	AlterSpaceClientCommonInit("localhost");
+    	AlterSpaceClientCommonInit("localhost", 1234);
     }
     public void exit() { }
 

@@ -14,7 +14,7 @@ public class Factory {
 
 		logger.info("Start space ...");
 
-		SpaceTech mozartSpaces = new AlterSpaceServer(true);
+		SpaceTech mozartSpaces = new AlterSpaceServer(0);
 		mozartSpaces.init();
 
 		logger.info("Space started.");

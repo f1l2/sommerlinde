@@ -13,43 +13,44 @@ public class AlterSpaceServer extends AlterSpace {
     private int trans_count;
  
     public void init() {
-	System.err.println ("*** Initialising AlterSpaceServer");
-	super.init();
+		System.err.println ("*** Initialising AlterSpaceServer");
+		super.init();
     }
 
-    public AlterSpaceServer(boolean server) {
-	final AlterSpaceServer self = this;
-	(new Thread() {
-	    public void run() {
-		try {
-		  ssock = new ServerSocket (port);
-		  while (true) {
-			Socket client = ssock.accept();
-			AlterSpaceClientThread cc = new AlterSpaceClientThread(client, self);
-			cc.start();
-		  }
-	       	} catch (Exception e) {
-			System.err.println ("Exception while accepting client: " + e.getMessage());
-		}
-	    }
-	}).start();
-	containers = new HashMap<String,AlterContainer>();
-	container_map = new HashMap<String,AlterSpaceContainer>();
-	transaction_map = new HashMap<Integer,AlterSpaceTransaction>();
+    public AlterSpaceServer(int bind_port) {
+		final AlterSpaceServer self = this;
+		final int xport = (bind_port == 0) ? 1234 : bind_port;
+		(new Thread() {
+		    public void run() {
+			try {
+			  ssock = new ServerSocket (xport);
+			  while (true) {
+				Socket client = ssock.accept();
+				AlterSpaceClientThread cc = new AlterSpaceClientThread(client, self);
+				cc.start();
+			  }
+		       	} catch (Exception e) {
+				System.err.println ("Exception while accepting client: " + e.getMessage());
+			}
+		    }
+		}).start();
+		containers = new HashMap<String,AlterContainer>();
+		container_map = new HashMap<String,AlterSpaceContainer>();
+		transaction_map = new HashMap<Integer,AlterSpaceTransaction>();
     }
 
     public void exit() { }
 
     public synchronized Container createContainer(String id, int size) {
-	AlterContainer a = new AlterContainer(id, size);
-	AlterSpaceContainer asc = new AlterSpaceContainer(id,size);
-	containers.put(id, a);
-	container_map.put(id, asc);
-	return (Container) a;
+		AlterContainer a = new AlterContainer(id, size);
+		AlterSpaceContainer asc = new AlterSpaceContainer(id,size);
+		containers.put(id, a);
+		container_map.put(id, asc);
+		return (Container) a;
     }
 
     public Container findContainer(String id) {
-	return (Container) containers.get(id);
+		return (Container) containers.get(id);
     }
 
     public AlterSpaceTransaction mapTransaction(AlterTransaction  at) {
@@ -57,12 +58,12 @@ public class AlterSpaceServer extends AlterSpace {
     }
     
     public synchronized SpaceTransaction createTransaction(long timeout) {
-	AlterSpaceTransaction ast = new AlterSpaceTransaction();
-/*	SpaceTransaction res = new SpaceTransaction();*/
-	AlterTransaction at = new AlterTransaction(++trans_count);
-	transaction_map.put(at.getId(),ast);
-	return (SpaceTransaction)at;
-/*	return (SpaceTransaction) new AlterTransaction();*/
+		AlterSpaceTransaction ast = new AlterSpaceTransaction();
+	/*	SpaceTransaction res = new SpaceTransaction();*/
+		AlterTransaction at = new AlterTransaction(++trans_count);
+		transaction_map.put(at.getId(),ast);
+		return (SpaceTransaction)at;
+	/*	return (SpaceTransaction) new AlterTransaction();*/
     }
 
     public void endTransaction (SpaceTransaction st, TransactionEndType tet) throws Exception {
@@ -77,23 +78,23 @@ public class AlterSpaceServer extends AlterSpace {
     }
 
     protected AlterSpaceContainer getContainer(Container t) {
-	return (t == null ? null : container_map.get(((AlterContainer)t).getId()));
+		return (t == null ? null : container_map.get(((AlterContainer)t).getId()));
     }
     protected AlterSpaceTransaction getTransaction(SpaceTransaction t) {
-	return (t == null ? null : transaction_map.get(((AlterTransaction)t).getId()));
+		return (t == null ? null : transaction_map.get(((AlterTransaction)t).getId()));
     }
 
     public <T extends SpaceEntry> ArrayList<T> take(Container c, SpaceTransaction t,
     		SelectorType s, int count, AlterQuery query) throws Exception {
-	AlterSpaceContainer asc = getContainer(c); //container_map.get(((AlterContainer)c).getId());
-	if (asc == null) throw new Exception ("Invalid Container");
-/*	if (t != null) {
-		AlterSpaceTransaction ast = transaction_map.get(t);
-		if (ast == null) throw new Exception ("Invalid Transaction");
-		return ast.take(asc, s, count);
-	}*/
-	return asc.take(s, getTransaction(t), count, false, query);
-/*	return new ArrayList<T>();*/
+		AlterSpaceContainer asc = getContainer(c); //container_map.get(((AlterContainer)c).getId());
+		if (asc == null) throw new Exception ("Invalid Container");
+	/*	if (t != null) {
+			AlterSpaceTransaction ast = transaction_map.get(t);
+			if (ast == null) throw new Exception ("Invalid Transaction");
+			return ast.take(asc, s, count);
+		}*/
+		return asc.take(s, getTransaction(t), count, false, query);
+	/*	return new ArrayList<T>();*/
     }
     public <T extends SpaceEntry> ArrayList<T> take(Container c, SpaceTransaction t,
     		SelectorType s, int count) throws Exception {
@@ -102,14 +103,14 @@ public class AlterSpaceServer extends AlterSpace {
 
     public <T extends SpaceEntry> void write(Container c, SpaceTransaction t,
 		T entry) throws Exception {
-	AlterSpaceContainer asc = getContainer(c); //container_map.get(((AlterContainer)c).getId());
-	if (asc == null) throw new Exception ("Invalid Container");
-/*	if (t != null) {
-		AlterSpaceTransaction ast = transaction_map.get(t);
-		if (ast == null) throw new Exception ("Invalid Transaction"); 
-		ast.write(asc, entry);
-		return;
-	}*/
-	asc.write(getTransaction(t), entry);
+		AlterSpaceContainer asc = getContainer(c); //container_map.get(((AlterContainer)c).getId());
+		if (asc == null) throw new Exception ("Invalid Container");
+	/*	if (t != null) {
+			AlterSpaceTransaction ast = transaction_map.get(t);
+			if (ast == null) throw new Exception ("Invalid Transaction"); 
+			ast.write(asc, entry);
+			return;
+		}*/
+		asc.write(getTransaction(t), entry);
     }
 }

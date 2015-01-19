@@ -32,6 +32,7 @@ public class AlterQuery implements Serializable {
 		return this;
 	}
 	public AlterQuery cnt(int cnt) {
+		if (cnt == -2) cnt = -1;
 		count = cnt;
 		return this;
 	}

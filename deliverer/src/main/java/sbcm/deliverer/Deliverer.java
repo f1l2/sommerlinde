@@ -48,10 +48,10 @@ public class Deliverer extends Role {
 			List<Rocket> rockets = new ArrayList<Rocket>();
 			Order finishedOrder = new Order();
 //			Query query = null;
-			AlterQuery query = new AlterQuery();
 
 			// wait for finished orders
 			try {
+				AlterQuery query = new AlterQuery();
 
 				// waiting for processed orders
 				mt = this.mozartSpaces.createTransaction(-1);
@@ -75,6 +75,7 @@ public class Deliverer extends Role {
 
 				} catch (Exception e) {
 					this.shippingSpaces = null;
+					logger.debug("Shipping space not available");
 				}
 
 				if (this.shippingSpaces != null) {

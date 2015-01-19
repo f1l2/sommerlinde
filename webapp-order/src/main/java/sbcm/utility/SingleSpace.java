@@ -1,24 +1,24 @@
 package sbcm.utility;
 
-import sbc.space.MozartSpaces;
+import sbc.space.*;
 
 public class SingleSpace {
 	private static volatile SingleSpace instance = null;
 
-	public final static String URI = "xvsm://localhost:9874/";
+	public final static String URI = "localhost:1235";
 
-	private MozartSpaces shippingSpace;
+	private AlterSpaceServer shippingSpace;
 
 	private SingleSpace() {
-		this.shippingSpace = new MozartSpaces(Boolean.TRUE, URI);
+		this.shippingSpace = new AlterSpaceServer(1235);
 		this.shippingSpace.init();
 	}
 
-	public MozartSpaces getShippingSpace() {
+	public AlterSpaceServer getShippingSpace() {
 		return shippingSpace;
 	}
 
-	public void setShippingSpace(MozartSpaces shippingSpace) {
+	public void setShippingSpace(AlterSpaceServer shippingSpace) {
 		this.shippingSpace = shippingSpace;
 	}
 
