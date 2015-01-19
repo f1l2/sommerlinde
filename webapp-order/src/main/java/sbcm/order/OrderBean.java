@@ -86,7 +86,7 @@ public class OrderBean extends Role {
 
 			logger.info("Fetch pending order.");
 
-			MozartSpaces space = SingleSpace.getInstance().getShippingSpace();
+			AlterSpaceServer space = SingleSpace.getInstance().getShippingSpace();
 
 			mt = this.mozartSpaces.createTransaction(1000);
 
@@ -97,7 +97,7 @@ public class OrderBean extends Role {
 			Matchmaker ordererId = ComparableProperty.forName("ordererId").equalTo(this.employeeId);
 			Query query = new Query().filter(Matchmakers.and(status, ordererId));*/
 			AlterQuery query = new AlterQuery();
-			query.prop("getStatus").equaling(OrderStatus.NOT_DELIVERED).prop("getOrderId").equaling(this.employeeId);
+			query.prop("getStatus").equaling(OrderStatus.NOT_DELIVERED).prop("getOrderId").equaling(this.employeeId).cnt(Selecting.COUNT_ALL);
 
 			
 			ArrayList<Order> orders = this.mozartSpaces.take(mcOrders, mt, query);
