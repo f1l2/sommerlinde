@@ -236,7 +236,7 @@ public class Producer extends Role {
 
 	private Rocket getNextRequestedRocket() {
 		try {
-			mt = (MozartTransaction) this.mozartSpaces.createTransaction(2000);
+			mt = this.mozartSpaces.createTransaction(2000);
 
 //			MozartSelector requestedSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), 1));
 			Rocket result = this.mozartSpaces.take(mcRequested, mt);

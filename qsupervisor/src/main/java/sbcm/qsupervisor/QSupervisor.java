@@ -11,9 +11,9 @@ import sbc.space.*;
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.Query;
 import org.mozartspaces.capi3.QueryCoordinator;
-import org.mozartspaces.core.MzsConstants.Selecting;
-import org.mozartspaces.core.MzsConstants.TransactionTimeout;*/
 
+import org.mozartspaces.core.MzsConstants.TransactionTimeout;*/
+import org.mozartspaces.core.MzsConstants.Selecting;
 /*import sbc.space.MozartContainer;
 import sbc.space.MozartSelector;
 import sbc.space.MozartSpaces;
@@ -133,12 +133,13 @@ public class QSupervisor extends Role {
 
 	private void checkIfOrderIsFinished(Rocket rocket) throws Exception {
 
-/*		Order order = this.readOrderById(rocket.getOrderId());
+		Order order = this.readOrderById(rocket.getOrderId());
+		AlterQuery query = new AlterQuery();
 
 		Rocket templRocket = new Rocket();
 		templRocket.setOrderId(order.getId());
-		ArrayList<Rocket> rockets = this.mozartSpaces.read(mcOrderRockets, mt,
-				new MozartSelector(LindaCoordinator.newSelector(templRocket, Selecting.COUNT_ALL)));
+		query.getClass(templRocket).cnt(Selecting.COUNT_ALL);
+		ArrayList<Rocket> rockets = this.mozartSpaces.read(mcOrderRockets, mt, query);
 
 		if (rockets.size() == order.getQuantityRockets()) {
 			Order takeOrder = this.takeOrderById(rocket.getOrderId());
@@ -146,8 +147,8 @@ public class QSupervisor extends Role {
 			logger.info("Write order " + takeOrder.toString());
 
 			this.mozartSpaces.write(MozartSpaces.ORDERS, takeOrder);
-		}*/
-		System.err.println("TODO: Checking if order is finished");
+		}
+		//System.err.println("TODO: Checking if order is finished");
 	}
 
 	private void createSpareRequest(Rocket rocket) throws Exception {

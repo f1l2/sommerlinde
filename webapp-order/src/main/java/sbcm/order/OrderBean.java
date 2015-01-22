@@ -97,11 +97,13 @@ public class OrderBean extends Role {
 			Matchmaker ordererId = ComparableProperty.forName("ordererId").equalTo(this.employeeId);
 			Query query = new Query().filter(Matchmakers.and(status, ordererId));*/
 			AlterQuery query = new AlterQuery();
-			query.prop("getStatus").equaling(OrderStatus.NOT_DELIVERED).prop("getOrderId").equaling(this.employeeId).cnt(Selecting.COUNT_ALL);
+			query.prop("getStatus").equaling(OrderStatus.NOT_DELIVERED).prop("getOrderId").equaling(this.employeeId).cnt(Selecting.COUNT_MAX);
 
 			
 			ArrayList<Order> orders = this.mozartSpaces.take(mcOrders, mt, query);
 
+			if (orders.size() == 0) throw new Exception ("");
+			
 			logger.info("Found pending orders.");
 
 			for (Order order : orders) {

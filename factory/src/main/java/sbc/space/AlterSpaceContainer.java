@@ -141,7 +141,7 @@ public class AlterSpaceContainer {
 	ArrayList<T> res = new ArrayList<T>();
 
 
-	if (count < -1) throw new Exception ("take: Invalid count: " + count);
+	if (count < -2) throw new Exception ("take: Invalid count: " + count);
 	
 	if (count > 0) {
 		while (commited_entries + getSaldo(ast) < count) {
@@ -157,6 +157,8 @@ public class AlterSpaceContainer {
 
 	if (count == -1) {
 		count = commited_entries + getSaldo(ast);
+	} else if (count == -2) {
+		count = 1; // minimum
 	}
 
 	if (ast != null)

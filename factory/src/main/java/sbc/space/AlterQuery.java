@@ -20,8 +20,9 @@ public class AlterQuery implements Serializable {
 	private Object propval;
 	private String cname;
 	private boolean sorting;
+	private boolean countmax;
 	
-	public int getCount() { return count; }
+	public int getCount() { return count - (countmax ? 1 : 0); }
 	public AlterQuery sortup(String propname) {
 		property = propname;
 		sorting = true;
@@ -32,7 +33,7 @@ public class AlterQuery implements Serializable {
 		return this;
 	}
 	public AlterQuery cnt(int cnt) {
-		if (cnt == -2) cnt = -1;
+		if (cnt == -2) { countmax = true; cnt = -1; }
 		count = cnt;
 		return this;
 	}
@@ -103,7 +104,8 @@ public class AlterQuery implements Serializable {
 							}
 							if (x != 0)
 								continue;
-						}
+						} else if (propval != null)
+							continue;
 						if (sorting)
 							map.put(ref, e);
 						else {
