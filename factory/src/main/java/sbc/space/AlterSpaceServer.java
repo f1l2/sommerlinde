@@ -121,6 +121,6 @@ public class AlterSpaceServer extends AlterSpace {
 		ArrayList<T> res = take(mc, t, SpaceTech.SelectorType.SEL_ANY, 0, query);
 		for (T entry : res)
 			write(mc, t, entry);
-		return null;
+		return res;
 	}
 }

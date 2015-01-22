@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mozartspaces.core.MzsConstants.Selecting;
+
 /*import org.mozartspaces.capi3.ComparableProperty;
 import org.mozartspaces.capi3.LindaCoordinator;
 import org.mozartspaces.capi3.Query;
@@ -59,6 +61,7 @@ public class Producer extends Role {
 
 		do {
 			Rocket rqRocket = null;
+			isOrder = true;
 			if (isOrder) {
 				rqRocket = this.getNextRequestedRocket();
 				isOrder = (rqRocket == null) ? false : true;
@@ -236,10 +239,15 @@ public class Producer extends Role {
 
 	private Rocket getNextRequestedRocket() {
 		try {
+			AlterQuery query = new AlterQuery();
+			Rocket result = null;
+			query.getClass(new Rocket()).cnt(Selecting.COUNT_MAX);
 			mt = this.mozartSpaces.createTransaction(2000);
 
+			if (mozartSpaces.read(mcRequested, mt, query).size() > 0) {
 //			MozartSelector requestedSelector = new MozartSelector(LindaCoordinator.newSelector(new Rocket(), 1));
-			Rocket result = this.mozartSpaces.take(mcRequested, mt);
+				result = this.mozartSpaces.take(mcRequested, mt);
+			}
 
 			this.mozartSpaces.endTransaction(mt, TransactionEndType.TET_COMMIT);
 
